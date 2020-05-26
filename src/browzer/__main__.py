@@ -1,5 +1,5 @@
 """
-Entrypoint module, in case you use `python -mbrowzer`.
+Entrypoint module, in case you use `python -m browzer`.
 
 
 Why does this file exist, and why __main__? For more info, read:
