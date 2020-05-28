@@ -8,6 +8,9 @@ from browzer.constants.strings import GRID_LOCALHOST
 from browzer.constants.strings import BROWSER_RESOLUTION as RESOLUTION
 from browzer.constants.strings import BROWSER_BINARY_PATH
 from browzer.constants.strings import BROWSER_VERSION as VERSION
+from browzer.helpers.operating_system.environ import read_from_environ
+from browzer.constants.strings import BROWZER_CONFIG
+from browzer.helpers.importlib.importer import instantiate_class_from_path
 
 
 @dataclass
@@ -38,3 +41,16 @@ class BrowzerConfiguration:
     DEFAULT_SELECTOR: str = "css"
     DRIVER_LISTENER: Optional[Callable] = None
     MAXIMIZED: bool = True
+
+
+def load_browzer_config() -> BrowzerConfiguration:
+    """
+    If the BROWZER_CONFIG environment variable has been setup, take its value and attempt to instantiate
+    a custom user provided subclass of the config with their overridden values.
+    :return: the default BrowzerConfiguration, or an instance of a user supplied subclass
+    """
+    has_custom = read_from_environ(BROWZER_CONFIG, None)
+    if not has_custom:
+        return BrowzerConfiguration()
+    else:
+        return instantiate_class_from_path(has_custom)

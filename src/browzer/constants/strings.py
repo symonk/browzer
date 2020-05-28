@@ -11,3 +11,7 @@ BROWSER_BINARY_PATH = "acquire"
 
 # Grid constants
 GRID_LOCALHOST = "http://127.0.0.1:4444/wd/hub"
+
+
+# environment variable keys
+BROWZER_CONFIG = "BROWZER_CONFIGURATION"
