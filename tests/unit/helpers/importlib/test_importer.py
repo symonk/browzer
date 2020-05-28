@@ -5,7 +5,7 @@ from browzer.helpers.importlib.importer import instantiate_class_from_path
 from browzer import BrowzerConfiguration
 
 
-def test_importer_returns_instance_successfully(monkey_test_files_on_path):
+def test_importer_returns_instance_successfully(monkeypatch):
     path = "tests.test_files.custom_config.CustomConfig"
     clazz = instantiate_class_from_path(path, BrowzerConfiguration)
     assert_that(clazz).is_instance_of(BrowzerConfiguration)
