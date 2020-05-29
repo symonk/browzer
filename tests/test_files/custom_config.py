@@ -1,5 +1,6 @@
-from browzer import BrowzerConfiguration
 from dataclasses import dataclass
+
+from browzer import BrowzerConfiguration
 
 
 @dataclass

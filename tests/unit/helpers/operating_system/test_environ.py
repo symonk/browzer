@@ -1,4 +1,5 @@
 from assertpy import assert_that
+
 from browzer.helpers.operating_system.environ import read_from_environ
 
 

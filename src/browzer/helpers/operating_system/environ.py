@@ -1,5 +1,5 @@
-from typing import Any
 from os import environ
+from typing import Any
 
 
 def read_from_environ(key: str, default: Any = None) -> Any:

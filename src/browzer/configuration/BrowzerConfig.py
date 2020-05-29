@@ -1,16 +1,18 @@
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Dict, Callable, List
+from typing import Callable
+from typing import Dict
+from typing import List
 from typing import Optional
 
+from browzer.constants.strings import BROWSER_BINARY_PATH
+from browzer.constants.strings import BROWSER_RESOLUTION as RESOLUTION
+from browzer.constants.strings import BROWSER_VERSION as VERSION
+from browzer.constants.strings import BROWZER_CONFIG
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import GRID_LOCALHOST
-from browzer.constants.strings import BROWSER_RESOLUTION as RESOLUTION
-from browzer.constants.strings import BROWSER_BINARY_PATH
-from browzer.constants.strings import BROWSER_VERSION as VERSION
-from browzer.helpers.operating_system.environ import read_from_environ
-from browzer.constants.strings import BROWZER_CONFIG
 from browzer.helpers.importlib.importer import instantiate_class_from_path
+from browzer.helpers.operating_system.environ import read_from_environ
 
 
 @dataclass

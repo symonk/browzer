@@ -1,8 +1,8 @@
 import pytest
 from assertpy import assert_that
 
-from browzer.helpers.importlib.importer import instantiate_class_from_path
 from browzer import BrowzerConfiguration
+from browzer.helpers.importlib.importer import instantiate_class_from_path
 
 
 def test_importer_returns_instance_successfully(test_files_config_classes):

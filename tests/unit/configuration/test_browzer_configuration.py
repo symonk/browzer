@@ -1,9 +1,9 @@
 from assertpy import assert_that
-from browzer.constants.strings import BROWZER_CONFIG
+from tests.test_files.custom_config import CustomConfig
 
 from browzer.configuration.BrowzerConfig import BrowzerConfiguration
 from browzer.configuration.BrowzerConfig import load_browzer_config
-from tests.test_files.custom_config import CustomConfig
+from browzer.constants.strings import BROWZER_CONFIG
 
 
 def test_browzer_config_load():
