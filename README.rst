@@ -7,14 +7,11 @@ Overview
 .. list-table::
     :stub-columns: 1
 
-    * - docs
+    * - documentation
       - |docs|
-    * - tests
-      - | |travis| |appveyor| |requires|
-        | |codecov|
-    * - package
-      - | |version| |wheel| |supported-versions| |supported-implementations|
-        | |commits-since|
+    * - testing
+      - | |travis| |appveyor| |requires| |codecov|
+
 .. |docs| image:: https://readthedocs.org/projects/browzer/badge/?style=flat
     :target: https://readthedocs.org/projects/browzer
     :alt: Documentation Status
