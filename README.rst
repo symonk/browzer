@@ -56,6 +56,10 @@ Overview
 
 .. end-badges
 
+========
+What is Browzer :flags:
+========
+
 Browzer is a frontend automated test framework for driving end to end tests of user interface(s).
 Written in Python it allows a quick time to market on your automated tests
 while erradicating flakyness through smart waiting and various other mechanisms to make selenium
