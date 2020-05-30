@@ -7,9 +7,9 @@ Overview
 .. list-table::
     :stub-columns: 1
 
-    * - documentation
+    * - docs:
       - |docs|
-    * - testing
+    * - tests:
       - | |travis| |appveyor| |requires| |codecov|
 
 .. |docs| image:: https://readthedocs.org/projects/browzer/badge/?style=flat
@@ -56,49 +56,13 @@ Overview
 
 .. end-badges
 
-Selenium wrapper placeholder
-
-* Free software: MIT license
-
-Installation
-============
-
-::
-
-    pip install browzer
-
-You can also install the in-development version with::
-
-    pip install https://github.com/symonk/browzer/archive/master.zip
+Browzer is a frontend automated test framework for driving end to end tests of user interface(s).
+Written in Python it allows a quick time to market on your automated tests
+while erradicating flakyness through smart waiting and various other mechanisms to make selenium
+more test-friendly.
 
 
 Documentation
 =============
 
-
 https://browzer.readthedocs.io/
-
-
-Development
-===========
-
-To run the all tests run::
-
-    tox
-
-Note, to combine the coverage data from all the tox environments run:
-
-.. list-table::
-    :widths: 10 90
-    :stub-columns: 1
-
-    - - Windows
-      - ::
-
-            set PYTEST_ADDOPTS=--cov-append
-            tox
-
-    - - Other
-      - ::
-
-            PYTEST_ADDOPTS=--cov-append tox
