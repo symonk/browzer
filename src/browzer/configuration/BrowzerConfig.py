@@ -5,6 +5,8 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+from webdriver_manager.chrome import ChromeDriverManager
+
 from browzer.constants.strings import BROWSER_BINARY_PATH
 from browzer.constants.strings import BROWSER_RESOLUTION as RESOLUTION
 from browzer.constants.strings import BROWSER_VERSION as VERSION
@@ -26,7 +28,9 @@ class BrowzerConfiguration:
 
     BROWSER: str = CHROME
     HEADLESS: bool = False
+    IS_REMOTE: bool = False
     SELENIUM_GRID_URL: str = GRID_LOCALHOST
+    SELENIUM_GRID_PORT: int = 4444
     BROWSER_RESOLUTION: str = RESOLUTION
     BROWSER_VERSION: str = VERSION
     DRIVER_BINARY_PATH: str = BROWSER_BINARY_PATH
@@ -42,7 +46,6 @@ class BrowzerConfiguration:
     JAVASCRIPT_SENDKEYS: bool = False
     DEFAULT_SELECTOR: str = "css"
     DRIVER_LISTENER: Optional[Callable] = None
-    MAXIMIZED: bool = True
 
 
 def load_browzer_config() -> BrowzerConfiguration:
@@ -56,3 +59,39 @@ def load_browzer_config() -> BrowzerConfiguration:
         return BrowzerConfiguration()
     else:
         return instantiate_class_from_path(has_custom)
+
+
+class ConfigHelper:
+    def __init__(self, config: BrowzerConfiguration):
+        self.config = config
+
+    def get_grid_info(self) -> str:
+        """
+        Resolves the selenium hub address for remote browsers.
+        :return: String for the full hub address
+        """
+        if not self.config.IS_REMOTE:
+            raise ValueError(
+                "Using a selenium hub is not permitted unless IS_REMOTE is true"
+            )
+        return (
+            f"{self.config.SELENIUM_GRID_URL}:{self.config.SELENIUM_GRID_PORT}/wd/hub"
+        )
+
+    def get_browser_info(self) -> tuple:
+        """
+        Fetches the driver binary and version specified by the users config
+        :return: A tuple of browser meta data relating to versioning and binary data
+        """
+        return self.config.DRIVER_BINARY_PATH, self.config.BROWSER_VERSION
+
+    def resolve_binary_path(self) -> str:
+        """
+        Decide if we need to:
+        A) Acquire the driver binary binary path == 'acquire'
+        B) Use a local path passed by the user if path is anything else
+        :return: the path to the chrome-driver binary - downloaded or installed by the user
+        """
+        ver = self.config.BROWSER_VERSION
+        path = self.config.DRIVER_BINARY_PATH
+        return ChromeDriverManager(ver).install() if path.lower() == "acquire" else path
