@@ -19,7 +19,7 @@ from browzer.core.webelement.pylenium_webelement import BrowzerElement
 
 class ICreator(ABC):
     """
-    Interface for browser creation, useful for type hinting.
+    Interface for browser creation, each subclass guarantees it can create a browser of its type.
     """
 
     @abstractmethod
