@@ -92,7 +92,7 @@ class BrowzerDriverFactory:
     def __init__(self, config: BrowzerConfiguration):
         self.config = config
         self.supported = {CHROME: ChromeCreator, FIREFOX: FireFoxCreator}
-        self.driver = threading.local().driver = None
+        self.drivers = {}
 
     def get_driver(self) -> RemoteWebDriver:
         """
@@ -110,7 +110,7 @@ class BrowzerDriverFactory:
         :return: An instance of a RemoteWebDriver subclass.
         """
         new_driver = self.supported.get(self.config.BROWSER)(self.config).create()
-        self.driver = new_driver
+        self.drivers[threading.get_ident()] = new_driver
         return new_driver
 
     def _check_and_fetch(self) -> Optional[RemoteWebDriver]:
@@ -118,7 +118,8 @@ class BrowzerDriverFactory:
         Simple lookup if a driver has been already registered based on the thread id.
         :return: An instance of a RemoteWebDriver subclass, or None if one has never been created (yet).
         """
-        return self.driver
+        if threading.get_ident() in self.drivers:
+            return self.drivers[threading.get_ident()]
 
     def terminate_driver(self) -> None:
         """
@@ -126,7 +127,11 @@ class BrowzerDriverFactory:
         Note: Browzer does not support persistent browsers across tests at present.
         :return:
         """
-        print("terminating driver")
-        if self.driver:
-            self.driver.quit()
-            self.driver = None
+        driver = self._check_and_fetch()
+        if driver:
+            driver.quit()
+            del self.drivers[threading.get_ident()]
+
+    def destroy_all(self) -> None:
+        for driver in self.drivers:
+            driver.quit()
