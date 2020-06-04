@@ -6,6 +6,7 @@ from abc import abstractmethod
 from typing import Optional
 from typing import Union
 
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
@@ -37,7 +38,9 @@ class ChromeCreator(ICreator):
         Chrome driver instantiation
         :return: Return the instantiated version of the chrome driver (Remote or local)
         """
-        chrome_opts = self.config.CHROME_OPTIONS
+        chrome_opts = ChromeOptions()
+        for option in self.config.CHROME_OPTIONS:
+            chrome_opts.add_argument(option)
         capabilities = self.config.BROWSER_CAPABILITIES
         binary = self.config_helper.resolve_binary_path()
         driver = ChromeDriver(

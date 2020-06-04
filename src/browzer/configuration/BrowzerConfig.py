@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from dataclasses import field
 from typing import Callable
 from typing import Dict
-from typing import List
 from typing import Optional
+from typing import Set
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -35,7 +35,9 @@ class BrowzerConfiguration:
     BROWSER_VERSION: str = VERSION
     DRIVER_BINARY_PATH: str = BROWSER_BINARY_PATH
     BROWSER_CAPABILITIES: Optional[Dict] = field(default_factory=dict)
-    CHROME_OPTIONS: Optional[List] = None
+    CHROME_OPTIONS: Optional[Set] = field(
+        default_factory=lambda: {"no-sandbox", "--disable-extensions", "--headless"}
+    )
     BASE_URL: str = None
     EXPLICIT_WAIT: float = 30.00
     POLLING_INTERVAL: float = 0.25
