@@ -1,8 +1,8 @@
 from assertpy import assert_that
 from tests.test_files.custom_config import CustomConfig
 
-from browzer.configuration.BrowzerConfig import BrowzerConfiguration
-from browzer.configuration.BrowzerConfig import load_browzer_config
+from browzer.configuration.configuration import BrowzerConfiguration
+from browzer.configuration.configuration import load_browzer_config
 from browzer.constants.strings import BROWZER_CONFIG
 
 

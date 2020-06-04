@@ -12,7 +12,7 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
 from browzer import BrowzerConfiguration
-from browzer.configuration.BrowzerConfig import ConfigHelper
+from browzer.configuration.configuration import ConfigHelper
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import FIREFOX
 from browzer.core.webelement.pylenium_webelement import BrowzerElement
