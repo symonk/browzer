@@ -24,4 +24,4 @@ def test_meta_class_pages():
     class LoginPage(metaclass=BrowzerPage):
         pass
 
-    assert_that(LoginPage().current_url).is_equal_to("data:,")
+    assert_that(LoginPage().driver.current_url).is_equal_to("data:,")
