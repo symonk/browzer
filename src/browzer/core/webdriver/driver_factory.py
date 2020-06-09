@@ -15,7 +15,7 @@ from browzer import BrowzerConfiguration
 from browzer.configuration.configuration import ConfigHelper
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import FIREFOX
-from browzer.core.webelement.pylenium_webelement import BrowzerElement
+from browzer.core.webelement.browzer_element import BrowzerElement
 
 
 class ICreator(ABC):
