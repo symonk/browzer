@@ -4,7 +4,7 @@ import atexit
 
 from browzer.configuration.configuration import BrowzerConfiguration  # noqa: F401
 from browzer.configuration.configuration import load_browzer_config
-from browzer.core.pages.meta_base import BrowzerPage  # noqa: F401
+from browzer.core.pages.base_page import BrowzerPage  # noqa: F401
 from browzer.core.webdriver.driver_factory import BrowzerDriverFactory
 from browzer.core.webelement.browzer_element import BrowzerElement  # noqa: F401
 
