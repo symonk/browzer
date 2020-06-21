@@ -138,6 +138,6 @@ class BrowzerDriverFactory:
             driver.quit()
             del self.drivers[threading.get_ident()]
 
-    def destroy_all(self) -> None:
+    def __del__(self) -> None:
         for driver in self.drivers:
             driver.quit()
