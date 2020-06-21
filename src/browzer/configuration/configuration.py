@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from browzer.constants.strings import BROWSER_BINARY_PATH
 from browzer.constants.strings import BROWSER_RESOLUTION as RESOLUTION
 from browzer.constants.strings import BROWSER_VERSION as VERSION
-from browzer.constants.strings import BROWZER_CONFIG
+from browzer.constants.strings import BROWZER_CONFIGURATION
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import GRID_LOCALHOST
 from browzer.helpers.importlib.importer import instantiate_class_from_path
@@ -57,7 +57,7 @@ def load_browzer_config() -> ConfigTypeVar:
     a custom user provided subclass of the config with their overridden values.
     :return: the default BrowzerConfiguration, or an instance of a user supplied subclass
     """
-    has_custom = read_from_environ(BROWZER_CONFIG, None)
+    has_custom = read_from_environ(BROWZER_CONFIGURATION, None)
     if not has_custom:
         return BrowzerConfiguration()
     else:
