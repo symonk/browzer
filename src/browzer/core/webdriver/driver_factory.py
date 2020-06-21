@@ -137,8 +137,3 @@ class BrowzerDriverFactory:
         if driver:
             driver.quit()
             del self.drivers[threading.get_ident()]
-
-    def __del__(self) -> None:
-        for thread_id, driver in self.drivers:
-            print(f"driver on: {thread_id} was not cleaned up; terminating it")
-            driver.quit()
