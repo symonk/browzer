@@ -17,7 +17,7 @@ from browzer.constants.strings import GRID_LOCALHOST
 from browzer.helpers.importlib.importer import instantiate_class_from_path
 from browzer.helpers.operating_system.environ import read_from_environ
 
-ConfigTypeVar = TypeVar("T", bound="BrowzerConfiguration")
+ConfigTypeVar = TypeVar("ConfigTypeVar", bound="BrowzerConfiguration")
 
 
 @dataclass
