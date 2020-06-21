@@ -4,6 +4,7 @@ from typing import Callable
 from typing import Dict
 from typing import Optional
 from typing import Set
+from typing import TypeVar
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -15,6 +16,8 @@ from browzer.constants.strings import CHROME
 from browzer.constants.strings import GRID_LOCALHOST
 from browzer.helpers.importlib.importer import instantiate_class_from_path
 from browzer.helpers.operating_system.environ import read_from_environ
+
+ConfigTypeVar = TypeVar("T", bound="BrowzerConfiguration")
 
 
 @dataclass
@@ -50,7 +53,7 @@ class BrowzerConfiguration:
     DRIVER_LISTENER: Optional[Callable] = None
 
 
-def load_browzer_config() -> BrowzerConfiguration:
+def load_browzer_config() -> ConfigTypeVar:
     """
     If the BROWZER_CONFIG environment variable has been setup, take its value and attempt to instantiate
     a custom user provided subclass of the config with their overridden values.

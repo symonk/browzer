@@ -15,6 +15,6 @@ def findall(by: By) -> List[BrowzerElement]:
 
 
 def get_webdriver() -> RemoteWebDriver:
-    from browzer import driver_manager
+    from browzer import driver_factory
 
-    return driver_manager.get_driver()
+    return driver_factory.get_driver()

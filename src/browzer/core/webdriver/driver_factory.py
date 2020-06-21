@@ -4,6 +4,7 @@ import threading
 from abc import ABC
 from abc import abstractmethod
 from typing import Optional
+from typing import Type
 from typing import Union
 
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -92,7 +93,7 @@ class BrowzerDriverFactory:
     These browsers are thread local scoped to help with parallel testing on test frameworks that can support it.
     """
 
-    def __init__(self, config: BrowzerConfiguration):
+    def __init__(self, config: Type[BrowzerConfiguration]):
         self.config = config
         self.supported = {CHROME: ChromeCreator, FIREFOX: FireFoxCreator}
         self.drivers = {}
