@@ -40,8 +40,10 @@ class ChromeCreator(ICreator):
         :return: Return the instantiated version of the chrome driver (Remote or local)
         """
         chrome_opts = ChromeOptions()
-        for option in self.config.CHROME_OPTIONS:
-            chrome_opts.add_argument(option)
+        cfg_chrome_opts = self.config.CHROME_OPTIONS
+        if cfg_chrome_opts:
+            for option in cfg_chrome_opts:
+                chrome_opts.add_argument(option)
         capabilities = self.config.BROWSER_CAPABILITIES
         binary = self.config_helper.resolve_binary_path()
         driver = ChromeDriver(
@@ -88,7 +90,7 @@ class FireFoxCreator(ICreator):
 
 class BrowzerDriverFactory:
     """
-    The Browzer factory is responsible for tracking instaniating browsers.
+    The Browzer factory is responsible for tracking instantiating browsers.
     If an interaction occurs without a driver, such interaction will create and register a new browser.
     These browsers are thread local scoped to help with parallel testing on test frameworks that can support it.
     """

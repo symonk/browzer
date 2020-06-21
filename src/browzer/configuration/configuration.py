@@ -38,9 +38,7 @@ class BrowzerConfiguration:
     BROWSER_VERSION: str = VERSION
     DRIVER_BINARY_PATH: str = BROWSER_BINARY_PATH
     BROWSER_CAPABILITIES: Optional[Dict] = field(default_factory=dict)
-    CHROME_OPTIONS: Optional[Set] = field(
-        default_factory=lambda: {"no-sandbox", "--disable-extensions", "--headless"}
-    )
+    CHROME_OPTIONS: Optional[Set] = None
     BASE_URL: str = None
     EXPLICIT_WAIT: float = 30.00
     POLLING_INTERVAL: float = 0.25
