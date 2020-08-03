@@ -91,6 +91,8 @@ class ConfigurationYamlContainer:
         self.browzer_cfg_path: str = os.path.join(
             os.path.dirname(__file__), "default_configuration.yaml"
         )
+        print("user_cfg:" + self.user_cfg_path)
+        print("default_cfg:" + self.browzer_cfg_path)
 
     def get_config_merged_dictionary(self) -> Dict:
         default_dict = get_dictionary_from_yaml(self.browzer_cfg_path)
