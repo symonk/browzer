@@ -95,7 +95,7 @@ class BrowzerDriverFactory:
     These browsers are thread local scoped to help with parallel testing on test frameworks that can support it.
     """
 
-    def __init__(self, config: Type[BrowzerConfiguration]):
+    def __init__(self, config: BrowzerConfiguration):
         self.config = config
         self.supported = {CHROME: ChromeCreator, FIREFOX: FireFoxCreator}
         self.drivers = {}
