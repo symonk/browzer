@@ -57,15 +57,15 @@ Overview
 .. end-badges
 
 ========
-What is Browzer :top:
+Browzer Overview
 ========
 
 Selenium wrapper for automating web applications end to end. Browzer helps you get off the ground running and has a
 core focus on improving stability of selenium when used for test writing.  With Selenium 4 upcoming, Browzer aims for
 its first release in Q1 2021.  Browzer contains test runner framework plugin(s) and is test runner agnostic.
 
-
-Configuring Browzer :information_source:
+=============
+Browzer Configuration
 =============
 
 Browzer offers a wide range of configuration options and a pain free way to provide and override such option(s) to fit
