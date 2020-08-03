@@ -1,3 +1,6 @@
+.. image:: .github/banner.png
+  :width: 800
+
 ========
 Overview
 ========
