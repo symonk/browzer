@@ -127,9 +127,15 @@ class BrowzerDriverFactory:
         """
         Looks up a given driver from the dictionary and terminate(s) it if so.
         Note: Browzer does not support persistent browsers across tests at present.
-        :return:
         """
         driver = self._check_and_fetch()
         if driver:
             driver.quit()
             del self.drivers[threading.get_ident()]
+
+    def terminate_all_drivers(self) -> None:
+        """
+        Terminate(s) all drivers currently tracked; regardless of threading ident.
+        """
+        for driver in self.drivers.values():
+            driver.quit()

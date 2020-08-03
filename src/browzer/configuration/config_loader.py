@@ -78,7 +78,6 @@ class BrowzerConfiguration:
 class ConfigLoader:
     def __init__(self):
         self.configuration_container = ConfigurationYamlContainer()
-        self.browzer_config = None
 
     def build_config(self) -> BrowzerConfiguration:
         return BrowzerConfiguration(
