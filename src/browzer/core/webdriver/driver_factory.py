@@ -72,7 +72,7 @@ class ChromeCreator(ICreator):
          parser will raise a ValueError alerting them about the issue
          :param driver: the webdriver instance to 'potentially' wrap
          """
-        event_firing = self.config.driver_listener
+        event_firing = self.config.driver_listener_module_class_path
         return EventFiringWebDriver(driver, event_firing()) if event_firing else driver
 
 

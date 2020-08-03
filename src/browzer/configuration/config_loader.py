@@ -39,7 +39,7 @@ class BrowzerConfiguration:
         self.javascript_clicks: bool = kwargs.pop("javascript_clicks")
         self.javascript_sendkeys: bool = kwargs.pop("javascript_sendkeys")
         self.default_selector: str = kwargs.pop("default_selector").lower()
-        self.driver_listener: str = kwargs.pop("driver_listener").lower()
+        self.driver_listener_module_class_path: str = kwargs.pop("driver_listener_module_class_path")
 
     def get_grid_info(self) -> str:
         """
