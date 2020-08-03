@@ -114,9 +114,9 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         The getter for the remote attribute
         :return: The remote attribute (boolean)
         """
-        return self._headless
+        return self._remote
 
-    @headless.setter
+    @remote.setter
     def remote(self, value: bool) -> None:
         if isinstance(value, bool):
             self._remote = value
@@ -132,7 +132,7 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         """
         if not self.remote:
             raise ValueError(
-                "Using a selenium hub is not permitted unless IS_REMOTE is true"
+                "Using a selenium hub is not permitted unless remote is true"
             )
         return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
 

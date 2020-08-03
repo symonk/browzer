@@ -20,4 +20,4 @@ def test_browser_headless_off():
 
 def test_browser_headless_type_checks():
     with pytest.raises(BrowzerConfigValueError):
-        BrowserSubclass(remote='exception')
+        BrowserSubclass(remote="exception")
