@@ -73,6 +73,7 @@ Browzer offers a wide range of configuration options and a pain free way to prov
 your needs.  The default configuration is outlined below:
 
 ```yaml
+
 browzer:
   browser: "CHROME"
   headless: True
