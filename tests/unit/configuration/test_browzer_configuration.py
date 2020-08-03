@@ -11,4 +11,4 @@ def test_browzer_config_load():
 def test_browzer_override(monkeypatch, yaml_headless_only_true):
     monkeypatch.setenv(BROWZER_CONFIGURATION, yaml_headless_only_true)
     browzer_config.reload()
-    assert_that(browzer_config._headless).is_equal_to(True)
+    assert_that(browzer_config.headless).is_equal_to(True)
