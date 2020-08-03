@@ -71,6 +71,7 @@ class BrowzerConfiguration:
                 f"Browser provided: {value} is not supported by Browzer.  Please select"
                 f"Something from: {supported}"
             )
+        self._browser = value.lower()
 
     def get_grid_info(self) -> str:
         """
