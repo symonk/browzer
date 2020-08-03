@@ -2,6 +2,7 @@ import threading
 import time
 
 from assertpy import assert_that
+
 from browzer import BrowzerPage
 from browzer import driver_factory
 

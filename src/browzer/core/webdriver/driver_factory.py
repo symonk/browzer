@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
+
 from browzer import browzer_config
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import FIREFOX
