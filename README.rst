@@ -102,7 +102,7 @@ In order to override any of these options, the BROWZER_CONFIGURATION environment
 own yaml file; any of the overridden keys will then be merged into the default and applied at runtime before the library
 is imported.
 
-
+=============
 Documentation
 =============
 
