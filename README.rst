@@ -74,7 +74,7 @@ your needs.  The default configuration is outlined below:
     .. code-block:: yaml
 
         browzer:
-          browser: "CHROME"
+          browser: "chrome"  # chrome|firefox
           headless: True
           remote: True
           selenium_grid_url: "http://127.0.0.1:4444/wd/hub"
@@ -93,7 +93,9 @@ your needs.  The default configuration is outlined below:
           javascript_clicks: False
           javascript_sendkeys: False
           default_selector: "css"
-          driver_listener_module_class_path: ""
+          page_loading_strategy: = "fast"  # slow|fast
+          driver_listener_module_class_path: null
+
 
 
 In order to override any of these options, the BROWZER_CONFIGURATION environment variable should store a path to your

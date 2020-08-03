@@ -23,6 +23,7 @@ class BrowzerConfiguration:
         self.browser: str = kwargs.pop("browser").lower()
         self.headless: bool = kwargs.pop("headless")
         self.remote: bool = kwargs.pop("remote")
+        self.loading_strategy: str = kwargs.pop("page_loading_strategy")
         self.selenium_grid_url: str = kwargs.pop("selenium_grid_url").lower()
         self.selenium_grid_port: int = kwargs.pop("selenium_grid_port")
         self.browser_resolution: str = kwargs.pop("browser_resolution").lower()
