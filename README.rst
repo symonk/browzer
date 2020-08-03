@@ -72,7 +72,7 @@ Configuring Browzer
 Browzer offers a wide range of configuration options and a pain free way to provide and override such option(s) to fit
 your needs.  The default configuration is outlined below:
 
-```yaml
+.. code-block:: yaml
 
 browzer:
   browser: "CHROME"
@@ -96,7 +96,6 @@ browzer:
   default_selector: "css"
   driver_listener_module_class_path: ""
 
-```
 
 In order to override any of these options, the BROWZER_CONFIGURATION environment variable should store a path to your
 own yaml file; any of the overridden keys will then be merged into the default and applied at runtime before the library
