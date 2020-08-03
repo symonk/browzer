@@ -1,4 +1,4 @@
-assertpy == 1.0
+assertpy == 1.1
 pre-commit == 2.6.0
 pytest
 pytest-cov
