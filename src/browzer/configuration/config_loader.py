@@ -20,6 +20,7 @@ class BrowzerConfiguration:
     :param headless: If the browsers instantiated will run headlessly. choices are: (True|False)
     :param remote: If the browser will be running using a seleniuim grid, likely in the cloud. choices are: (True|False)
     """
+
     def __init__(
         self,
         browser: str,
@@ -101,7 +102,9 @@ class BrowzerConfiguration:
         if isinstance(value, bool):
             self._headless = value
         else:
-            raise ValueError(f"Only boolean types are supported for headless, you provided: {type(value)}")
+            raise ValueError(
+                f"Only boolean types are supported for headless, you provided: {type(value)}"
+            )
 
     def get_grid_info(self) -> str:
         """
