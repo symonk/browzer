@@ -38,7 +38,7 @@ class BrowzerConfiguration:
         default_selector: str,
     ):
         self._browser: str = browser
-        self.headless: bool = headless
+        self._headless: bool = headless
         self.remote: bool = remote
         self.selenium_grid_url: str = selenium_grid_url
         self.selenium_grid_port: int = selenium_grid_port
@@ -72,6 +72,14 @@ class BrowzerConfiguration:
                 f"Something from: {supported}"
             )
         self._browser = value.lower()
+
+    @property
+    def headless(self) -> bool:
+        return self._headless
+
+    @headless.setter
+    def headless(self, value: bool) -> None:
+        self._headless = value
 
     def get_grid_info(self) -> str:
         """
