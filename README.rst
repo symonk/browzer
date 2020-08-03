@@ -72,8 +72,6 @@ Configuring Browzer
 Browzer offers a wide range of configuration options and a pain free way to provide and override such option(s) to fit
 your needs.  The default configuration is outlined below:
 
-.. configuration-block::
-
     .. code-block:: yaml
 
         browzer:
