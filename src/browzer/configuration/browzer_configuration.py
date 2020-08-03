@@ -7,7 +7,7 @@ from typing import Optional
 from webdriver_manager.chrome import ChromeDriverManager
 
 from browzer.constants.strings import BROWZER_CONFIGURATION
-from browzer.exceptions.exceptions import BrowzerConfigurationException
+from browzer.exceptions.exceptions import BrowzerConfigValueError
 from browzer.helpers.operating_system.environ import get_dictionary_from_yaml
 from browzer.helpers.operating_system.environ import read_from_environ
 from browzer.mixins.simple_eq_mixin import SimpleEQMixing
@@ -85,7 +85,7 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         """
         supported = {"chrome", "firefox"}
         if value not in supported:
-            raise BrowzerConfigurationException(
+            raise BrowzerConfigValueError(
                 f"Browser provided: {value} is not supported by Browzer.  Please select"
                 f"Something from: {supported}"
             )
@@ -104,7 +104,7 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         if isinstance(value, bool):
             self._headless = value
         else:
-            raise ValueError(
+            raise BrowzerConfigValueError(
                 f"Only boolean types are supported for headless, you provided: {type(value)}"
             )
 

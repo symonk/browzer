@@ -2,7 +2,7 @@ import pytest
 from assertpy import assert_that
 
 from browzer.configuration.browzer_configuration import BrowzerConfiguration
-from browzer.exceptions.exceptions import BrowzerConfigurationException
+from browzer.exceptions.exceptions import BrowzerConfigValueError
 
 
 class BrowserSubclass(BrowzerConfiguration):
@@ -11,7 +11,7 @@ class BrowserSubclass(BrowzerConfiguration):
 
 
 def test_browser_validation_is_enforced():
-    with pytest.raises(BrowzerConfigurationException):
+    with pytest.raises(BrowzerConfigValueError):
         BrowserSubclass(browser="unsupported")
 
 
