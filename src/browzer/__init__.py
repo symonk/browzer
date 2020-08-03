@@ -1,7 +1,6 @@
 __version__ = "0.0.1"
 
 import atexit
-from typing import Type
 
 from browzer.configuration.config_loader import BrowzerConfiguration
 from browzer.configuration.config_loader import ConfigLoader
