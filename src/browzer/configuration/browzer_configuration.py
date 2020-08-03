@@ -49,7 +49,7 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
     ):
         self._browser: str = browser
         self._headless: bool = headless
-        self.remote: bool = remote
+        self._remote: bool = remote
         self.selenium_grid_url: str = selenium_grid_url
         self.selenium_grid_port: int = selenium_grid_port
         self.browser_resolution: str = browser_resolution
@@ -106,6 +106,23 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         else:
             raise BrowzerConfigValueError(
                 f"Only boolean types are supported for headless, you provided: {type(value)}"
+            )
+
+    @property
+    def remote(self) -> bool:
+        """
+        The getter for the remote attribute
+        :return: The remote attribute (boolean)
+        """
+        return self._headless
+
+    @headless.setter
+    def remote(self, value: bool) -> None:
+        if isinstance(value, bool):
+            self._remote = value
+        else:
+            raise BrowzerConfigValueError(
+                f"Only boolean types are supported for remote, you provided: {type(value)}"
             )
 
     def get_grid_info(self) -> str:
