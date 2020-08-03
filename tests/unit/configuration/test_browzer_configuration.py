@@ -1,6 +1,6 @@
 from assertpy import assert_that
 from browzer import browzer_config
-from browzer.configuration.config_loader import BrowzerConfiguration
+from browzer.configuration.browzer_configuration import BrowzerConfiguration
 from browzer.constants.strings import BROWZER_CONFIGURATION
 
 

@@ -1,6 +1,6 @@
 from assertpy import assert_that
 
-from browzer.configuration.config_loader import BrowzerConfiguration
+from browzer.configuration.browzer_configuration import BrowzerConfiguration
 
 
 class BrowserSubclass(BrowzerConfiguration):
