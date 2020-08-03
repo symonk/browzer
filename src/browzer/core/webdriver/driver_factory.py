@@ -10,9 +10,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
-
-from browzer import BrowzerConfiguration
-from browzer.configuration.configuration import ConfigHelper
+from browzer import browzer_config
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import FIREFOX
 from browzer.core.webelement.browzer_element import BrowzerElement
@@ -29,9 +27,8 @@ class ICreator(ABC):
 
 
 class ChromeCreator(ICreator):
-    def __init__(self, config: BrowzerConfiguration):
-        self.config = config
-        self.config_helper = ConfigHelper(self.config)
+    def __init__(self):
+        self.config = browzer_config
 
     def create(self) -> RemoteWebDriver:
         """
@@ -39,12 +36,12 @@ class ChromeCreator(ICreator):
         :return: Return the instantiated version of the chrome driver (Remote or local)
         """
         chrome_opts = ChromeOptions()
-        cfg_chrome_opts = self.config.CHROME_OPTIONS
+        cfg_chrome_opts = self.config.chrome_options
         if cfg_chrome_opts:
             for option in cfg_chrome_opts:
                 chrome_opts.add_argument(option)
-        capabilities = self.config.BROWSER_CAPABILITIES
-        binary = self.config_helper.resolve_binary_path()
+        capabilities = self.config.browser_capabilities
+        binary = self.config.resolve_binary_path()
         driver = ChromeDriver(
             executable_path=binary,
             options=chrome_opts,
@@ -61,7 +58,7 @@ class ChromeCreator(ICreator):
         :param driver: the driver instances; recently instantiated
         :return: the creator for fluency
         """
-        url = self.config.BASE_URL
+        url = self.config.base_url
         if url:
             driver.get(url)
         return driver
@@ -75,7 +72,7 @@ class ChromeCreator(ICreator):
          parser will raise a ValueError alerting them about the issue
          :param driver: the webdriver instance to 'potentially' wrap
          """
-        event_firing = self.config.DRIVER_LISTENER
+        event_firing = self.config.driver_listener
         return EventFiringWebDriver(driver, event_firing()) if event_firing else driver
 
 
@@ -94,8 +91,8 @@ class BrowzerDriverFactory:
     These browsers are thread local scoped to help with parallel testing on test frameworks that can support it.
     """
 
-    def __init__(self, config: BrowzerConfiguration):
-        self.config = config
+    def __init__(self):
+        self.config = browzer_config
         self.supported = {CHROME: ChromeCreator, FIREFOX: FireFoxCreator}
         self.drivers = {}
 
@@ -114,7 +111,7 @@ class BrowzerDriverFactory:
         Registers a new driver object into the active drivers space and returns it to the caller.
         :return: An instance of a RemoteWebDriver subclass.
         """
-        new_driver = self.supported.get(self.config.BROWSER)(self.config).create()
+        new_driver = self.supported.get(self.config.browser)().create()
         self.drivers[threading.get_ident()] = new_driver
         return new_driver
 

@@ -6,7 +6,7 @@ browzer:
   selenium_grid_port: 4444
   browser_resolution: "1280x1024"
   browser_version: "latest"
-  browser_binary_path: "acquire"
+  driver_binary_path: "acquire"
   browser_capabilities: {}
   chrome_options: []
   base_url: ""
@@ -18,3 +18,4 @@ browzer:
   javascript_clicks: False
   javascript_sendkeys: False
   default_selector: "css"
+  driver_listener: ""

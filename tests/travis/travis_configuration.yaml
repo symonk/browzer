@@ -1,0 +1,5 @@
+browzer:
+  chromeoptions:
+    - "no-sandbox"
+    - "--disable-extensions"
+    - "--headless"
