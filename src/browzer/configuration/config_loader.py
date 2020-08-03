@@ -13,6 +13,13 @@ from browzer.helpers.operating_system.environ import read_from_environ
 
 
 class BrowzerConfiguration:
+    """
+    This is the core configuration class for browzer.  User provided yaml is merged into the defaults to provide
+    an instance of this class.
+    :param browser: The browser type to instantiate downstream. choices are: (chrome|firefox)
+    :param headless: If the browsers instantiated will run headlessly. choices are: (True|False)
+    :param remote: If the browser will be running using a seleniuim grid, likely in the cloud. choices are: (True|False)
+    """
     def __init__(
         self,
         browser: str,
@@ -61,10 +68,18 @@ class BrowzerConfiguration:
 
     @property
     def browser(self) -> str:
+        """
+        Getter for the browser attribute
+        :return: The browser attribute (string)
+        """
         return self._browser
 
     @browser.setter
     def browser(self, value: str) -> None:
+        """
+        Setter for the browser attribute.
+        :param value: The browser to configure
+        """
         supported = {"chrome", "firefox"}
         if value not in supported:
             raise BrowzerConfigurationException(
@@ -75,11 +90,18 @@ class BrowzerConfiguration:
 
     @property
     def headless(self) -> bool:
+        """
+        The getter for the headless attribute
+        :return: The headless attribute (boolean)
+        """
         return self._headless
 
     @headless.setter
     def headless(self, value: bool) -> None:
-        self._headless = value
+        if isinstance(value, bool):
+            self._headless = value
+        else:
+            raise ValueError(f"Only boolean types are supported for headless, you provided: {type(value)}")
 
     def get_grid_info(self) -> str:
         """
