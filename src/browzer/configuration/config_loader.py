@@ -10,9 +10,11 @@ from browzer.constants.strings import BROWZER_CONFIGURATION
 from browzer.exceptions.exceptions import BrowzerConfigurationException
 from browzer.helpers.operating_system.environ import get_dictionary_from_yaml
 from browzer.helpers.operating_system.environ import read_from_environ
+from browzer.mixins.simple_eq_mixin import SimpleEQMixing
+from browzer.mixins.simple_repr_mixin import SimpleReprMixin
 
 
-class BrowzerConfiguration:
+class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
     """
     This is the core configuration class for browzer.  User provided yaml is merged into the defaults to provide
     an instance of this class.
