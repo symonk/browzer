@@ -6,12 +6,11 @@ from abc import abstractmethod
 from typing import Optional
 from typing import Union
 
+import browzer
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
-
-from browzer import browzer_config
 from browzer.constants.strings import CHROME
 from browzer.constants.strings import FIREFOX
 from browzer.core.webelement.browzer_element import BrowzerElement
@@ -29,7 +28,7 @@ class ICreator(ABC):
 
 class ChromeCreator(ICreator):
     def __init__(self):
-        self.config = browzer_config
+        self.config = browzer.browzer_config
 
     def create(self) -> RemoteWebDriver:
         """
@@ -93,7 +92,7 @@ class BrowzerDriverFactory:
     """
 
     def __init__(self):
-        self.config = browzer_config
+        self.config = browzer.browzer_config
         self.supported = {CHROME: ChromeCreator, FIREFOX: FireFoxCreator}
         self.drivers = {}
 

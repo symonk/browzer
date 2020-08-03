@@ -9,8 +9,6 @@ from browzer.core.webdriver.driver_factory import BrowzerDriverFactory
 from browzer.core.webelement.browzer_element import BrowzerElement  # noqa: F401
 
 browzer_config: BrowzerConfiguration = ConfigLoader().build_config()
-
-
 driver_factory = BrowzerDriverFactory()
 
 
