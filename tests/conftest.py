@@ -7,6 +7,6 @@ def destroy_threaded_driver(request):
     request.addfinalizer(driver_factory.terminate_driver)
 
 
-@pytest.fixture(autouse=True, scope='session')
+@pytest.fixture(autouse=True, scope="session")
 def destroy_all_drivers(request):
     request.addfinalizer(driver_factory.terminate_all_drivers)

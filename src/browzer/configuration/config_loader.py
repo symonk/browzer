@@ -7,40 +7,70 @@ from typing import Optional
 from webdriver_manager.chrome import ChromeDriverManager
 
 from browzer.constants.strings import BROWZER_CONFIGURATION
+from browzer.exceptions.exceptions import BrowzerConfigurationException
 from browzer.helpers.operating_system.environ import get_dictionary_from_yaml
 from browzer.helpers.operating_system.environ import read_from_environ
 
 
 class BrowzerConfiguration:
-    """
-    The Browzer config assumes sensible defaults, however to implement your own config you should
-    subclass this object and register the full path to your subclass through the ENV_BROWZER_CONFIG
-    environment variable.  Upon loading Browzer will detect the env and instantiate your config with the
-    overridden values.
-    """
+    def __init__(
+        self,
+        browser: str,
+        headless: bool,
+        remote: bool,
+        page_loading_strategy: str,
+        selenium_grid_url: str,
+        selenium_grid_port: int,
+        browser_resolution: str,
+        browser_version: str,
+        driver_binary_path: Optional[str],
+        browser_capabilities: Dict[str, str],
+        chrome_options: List[str],
+        base_url: str,
+        explicit_waiting: float,
+        polling_interval: float,
+        page_source_capturing: bool,
+        page_screenshot_capturing: bool,
+        stack_trace_capturing: bool,
+        javascript_clicks: bool,
+        javascript_sendkeys: bool,
+        driver_listener_module_class_path: str,
+        default_selector: str,
+    ):
+        self._browser: str = browser
+        self.headless: bool = headless
+        self.remote: bool = remote
+        self.selenium_grid_url: str = selenium_grid_url
+        self.selenium_grid_port: int = selenium_grid_port
+        self.browser_resolution: str = browser_resolution
+        self.browser_version: str = browser_version
+        self.driver_binary_path: str = driver_binary_path
+        self.browser_capabilities: Dict[str, str] = browser_capabilities
+        self.chrome_options: List[str] = chrome_options
+        self.base_url: str = base_url
+        self.explicit_waiting: float = explicit_waiting
+        self.polling_interval: float = polling_interval
+        self.page_source_capturing: bool = page_source_capturing
+        self.page_screenshot_capturing: bool = page_screenshot_capturing
+        self.stack_trace_capturing: bool = stack_trace_capturing
+        self.javascript_clicks: bool = javascript_clicks
+        self.javascript_sendkeys: bool = javascript_sendkeys
+        self.driver_listener_module_class_path: str = driver_listener_module_class_path
+        self.page_loading_strategy: str = page_loading_strategy
+        self.default_selector: str = default_selector
 
-    def __init__(self, *args, **kwargs):
-        self.browser: str = kwargs.pop("browser").lower()
-        self.headless: bool = kwargs.pop("headless")
-        self.remote: bool = kwargs.pop("remote")
-        self.loading_strategy: str = kwargs.pop("page_loading_strategy")
-        self.selenium_grid_url: str = kwargs.pop("selenium_grid_url").lower()
-        self.selenium_grid_port: int = kwargs.pop("selenium_grid_port")
-        self.browser_resolution: str = kwargs.pop("browser_resolution").lower()
-        self.browser_version: str = kwargs.pop("browser_version").lower()
-        self.driver_binary_path: str = kwargs.pop("driver_binary_path").lower()
-        self.browser_capabilities: Dict = kwargs.pop("browser_capabilities")
-        self.chrome_options: List = kwargs.pop("chrome_options")
-        self.base_url: str = kwargs.pop("base_url")
-        self.explicit_waiting: float = kwargs.pop("explicit_waiting")
-        self.polling_interval: float = kwargs.pop("polling_interval")
-        self.page_source_capturing: bool = kwargs.pop("page_source_capturing")
-        self.page_screenshot_capturing: bool = kwargs.pop("page_screenshot_capturing")
-        self.stack_trace_capturing: bool = kwargs.pop("stack_trace_capturing")
-        self.javascript_clicks: bool = kwargs.pop("javascript_clicks")
-        self.javascript_sendkeys: bool = kwargs.pop("javascript_sendkeys")
-        self.default_selector: str = kwargs.pop("default_selector").lower()
-        self.driver_listener_module_class_path: str = kwargs.pop("driver_listener_module_class_path")
+    @property
+    def browser(self) -> str:
+        return self._browser
+
+    @browser.setter
+    def browser(self, value: str) -> None:
+        supported = {"chrome", "firefox"}
+        if value not in supported:
+            raise BrowzerConfigurationException(
+                f"Browser provided: {value} is not supported by Browzer.  Please select"
+                f"Something from: {supported}"
+            )
 
     def get_grid_info(self) -> str:
         """
