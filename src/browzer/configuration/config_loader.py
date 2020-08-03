@@ -69,6 +69,10 @@ class BrowzerConfiguration:
         path = self.driver_binary_path
         return ChromeDriverManager(ver).install() if path.lower() == "acquire" else path
 
+    @classmethod
+    def reload(cls):
+        return ConfigLoader().build_config()
+
 
 class ConfigLoader:
     def __init__(self):
@@ -89,7 +93,10 @@ class ConfigurationYamlContainer:
         )
 
     def get_config_merged_dictionary(self) -> Dict:
+        default_dict = get_dictionary_from_yaml(self.browzer_cfg_path)
         user_dict = get_dictionary_from_yaml(self.user_cfg_path)
-        browzer_dict = get_dictionary_from_yaml(self.browzer_cfg_path)
-        merged_dictionary = {**browzer_dict, **user_dict}
-        return merged_dictionary["browzer"]
+        merged_dict = {}
+        for d in [default_dict, user_dict]:
+            for key, value in d.items():
+                merged_dict.setdefault(key, {}).update(value)
+        return merged_dict["browzer"]
