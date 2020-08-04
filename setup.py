@@ -24,7 +24,7 @@ def read(*names, **kwargs):from distutils.core import setup
 
 setup(
     name="browzer",
-    version="0.0.1",
+    version="0.0.3",
     license="MIT",
     description="Selenium wrapper placeholder",
     long_description="%s\n%s"
