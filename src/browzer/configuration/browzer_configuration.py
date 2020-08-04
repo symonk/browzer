@@ -6,6 +6,8 @@ from typing import Optional
 
 from webdriver_manager.chrome import ChromeDriverManager
 
+from browzer.helpers.object_validator import enforce_type_of
+from browzer.helpers.object_validator import enforce_value_is_in
 from browzer.constants.strings import BROWZER_CONFIGURATION
 from browzer.exceptions.exceptions import BrowzerConfigValueError
 from browzer.helpers.operating_system.environ import get_dictionary_from_yaml
@@ -50,9 +52,9 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         self._browser: str = browser
         self._headless: bool = headless
         self._remote: bool = remote
-        self.selenium_grid_url: str = selenium_grid_url
-        self.selenium_grid_port: int = selenium_grid_port
-        self.browser_resolution: str = browser_resolution
+        self._selenium_grid_url: str = selenium_grid_url
+        self._selenium_grid_port: int = selenium_grid_port
+        self._browser_resolution: str = browser_resolution
         self.browser_version: str = browser_version
         self.driver_binary_path: str = driver_binary_path
         self.browser_capabilities: Dict[str, str] = browser_capabilities
@@ -84,11 +86,9 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         :param value: The browser to configure
         """
         supported = {"chrome", "firefox"}
-        if value not in supported:
-            raise BrowzerConfigValueError(
-                f"Browser provided: {value} is not supported by Browzer.  Please select"
-                f"Something from: {supported}"
-            )
+        enforce_value_is_in(
+            iterable=supported, value=value, exc=BrowzerConfigValueError
+        )
         self._browser = value.lower()
 
     @property
@@ -101,12 +101,14 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
 
     @headless.setter
     def headless(self, value: bool) -> None:
-        if isinstance(value, bool):
-            self._headless = value
-        else:
-            raise BrowzerConfigValueError(
-                f"Only boolean types are supported for headless, you provided: {type(value)}"
-            )
+        """
+        The setter for the headless attribute
+        """
+        message = f"Only boolean types are supported for headless, you provided: {type(value)}"
+        enforce_type_of(
+            expected=bool, value=value, exc=BrowzerConfigValueError, msg=message
+        )
+        self._headless = value
 
     @property
     def remote(self) -> bool:
@@ -118,22 +120,85 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
 
     @remote.setter
     def remote(self, value: bool) -> None:
-        if isinstance(value, bool):
-            self._remote = value
-        else:
-            raise BrowzerConfigValueError(
-                f"Only boolean types are supported for remote, you provided: {type(value)}"
-            )
+        """
+        The setter for the remote attribute
+        """
+        message = (
+            f"Only boolean types are supported for remote, you provided: {type(value)}"
+        )
+        enforce_type_of(
+            expected=bool, value=value, exc=BrowzerConfigValueError, msg=message
+        )
+        self._remote = value
 
-    def get_grid_info(self) -> str:
+    @property
+    def selenium_grid_url(self) -> str:
         """
-        Resolves the selenium hub address for remote browsers.
-        :return: String for the full hub address
+        The getter for the selenium grid url attribute
+        :return: The selenium grid hub url (str)
         """
-        if not self.remote:
-            raise ValueError(
-                "Using a selenium hub is not permitted unless remote is true"
-            )
+        return self._selenium_grid_url
+
+    @selenium_grid_url.setter
+    def selenium_grid_url(self, value: str) -> None:
+        """
+        The setter for the selenium_grid_url attribute
+        """
+        # TODO -> Better validation, do not end with /wd/hub we append it etc
+        message = f"selenium grid url must be a string, but you provided: {type(value)}"
+        enforce_type_of(
+            expected=str, value=value, exc=BrowzerConfigValueError, msg=message
+        )
+        self._selenium_grid_url = value
+
+    @property
+    def selenium_grid_port(self) -> int:
+        """
+        The getter for the selenium grid port attribute
+        :return: The selenium grid hub port (int)
+        """
+        return self._selenium_grid_port
+
+    @selenium_grid_port.setter
+    def selenium_grid_port(self, value: int) -> None:
+        """
+        The setter for the selenium_grid_port attribute
+        """
+        message = (
+            f"selenium grid url must be an integer, but you provided: {type(value)}"
+        )
+        enforce_type_of(
+            expected=int, value=value, exc=BrowzerConfigValueError, msg=message
+        )
+        self._selenium_grid_port = value
+
+    @property
+    def browser_resolution(self) -> str:
+        """
+        The getter for the browser_resolution attribute
+        """
+        return self._browser_resolution
+
+    @browser_resolution.setter
+    def browser_resolution(self, value: str) -> None:
+        """
+        The setter for the browser_resolution attribute
+        """
+        # TODO -> Better validation on a intXint
+        message = (
+            f"browser_resolution must be a string, but you provided: {type(value)}"
+        )
+        enforce_type_of(
+            expected=str, value=value, exc=BrowzerConfigValueError, msg=message
+        )
+        self._selenium_grid_url = value
+
+    @property
+    def full_hub_endpoint(self) -> str:
+        """
+        The getter for the full hub endpoint that nodes are registered to and tests should be launched to.
+        """
+        # TODO -> Better validation, is it reachable? is it a url?
         return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
 
     def get_browser_info(self) -> tuple:
