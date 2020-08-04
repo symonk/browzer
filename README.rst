@@ -53,7 +53,7 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/browzer
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/symonk/browzer/v0.0.0.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/symonk/browzer/v0.1.1.svg
     :alt: Commits since latest release
     :target: https://github.com/symonk/browzer/compare/v0.1.1...master
 
