@@ -13,9 +13,11 @@ Overview
     * - docs:
       - |docs|
     * - tests:
-      - | |travis| |appveyor| |requires| |codecov| |github-actions|
-    * - versioning:
+      - | |travis| |appveyor| |requires| |codecov|
+    * - package:
       - | |version| |commits-since|
+    * - infra:
+      - | |github-actions|
 
 .. |docs| image:: https://readthedocs.org/projects/browzer/badge/?style=flat
     :target: https://readthedocs.org/projects/browzer
