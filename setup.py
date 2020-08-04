@@ -15,7 +15,7 @@ from setuptools import find_packages
 from distutils.core import setup
 
 
-def read(*names, **kwargs):
+def read(*names, **kwargs):from distutils.core import setup
     with io.open(
         join(dirname(__file__), *names), encoding=kwargs.get("encoding", "utf8")
     ) as fh:
@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name="browzer",
-    version="0.0.0",
+    version="0.0.1",
     license="MIT",
     description="Selenium wrapper placeholder",
     long_description="%s\n%s"
