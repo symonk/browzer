@@ -1,5 +1,6 @@
 .. image:: .github/banner.png
-  :width: 800
+  :class: with-border
+  :width: 1280
 
 ========
 Overview
