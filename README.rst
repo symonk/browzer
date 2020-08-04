@@ -14,6 +14,8 @@ Overview
       - |docs|
     * - tests:
       - | |travis| |appveyor| |requires| |codecov| |github-actions|
+    * - versioning:
+      - | |version| |commits-since|
 
 .. |docs| image:: https://readthedocs.org/projects/browzer/badge/?style=flat
     :target: https://readthedocs.org/projects/browzer
