@@ -55,6 +55,9 @@ Overview
     :alt: Commits since latest release
     :target: https://github.com/symonk/browzer/compare/v0.0.0...master
 
+.. |github-actions| image:: https://github.com/symonk/browzer/workflows/Release%20Browzer/badge.svg
+    :alt: Automated Releasing
+    :target: https://github.com/symonk/browzer/workflows/Release%20Browzer/badge.svg
 
 
 .. end-badges
