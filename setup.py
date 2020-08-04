@@ -12,7 +12,7 @@ from os.path import join
 from os.path import splitext
 
 from setuptools import find_packages
-from setuptools import setup
+from distutils.core import setup
 
 
 def read(*names, **kwargs):
