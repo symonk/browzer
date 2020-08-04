@@ -15,7 +15,7 @@ from setuptools import find_packages
 from distutils.core import setup
 
 
-def read(*names, **kwargs):from distutils.core import setup
+def read(*names, **kwargs):
     with io.open(
         join(dirname(__file__), *names), encoding=kwargs.get("encoding", "utf8")
     ) as fh:
