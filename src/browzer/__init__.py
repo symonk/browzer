@@ -1,11 +1,7 @@
 __version__ = "0.0.1"
-from browzer.configuration.browzer_configuration import BrowzerConfiguration
-from browzer.configuration.browzer_configuration import ConfigLoader
-from browzer.core.pages.base_page import BrowzerPage  # noqa: F401
-from browzer.core.webdriver.driver_factory import BrowzerDriverFactory
-from browzer.core.webelement.browzer_element import BrowzerElement  # noqa: F401
 
-browzer_config: BrowzerConfiguration = ConfigLoader().build_config()
-driver_factory = BrowzerDriverFactory()
+from .configuration.browzer_configuration import BrowzerConfiguration
 
-__all__ = [browzer_config]
+config = BrowzerConfiguration()
+
+__all__ = [config]

@@ -1,5 +1,4 @@
 from __future__ import annotations
-import os
 from typing import Dict
 from typing import List
 from typing import Optional
@@ -8,10 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from browzer.helpers.object_validator import enforce_type_of
 from browzer.helpers.object_validator import enforce_value_is_in
-from browzer.constants.strings import BROWZER_CONFIGURATION
 from browzer.exceptions.exceptions import BrowzerConfigValueError
-from browzer.helpers.operating_system.environ import get_dictionary_from_yaml
-from browzer.helpers.operating_system.environ import read_from_environ
 from browzer.mixins.simple_eq_mixin import SimpleEQMixing
 from browzer.mixins.simple_repr_mixin import SimpleReprMixin
 
@@ -27,27 +23,27 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
 
     def __init__(
         self,
-        browser: str,
-        headless: bool,
-        remote: bool,
-        page_loading_strategy: str,
-        selenium_grid_url: str,
-        selenium_grid_port: int,
-        browser_resolution: str,
-        browser_version: str,
-        driver_binary_path: Optional[str],
-        browser_capabilities: Dict[str, str],
-        chrome_options: List[str],
-        base_url: str,
-        explicit_waiting: float,
-        polling_interval: float,
-        page_source_capturing: bool,
-        page_screenshot_capturing: bool,
-        stack_trace_capturing: bool,
-        javascript_clicks: bool,
-        javascript_sendkeys: bool,
-        driver_listener_module_class_path: str,
-        default_selector: str,
+        browser: str = "chrome",
+        headless: bool = False,
+        remote: bool = False,
+        page_loading_strategy: str = "fast",
+        selenium_grid_url: str = "http://127.0.0.1",
+        selenium_grid_port: int = 4444,
+        browser_resolution: str = "1280x1024",
+        browser_version: str = "latest",
+        driver_binary_path: Optional[str] = None,
+        browser_capabilities: Dict[str, str] = None,
+        chrome_options: Optional[List[str]] = None,
+        base_url: Optional[str] = None,
+        explicit_waiting: float = 30.00,
+        polling_interval: float = 00.25,
+        page_source_capturing: bool = False,
+        page_screenshot_capturing: bool = False,
+        stack_trace_capturing: bool = False,
+        javascript_clicks: bool = False,
+        javascript_sendkeys: bool = False,
+        driver_listener_module_class_path: str = None,
+        default_selector: str = "css",
     ):
         self._browser: str = browser
         self._headless: bool = headless
@@ -217,35 +213,5 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         """
         ver = self.browser_version
         path = self.driver_binary_path
-        return ChromeDriverManager(ver).install() if path.lower() == "acquire" else path
-
-    @classmethod
-    def reload(cls) -> BrowzerConfiguration:
-        return ConfigLoader().build_config()
-
-
-class ConfigLoader:
-    def __init__(self):
-        self.configuration_container = ConfigurationYamlContainer()
-
-    def build_config(self) -> BrowzerConfiguration:
-        return BrowzerConfiguration(
-            **self.configuration_container.get_config_merged_dictionary()
-        )
-
-
-class ConfigurationYamlContainer:
-    def __init__(self):
-        self.user_cfg_path: Optional[str] = read_from_environ(BROWZER_CONFIGURATION)
-        self.browzer_cfg_path: str = os.path.join(
-            os.path.dirname(__file__), "default_configuration.yaml"
-        )
-
-    def get_config_merged_dictionary(self) -> Dict:
-        default_dict = get_dictionary_from_yaml(self.browzer_cfg_path)
-        user_dict = get_dictionary_from_yaml(self.user_cfg_path)
-        merged_dict = {}
-        for d in [default_dict, user_dict]:
-            for key, value in d.items():
-                merged_dict.setdefault(key, {}).update(value)
-        return merged_dict["browzer"]
+        if not path or path == "acquire":
+            return ChromeDriverManager(ver).install()

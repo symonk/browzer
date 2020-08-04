@@ -1,6 +1,7 @@
 import pytest
+from tests.test_files.test_configs import HeadlessConfig
 
 
 @pytest.fixture
-def yaml_headless_only_true():
-    return "tests/test_files/cfg_headless_only_true.yaml"
+def headless_config():
+    return HeadlessConfig()
