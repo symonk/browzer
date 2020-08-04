@@ -13,7 +13,7 @@ Overview
     * - docs:
       - |docs|
     * - tests:
-      - | |travis| |appveyor| |requires| |codecov|
+      - | |travis| |appveyor| |requires| |codecov| |github-actions|
 
 .. |docs| image:: https://readthedocs.org/projects/browzer/badge/?style=flat
     :target: https://readthedocs.org/projects/browzer
