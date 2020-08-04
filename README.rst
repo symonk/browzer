@@ -55,7 +55,7 @@ Overview
 
 .. |commits-since| image:: https://img.shields.io/github/commits-since/symonk/browzer/v0.0.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/symonk/browzer/compare/v0.0.0...master
+    :target: https://github.com/symonk/browzer/compare/v0.1.1...master
 
 .. |github-actions| image:: https://github.com/symonk/browzer/workflows/Release%20Browzer/badge.svg
     :alt: Automated Releasing
