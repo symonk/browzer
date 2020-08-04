@@ -27,13 +27,7 @@ setup(
     version="0.0.0",
     license="MIT",
     description="Selenium wrapper placeholder",
-    long_description="%s\n%s"
-    % (
-        re.compile("^.. start-badges.*^.. end-badges", re.M | re.S).sub(
-            "", read("README.rst")
-        ),
-        re.sub(":[a-z]+:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst")),
-    ),
+    long_description="testing",
     author="Simon Kerr",
     author_email="jackofspaces@gmail.com",
     url="https://github.com/symonk/browzer",
