@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name="browzer",
-    version="0.0.3",
+    version="0.1.0",
     license="MIT",
     description="Selenium wrapper placeholder",
     long_description="%s\n%s"
