@@ -21,7 +21,7 @@ Overview
       - | |github-actions|
 
 .. |docs| image:: https://readthedocs.org/projects/sylenium/badge/?style=flat
-    :target: https://readthedocs.org/projects/sylenium
+    :target: https://sylenium.readthedocs.io/en/latest/
     :alt: Documentation Status
 
 .. |travis| image:: https://api.travis-ci.org/symonk/sylenium.svg?branch=master
