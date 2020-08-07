@@ -30,6 +30,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         selenium_grid_port: int = 4444,
         browser_resolution: str = "1280x1024",
         browser_version: str = "latest",
+        browser_position: Optional[str] = None,
         driver_binary_path: Optional[str] = None,
         browser_capabilities: Dict[str, str] = None,
         chrome_options: Optional[List[str]] = None,
@@ -51,6 +52,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         self._selenium_grid_port: int = selenium_grid_port
         self._browser_resolution: str = browser_resolution
         self._browser_version: str = browser_version
+        self._browser_position: Optional[str] = browser_position
         self._driver_binary_path: str = driver_binary_path
         self._browser_capabilities: Dict[str, str] = browser_capabilities
         self._chrome_options: List[str] = chrome_options
@@ -210,6 +212,21 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             expected=str, value=version, exc=syleniumConfigValueError, msg=message
         )
         self._browser_version = version
+
+
+    @property
+    def browser_position(self) -> str:
+        """
+        Getter for the browser_position attribute
+        """
+        return self._browser_version
+
+    @browser_version.setter
+    def browser_position(self, browser_position: str) -> None:
+        """
+        Setter for the browser_position attribute
+        """
+        self._browser_version = browser_position
 
     @property
     def driver_binary_path(self) -> str:
