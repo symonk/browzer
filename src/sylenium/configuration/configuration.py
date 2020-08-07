@@ -12,9 +12,9 @@ from browzer.mixins.simple_eq_mixin import SimpleEQMixing
 from browzer.mixins.simple_repr_mixin import SimpleReprMixin
 
 
-class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
+class Configuration(SimpleReprMixin, SimpleEQMixing):
     """
-    This is the core configuration class for browzer.  User provided yaml is merged into the defaults to provide
+    This is the core configuration class for sylenium.  User provided yaml is merged into the defaults to provide
     an instance of this class.
     :param browser: The browser type to instantiate downstream. choices are: (chrome|firefox)
     :param headless: If the browsers instantiated will run headlessly. choices are: (True|False)
@@ -258,7 +258,7 @@ class BrowzerConfiguration(SimpleReprMixin, SimpleEQMixing):
         Setter for the chrome_options attribute
         """
         message = f"chrome_options must be a list, but you provided: {type(chrome_options)})"
-        enforce_type_of(expected=List, value=chrome_options, exc=BrowzerConfigValueError, msg=message)
+        enforce_type_of(expected=List, value=chrome_optizons, exc=BrowzerConfigValueError, msg=message)
         self._chrome_options = chrome_options
 
     @property
