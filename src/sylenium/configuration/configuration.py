@@ -31,6 +31,8 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         browser_resolution: str = "1280x1024",
         browser_version: str = "latest",
         browser_position: Optional[str] = None,
+        downloads_directory: Optional[str] = None,
+        proxy_enabled: bool = False,
         driver_binary_path: Optional[str] = None,
         browser_capabilities: Dict[str, str] = None,
         chrome_options: Optional[List[str]] = None,
@@ -53,6 +55,8 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         self._browser_resolution: str = browser_resolution
         self._browser_version: str = browser_version
         self._browser_position: Optional[str] = browser_position
+        self._downloads_directory: Optional[str] = downloads_directory
+        self._proxy_enabled: bool = proxy_enabled,
         self._driver_binary_path: str = driver_binary_path
         self._browser_capabilities: Dict[str, str] = browser_capabilities
         self._chrome_options: List[str] = chrome_options
@@ -213,7 +217,6 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         )
         self._browser_version = version
 
-
     @property
     def browser_position(self) -> str:
         """
@@ -221,12 +224,40 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         return self._browser_version
 
-    @browser_version.setter
+    @browser_position.setter
     def browser_position(self, browser_position: str) -> None:
         """
         Setter for the browser_position attribute
         """
-        self._browser_version = browser_position
+        self._browser_position = browser_position
+
+    @property
+    def downloads_directory(self) -> str:
+        """
+        Getter for the downloads_directory attribute
+        """
+        return self._downloads_directory
+
+    @downloads_directory.setter
+    def downloads_directory(self, downloads_directory: str) -> None:
+        """
+        Setter for the downloads_directory attribute
+        """
+        self._downloads_directory = downloads_directory
+
+    @property
+    def proxy_enabled(self) -> bool:
+        """
+        Getter for the proxy_enabled attribute
+        """
+        return self._proxy_enabled
+
+    @proxy_enabled.setter
+    def proxy_enabled(self, proxy_enabled: bool) -> None:
+        """
+        Setter for the downloads_directory attribute
+        """
+        self._proxy_enabled = proxy_enabled
 
     @property
     def driver_binary_path(self) -> str:
