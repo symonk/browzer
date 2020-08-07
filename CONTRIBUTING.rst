@@ -8,7 +8,7 @@ little bit helps, and credit will always be given.
 Bug reports
 ===========
 
-When `reporting a bug <https://github.com/symonk/browzer/issues>`_ please include:
+When `reporting a bug <https://github.com/symonk/sylenium/issues>`_ please include:
 
     * Your operating system name and version.
     * Any details about your local setup that might be helpful in troubleshooting.
@@ -17,14 +17,14 @@ When `reporting a bug <https://github.com/symonk/browzer/issues>`_ please includ
 Documentation improvements
 ==========================
 
-Browzer could always use more documentation, whether as part of the
-official Browzer docs, in docstrings, or even on the web in blog posts,
+sylenium could always use more documentation, whether as part of the
+official sylenium docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Feature requests and feedback
 =============================
 
-The best way to send feedback is to file an issue at https://github.com/symonk/browzer/issues.
+The best way to send feedback is to file an issue at https://github.com/symonk/sylenium/issues.
 
 If you are proposing a feature:
 
@@ -35,13 +35,13 @@ If you are proposing a feature:
 Development
 ===========
 
-To set up `browzer` for local development:
+To set up `sylenium` for local development:
 
-1. Fork `browzer <https://github.com/symonk/browzer>`_
+1. Fork `sylenium <https://github.com/symonk/sylenium>`_
    (look for the "Fork" button).
 2. Clone your fork locally::
 
-    git clone git@github.com:symonk/browzer.git
+    git clone git@github.com:symonk/sylenium.git
 
 3. Create a branch for local development::
 
@@ -74,7 +74,7 @@ For merging, you should:
 4. Add yourself to ``AUTHORS.rst``.
 
 .. [1] If you don't have all the necessary python versions available locally you can rely on Travis - it will
-       `run the tests <https://travis-ci.org/symonk/browzer/pull_requests>`_ for each change you add in the pull request.
+       `run the tests <https://travis-ci.org/symonk/sylenium/pull_requests>`_ for each change you add in the pull request.
 
        It will be slower though ...
 

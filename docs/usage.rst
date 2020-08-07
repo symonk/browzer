@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Browzer in a project::
+To use sylenium in a project::
 
-	import browzer
+	import sylenium

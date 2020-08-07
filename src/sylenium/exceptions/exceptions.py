@@ -1,6 +1,6 @@
-class BrowzerConfigValueError(ValueError):
+class syleniumConfigValueError(ValueError):
     """
-    When configuration options specified often by a user provided yaml do not adhere to browzers constraints this is
+    When configuration options specified often by a user provided yaml do not adhere to syleniums constraints this is
     raised.
     """
 

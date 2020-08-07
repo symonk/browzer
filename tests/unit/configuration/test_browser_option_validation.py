@@ -1,17 +1,17 @@
 import pytest
 from assertpy import assert_that
 
-from browzer.configuration.browzer_configuration import BrowzerConfiguration
-from browzer.exceptions.exceptions import BrowzerConfigValueError
+from sylenium.configuration.sylenium_configuration import syleniumConfiguration
+from sylenium.exceptions.exceptions import syleniumConfigValueError
 
 
-class BrowserSubclass(BrowzerConfiguration):
+class BrowserSubclass(syleniumConfiguration):
     def __init__(self, browser):
         self.browser = browser
 
 
 def test_browser_validation_is_enforced():
-    with pytest.raises(BrowzerConfigValueError):
+    with pytest.raises(syleniumConfigValueError):
         BrowserSubclass(browser="unsupported")
 
 

@@ -5,11 +5,11 @@ from typing import Optional
 
 from webdriver_manager.chrome import ChromeDriverManager
 
-from browzer.helpers.object_validator import enforce_type_of
-from browzer.helpers.object_validator import enforce_value_is_in
-from browzer.exceptions.exceptions import BrowzerConfigValueError
-from browzer.mixins.simple_eq_mixin import SimpleEQMixing
-from browzer.mixins.simple_repr_mixin import SimpleReprMixin
+from sylenium.helpers.object_validator import enforce_type_of
+from sylenium.helpers.object_validator import enforce_value_is_in
+from sylenium.exceptions.exceptions import syleniumConfigValueError
+from sylenium.mixins.simple_eq_mixin import SimpleEQMixing
+from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
 
 
 class Configuration(SimpleReprMixin, SimpleEQMixing):
@@ -83,7 +83,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         supported = {"chrome", "firefox"}
         enforce_value_is_in(
-            iterable=supported, value=browser.lower(), exc=BrowzerConfigValueError
+            iterable=supported, value=browser.lower(), exc=syleniumConfigValueError
         )
         self._browser = browser.lower()
 
@@ -102,7 +102,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         message = f"Only boolean types are supported for headless, you provided: {type(headless)}"
         enforce_type_of(
-            expected=bool, value=headless, exc=BrowzerConfigValueError, msg=message
+            expected=bool, value=headless, exc=syleniumConfigValueError, msg=message
         )
         self._headless = headless
 
@@ -123,7 +123,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             f"Only boolean types are supported for remote, you provided: {type(remote)}"
         )
         enforce_type_of(
-            expected=bool, value=remote, exc=BrowzerConfigValueError, msg=message
+            expected=bool, value=remote, exc=syleniumConfigValueError, msg=message
         )
         self._remote = remote
 
@@ -143,7 +143,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         # TODO -> Better validation, do not end with /wd/hub we append it etc
         message = f"selenium grid url must be a string, but you provided: {type(selenium_grid_url)}"
         enforce_type_of(
-            expected=str, value=selenium_grid_url, exc=BrowzerConfigValueError, msg=message
+            expected=str, value=selenium_grid_url, exc=syleniumConfigValueError, msg=message
         )
         self._selenium_grid_url = selenium_grid_url
 
@@ -164,7 +164,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             f"selenium grid url must be an integer, but you provided: {type(selenium_grid_port)}"
         )
         enforce_type_of(
-            expected=int, value=selenium_grid_port, exc=BrowzerConfigValueError, msg=message
+            expected=int, value=selenium_grid_port, exc=syleniumConfigValueError, msg=message
         )
         self._selenium_grid_port = selenium_grid_port
 
@@ -185,7 +185,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             f"browser_resolution must be a string, but you provided: {type(browser_resolution)}"
         )
         enforce_type_of(
-            expected=str, value=browser_resolution, exc=BrowzerConfigValueError, msg=message
+            expected=str, value=browser_resolution, exc=syleniumConfigValueError, msg=message
         )
         self._selenium_grid_url = browser_resolution
 
@@ -205,7 +205,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             f"browser_version must be a string, but you provided: {type(version)}"
         )
         enforce_type_of(
-            expected=str, value=version, exc=BrowzerConfigValueError, msg=message
+            expected=str, value=version, exc=syleniumConfigValueError, msg=message
         )
         self._browser_version = version
 
@@ -241,7 +241,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
             f"browser_capabilities must be a dictionary, but you provided: {type(capabilities)}"
         )
         enforce_type_of(
-            expected=Dict, value=capabilities, exc=BrowzerConfigValueError, msg=message
+            expected=Dict, value=capabilities, exc=syleniumConfigValueError, msg=message
         )
         self._browser_capabilities = capabilities
 
@@ -258,7 +258,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         Setter for the chrome_options attribute
         """
         message = f"chrome_options must be a list, but you provided: {type(chrome_options)})"
-        enforce_type_of(expected=List, value=chrome_optizons, exc=BrowzerConfigValueError, msg=message)
+        enforce_type_of(expected=List, value=chrome_optizons, exc=syleniumConfigValueError, msg=message)
         self._chrome_options = chrome_options
 
     @property

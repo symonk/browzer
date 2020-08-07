@@ -1,6 +1,6 @@
 from assertpy import assert_that
 
-from browzer.helpers.operating_system.environ import read_from_environ
+from sylenium.helpers.operating_system.environ import read_from_environ
 
 
 def test_environ_successfully(monkeypatch):

@@ -1,12 +1,12 @@
 from assertpy import assert_that
-from browzer import config
-from browzer.configuration.browzer_configuration import BrowzerConfiguration
+from sylenium import config
+from sylenium.configuration.sylenium_configuration import syleniumConfiguration
 
 
-def test_browzer_config_load():
-    assert_that(config).is_instance_of(BrowzerConfiguration)
+def test_sylenium_config_load():
+    assert_that(config).is_instance_of(syleniumConfiguration)
 
 
-def test_browzer_override(headless_config):
+def test_sylenium_override(headless_config):
     config.headless = True
     assert_that(config.headless).is_equal_to(True)

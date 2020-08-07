@@ -29,7 +29,7 @@ setup(
     long_description="This is an example placeholder for sylenium",
     author="Simon Kerr",
     author_email="jackofspaces@gmail.com",
-    url="https://github.com/symonk/browzer",
+    url="https://github.com/symonk/sylenium",
     packages=find_packages("src"),
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
@@ -55,9 +55,9 @@ setup(
         "Topic :: Utilities",
     ],
     project_urls={
-        "Documentation": "https://browzer.readthedocs.io/",
-        "Changelog": "https://browzer.readthedocs.io/en/latest/changelog.html",
-        "Issue Tracker": "https://github.com/symonk/browzer/issues",
+        "Documentation": "https://sylenium.readthedocs.io/",
+        "Changelog": "https://sylenium.readthedocs.io/en/latest/changelog.html",
+        "Issue Tracker": "https://github.com/symonk/sylenium/issues",
     },
     keywords=[
         # eg: 'keyword1', 'keyword2', 'keyword3',

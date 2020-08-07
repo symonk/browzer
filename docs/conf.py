@@ -16,7 +16,7 @@ extensions = [
 
 source_suffix = ".rst"
 master_doc = "index"
-project = "Browzer"
+project = "sylenium"
 year = "2020"
 author = "Simon Kerr"
 copyright = "{0}, {1}".format(year, author)
@@ -25,11 +25,11 @@ version = release = "0.0.0"
 pygments_style = "trac"
 templates_path = ["."]
 extlinks = {
-    "issue": ("https://github.com/symonk/browzer/issues/%s", "#"),
-    "pr": ("https://github.com/symonk/browzer/pull/%s", "PR #"),
+    "issue": ("https://github.com/symonk/sylenium/issues/%s", "#"),
+    "pr": ("https://github.com/symonk/sylenium/pull/%s", "PR #"),
 }
 html_theme = "sphinx_rtd_theme"
-html_theme_options = {"githuburl": "https://github.com/symonk/browzer/"}
+html_theme_options = {"githuburl": "https://github.com/symonk/sylenium/"}
 
 html_use_smartypants = True
 html_last_updated_fmt = "%b %d, %Y"

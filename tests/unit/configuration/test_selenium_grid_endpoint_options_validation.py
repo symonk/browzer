@@ -1,8 +1,8 @@
 from assertpy import assert_that
-from browzer.configuration.browzer_configuration import BrowzerConfiguration
+from sylenium.configuration.sylenium_configuration import syleniumConfiguration
 
 
-class BrowserSubclass(BrowzerConfiguration):
+class BrowserSubclass(syleniumConfiguration):
     def __init__(self, selenium_grid_url: str, selenium_grid_port: int):
         self.selenium_grid_url = selenium_grid_url
         self.selenium_grid_port = selenium_grid_port

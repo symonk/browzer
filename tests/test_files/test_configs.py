@@ -1,7 +1,7 @@
-from browzer.configuration.browzer_configuration import BrowzerConfiguration
+from sylenium.configuration.sylenium_configuration import syleniumConfiguration
 
 
-class HeadlessConfig(BrowzerConfiguration):
+class HeadlessConfig(syleniumConfiguration):
     def __init__(self):
         super().__init__(
             headless=True,

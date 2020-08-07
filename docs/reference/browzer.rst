@@ -1,9 +1,9 @@
-browzer
+sylenium
 =======
 
 .. testsetup::
 
-    from browzer import *
+    from sylenium import *
 
-.. automodule:: browzer
+.. automodule:: sylenium
     :members:

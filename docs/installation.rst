@@ -4,4 +4,4 @@ Installation
 
 At the command line::
 
-    pip install browzer
+    pip install sylenium
