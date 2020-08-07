@@ -2,6 +2,6 @@ __version__ = "0.0.1"
 
 from .configuration.configuration import Configuration
 
-config = Configuration()
+configuration = Configuration()
 
-__all__ = [config]
+__all__ = [configuration]
