@@ -143,7 +143,10 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         # TODO -> Better validation, do not end with /wd/hub we append it etc
         message = f"selenium grid url must be a string, but you provided: {type(selenium_grid_url)}"
         enforce_type_of(
-            expected=str, value=selenium_grid_url, exc=syleniumConfigValueError, msg=message
+            expected=str,
+            value=selenium_grid_url,
+            exc=syleniumConfigValueError,
+            msg=message,
         )
         self._selenium_grid_url = selenium_grid_url
 
@@ -160,11 +163,12 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         The setter for the selenium_grid_port attribute
         """
-        message = (
-            f"selenium grid url must be an integer, but you provided: {type(selenium_grid_port)}"
-        )
+        message = f"selenium grid url must be an integer, but you provided: {type(selenium_grid_port)}"
         enforce_type_of(
-            expected=int, value=selenium_grid_port, exc=syleniumConfigValueError, msg=message
+            expected=int,
+            value=selenium_grid_port,
+            exc=syleniumConfigValueError,
+            msg=message,
         )
         self._selenium_grid_port = selenium_grid_port
 
@@ -181,11 +185,12 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         The setter for the browser_resolution attribute
         """
         # TODO -> Better validation on a intXint
-        message = (
-            f"browser_resolution must be a string, but you provided: {type(browser_resolution)}"
-        )
+        message = f"browser_resolution must be a string, but you provided: {type(browser_resolution)}"
         enforce_type_of(
-            expected=str, value=browser_resolution, exc=syleniumConfigValueError, msg=message
+            expected=str,
+            value=browser_resolution,
+            exc=syleniumConfigValueError,
+            msg=message,
         )
         self._selenium_grid_url = browser_resolution
 
@@ -201,9 +206,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         Setter for the browser_version attribute
         """
-        message = (
-            f"browser_version must be a string, but you provided: {type(version)}"
-        )
+        message = f"browser_version must be a string, but you provided: {type(version)}"
         enforce_type_of(
             expected=str, value=version, exc=syleniumConfigValueError, msg=message
         )
@@ -237,9 +240,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         Setter for the browser_capabilities attribute
         """
-        message = (
-            f"browser_capabilities must be a dictionary, but you provided: {type(capabilities)}"
-        )
+        message = f"browser_capabilities must be a dictionary, but you provided: {type(capabilities)}"
         enforce_type_of(
             expected=Dict, value=capabilities, exc=syleniumConfigValueError, msg=message
         )
@@ -257,8 +258,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         Setter for the chrome_options attribute
         """
-        message = f"chrome_options must be a list, but you provided: {type(chrome_options)})"
-        enforce_type_of(expected=List, value=chrome_optizons, exc=syleniumConfigValueError, msg=message)
+        message = (
+            f"chrome_options must be a list, but you provided: {type(chrome_options)})"
+        )
+        enforce_type_of(
+            expected=List,
+            value=chrome_options,
+            exc=syleniumConfigValueError,
+            msg=message,
+        )
         self._chrome_options = chrome_options
 
     @property

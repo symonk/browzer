@@ -1,11 +1,11 @@
 import pytest
 from assertpy import assert_that
 
-from sylenium.configuration.sylenium_configuration import syleniumConfiguration
+from sylenium.configuration.configuration import Configuration
 from sylenium.exceptions.exceptions import syleniumConfigValueError
 
 
-class BrowserSubclass(syleniumConfiguration):
+class BrowserSubclass(Configuration):
     def __init__(self, browser):
         self.browser = browser
 
