@@ -1,7 +1,7 @@
 from assertpy import assert_that
 
-from sylenium import configuration
-from sylenium.configuration.configuration import Configuration
+from sylenium.configuration import configuration
+from sylenium.configuration import Configuration
 
 
 def test_sylenium_config_load():
