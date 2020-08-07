@@ -1,4 +1,5 @@
 from assertpy import assert_that
+
 from sylenium import config
 from sylenium.configuration.configuration import Configuration
 

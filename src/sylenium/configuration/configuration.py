@@ -1,13 +1,14 @@
 from __future__ import annotations
+
 from typing import Dict
 from typing import List
 from typing import Optional
 
 from webdriver_manager.chrome import ChromeDriverManager
 
+from sylenium.exceptions.exceptions import syleniumConfigValueError
 from sylenium.helpers.object_validator import enforce_type_of
 from sylenium.helpers.object_validator import enforce_value_is_in
-from sylenium.exceptions.exceptions import syleniumConfigValueError
 from sylenium.mixins.simple_eq_mixin import SimpleEQMixing
 from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
 

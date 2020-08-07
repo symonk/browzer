@@ -1,4 +1,6 @@
-from typing import Any, Type, Iterable
+from typing import Any
+from typing import Iterable
+from typing import Type
 
 
 def enforce_type_of(

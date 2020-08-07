@@ -1,4 +1,5 @@
 import pytest
+
 from tests.test_files.test_configs import HeadlessConfig
 
 
