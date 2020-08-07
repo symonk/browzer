@@ -1,8 +1,0 @@
-assertpy == 1.1
-pre-commit == 2.6.0
-pytest
-pytest-cov
-pytest-travis-fold
-PyYAML == 5.3.1
-selenium >= 3.14.0
-webdriver-manager == 3.2.1

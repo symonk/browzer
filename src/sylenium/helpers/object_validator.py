@@ -21,11 +21,11 @@ def enforce_type_of(
         raise exc(raised_message)
 
 
-def enforce_value_is_in(
+def raise_if_value_not_in(
     iterable: Iterable[Any], value: Any, exc: Type[Exception] = ValueError
 ) -> None:
     """
-    Enforce a particular value is in another itable
+    Enforce a particular value is in another iterable
     :param iterable: The iterable sequence that the containment check should be part of
     :param value: The object to be checked
     :param exc: The type of exception that should be raised upon failure, defaulting to ValueError
