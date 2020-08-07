@@ -1,5 +1,5 @@
 from .configuration import Configuration
 
-configuration = Configuration()
+config = Configuration()
 
-__all__ = [configuration, Configuration]
+__all__ = [config, Configuration]
