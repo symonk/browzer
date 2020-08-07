@@ -56,13 +56,13 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/sylenium
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/symonk/sylenium/v0.1.1.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/symonk/sylenium/v0.1.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/symonk/sylenium/compare/v0.1.1...master
+    :target: https://github.com/symonk/sylenium/compare/v0.1.0...master
 
-.. |github-actions| image:: https://github.com/symonk/sylenium/workflows/Release%20sylenium/badge.svg
+.. |github-actions| image:: https://github.com/symonk/sylenium/workflows/Release%20Sylenium/badge.svg
     :alt: Automated Releasing
-    :target: https://github.com/symonk/sylenium/workflows/Release%20sylenium/badge.svg
+    :target: https://github.com/symonk/sylenium/workflows/Release%20Sylenium/badge.svg
 
 
 .. end-badges
