@@ -4,8 +4,6 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
-from webdriver_manager.chrome import ChromeDriverManager
-
 from sylenium.exceptions.exceptions import syleniumConfigValueError
 from sylenium.helpers.object_validator import enforce_type_of
 from sylenium.helpers.object_validator import enforce_value_is_in
@@ -271,28 +269,150 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         self._chrome_options = chrome_options
 
     @property
+    def base_url(self) -> str:
+        """
+        Getter for the base_url attribute
+        """
+        return self._base_url
+
+    @base_url.setter
+    def base_url(self, base_url: str) -> None:
+        """
+        Setter for the base_url attribute
+        """
+        self._base_url = base_url
+
+    @property
+    def explicit_waiting(self) -> float:
+        """
+        Getter for the explicit_waiting attribute
+        """
+        return self._explicit_waiting
+
+    @explicit_waiting.setter
+    def explicit_waiting(self, explicit_waiting: float) -> None:
+        """
+        Setter for the explicit_waiting attribute
+        """
+        self._explicit_waiting = explicit_waiting
+
+    @property
+    def polling_interval(self) -> float:
+        """
+        Getter for the polling_interval attribute
+        """
+        return self.polling_interval
+
+    @polling_interval.setter
+    def polling_interval(self, polling_interval: float) -> None:
+        """
+        Setter for the polling_interval attribute
+        """
+        self._polling_interval = polling_interval
+
+    @property
+    def page_source_capturing(self) -> bool:
+        """
+        Getter for the page_source_capturing attribute
+        """
+        return self._page_source_capturing
+
+    @page_source_capturing.setter
+    def page_source_capturing(self, page_source_capturing: bool) -> None:
+        """
+        Setter for the page_source_capturing attribute
+        """
+        self._page_source_capturing = page_source_capturing
+
+    @property
+    def page_screenshot_capturing(self) -> bool:
+        """
+        Getter for the page_screenshot_capturing attribute
+        """
+        return self._page_source_capturing
+
+    @page_screenshot_capturing.setter
+    def page_screenshot_capturing(self, page_screenshot_capturing: bool) -> None:
+        """
+        Setter for the page_screenshot_capturing attribute
+        """
+        self._page_screenshot_capturing = page_screenshot_capturing
+
+    @property
+    def stack_trace_capturing(self) -> bool:
+        """
+        Getter for the stack_trace_capturing attribute
+        """
+        return self._stack_trace_capturing
+
+    @stack_trace_capturing.setter
+    def stack_trace_capturing(self, stack_trace_capturing: bool) -> None:
+        """
+        Setter for the stack_trace_capturing attribute
+        """
+        self._stack_trace_capturing = stack_trace_capturing
+
+    @property
+    def javascript_clicks(self) -> bool:
+        """
+        Getter for the javascript_clicks attribute
+        """
+        return self._javascript_clicks
+
+    @javascript_clicks.setter
+    def javascript_clicks(self, javascript_clicks: bool) -> None:
+        """
+        Setter for the javascript_clicks attribute
+        """
+        self._javascript_clicks = javascript_clicks
+
+    @property
+    def javascript_sendkeys(self) -> bool:
+        """
+        Getter for the javascript_sendkeys attribute
+        """
+        return self._javascript_sendkeys
+
+    @javascript_sendkeys.setter
+    def javascript_sendkeys(self, javascript_sendkeys: bool) -> None:
+        """
+        Setter for the javascript_sendkeys attribute
+        """
+        self._javascript_sendkeys = javascript_sendkeys
+
+    @property
+    def driver_listener_module_class_path(self) -> str:
+        """
+        Getter for the driver_listener_module_class_path attribute
+        """
+        return self._driver_listener_module_class_path
+
+    @driver_listener_module_class_path.setter
+    def driver_listener_module_class_path(
+        self, driver_listener_module_class_path: str
+    ) -> None:
+        """
+        Setter for the driver_listener_module_class_path attribute
+        """
+        self._driver_listener_module_class_path = driver_listener_module_class_path
+
+    @property
+    def default_selector(self) -> str:
+        """
+        Getter for the default_selector attribute
+        """
+        return self._default_selector
+
+    @default_selector.setter
+    def default_selector(self, default_selector: str) -> None:
+        """
+        Setter for the default_selector attribute
+        """
+        self._default_selector = default_selector
+
     def full_hub_endpoint(self) -> str:
         """
         The getter for the full hub endpoint that nodes are registered to and tests should be launched to.
         """
         # TODO -> Better validation, is it reachable? is it a url?
         return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
-
-    def get_browser_info(self) -> tuple:
-        """
-        Fetches the driver binary and version specified by the users config
-        :return: A tuple of browser meta data relating to versioning and binary data
-        """
-        return self.driver_binary_path, self.browser_version
-
-    def resolve_binary_path(self) -> str:
-        """
-        Decide if we need to:
-        A) Acquire the driver binary binary path == 'acquire'
-        B) Use a local path passed by the user if path is anything else
-        :return: the path to the chrome-driver binary - downloaded or installed by the user
-        """
-        ver = self.browser_version
-        path = self.driver_binary_path
-        if not path or path == "acquire":
-            return ChromeDriverManager(ver).install()
