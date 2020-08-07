@@ -1,2 +1,3 @@
+from .configuration import config
 
-__all__ = []
+__all__ = [config]
