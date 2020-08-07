@@ -22,11 +22,11 @@ def read(*names, **kwargs):
 
 
 setup(
-    name="browzer",
+    name="sylenium",
     version="0.1.0",
     license="MIT",
     description="Selenium wrapper placeholder",
-    long_description="This is an example placeholder for browzer",
+    long_description="This is an example placeholder for sylenium",
     author="Simon Kerr",
     author_email="jackofspaces@gmail.com",
     url="https://github.com/symonk/browzer",
