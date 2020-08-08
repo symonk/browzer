@@ -87,6 +87,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         Setter for the browser attribute.
         :param browser: The browser to configure
         """
+        self._validate_type(str, browser, "browser")
         raise_if_value_not_in(SUPPORTED_BROWSERS, browser.lower(), ValueError)
         self._browser = browser.lower()
 
@@ -448,5 +449,5 @@ class Configuration(SimpleReprMixin, SimpleEQMixing):
         """
         Wrapper function for validating types of attribute(s) and raising upon failing checks.
         """
-        msg = f"Attribute: {attr} only permits type of {type(expected)}.  You passed: {type(actual)}"
+        msg = f"Attribute: {attr} only permits type of {expected}.  You passed: {type(actual)}"
         enforce_type_of(expected, actual, ValueError, msg)

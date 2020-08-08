@@ -1,23 +1,20 @@
 import pytest
-from assertpy import assert_that
 
 from sylenium.configuration.configuration import Configuration
-from sylenium.exceptions.exceptions import syleniumConfigValueError
 
 
-class BrowserSubclass(Configuration):
-    def __init__(self, headless: bool):
-        self.headless = headless
+def test_headless_on():
+    cfg = Configuration()
+    cfg.headless = True
+    assert cfg.headless
 
 
-def test_browser_headless_on():
-    assert_that(BrowserSubclass(headless=True).headless).is_true()
-
-
-def test_browser_headless_off():
-    assert_that(BrowserSubclass(headless=False).headless).is_false()
+def test_headless_off():
+    cfg = Configuration()
+    cfg.headless = False
+    assert not cfg.headless
 
 
 def test_browser_headless_type_checks():
-    with pytest.raises(syleniumConfigValueError):
-        BrowserSubclass(headless="exception")
+    with pytest.raises(ValueError):
+        Configuration().headless = "unsupported"
