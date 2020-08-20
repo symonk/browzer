@@ -16,7 +16,7 @@ Overview
     * - tests:
       - | |travis| |appveyor| |requires| |codecov|
     * - package:
-      - | |version| |commits-since|
+      - | |version|
     * - infra:
       - | |github-actions|
 
