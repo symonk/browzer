@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 import io
+import re
 from distutils.core import setup
 from glob import glob
 from os.path import basename
@@ -21,9 +22,19 @@ def read(*names, **kwargs):
         return fh.read()
 
 
+VERSION_FILE ="src/sylenium/_version.py"
+version_str_line = open(VERSION_FILE, "rt").read()
+version_regex = r"^__version__ = ['\"]([^'\"]*)['\"]"
+mo = re.search(version_regex, version_str_line, re.M)
+if mo:
+    version_string = mo.group(1)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSION_FILE,))
+
+
 setup(
     name="sylenium",
-    version="0.1.0",
+    version=version_string,
     license="MIT",
     description="Selenium wrapper placeholder",
     long_description="This is an example placeholder for sylenium",
