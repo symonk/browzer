@@ -11,4 +11,4 @@ def test_eq_matches():
 
 
 def test_eq_fails_matching():
-    assert Dummy(5) == Dummy(4)
+    assert Dummy(5) != Dummy(4)
