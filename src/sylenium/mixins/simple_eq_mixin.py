@@ -1,4 +1,4 @@
-class SimpleEQMixing:
+class SimpleEQMixin:
     """
     Simple Equals mixin
     """

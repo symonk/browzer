@@ -8,11 +8,11 @@ from typing import Optional
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.helpers.object_validator import enforce_type_of
 from sylenium.helpers.object_validator import raise_if_value_not_in
-from sylenium.mixins.simple_eq_mixin import SimpleEQMixing
+from sylenium.mixins.simple_eq_mixin import SimpleEQMixin
 from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
 
 
-class Configuration(SimpleReprMixin, SimpleEQMixing):
+class Configuration(SimpleReprMixin, SimpleEQMixin):
     """
     This is the core configuration class for sylenium.
     This should be configured prior to instantiating any drivers; it assumes sensible defaults otherwise.

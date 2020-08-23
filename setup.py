@@ -22,7 +22,7 @@ def read(*names, **kwargs):
         return fh.read()
 
 
-VERSION_FILE ="src/sylenium/_version.py"
+VERSION_FILE = "src/sylenium/_version.py"
 version_str_line = open(VERSION_FILE, "rt").read()
 version_regex = r"^__version__ = ['\"]([^'\"]*)['\"]"
 mo = re.search(version_regex, version_str_line, re.M)
