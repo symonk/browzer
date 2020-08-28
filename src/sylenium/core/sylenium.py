@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from sylenium.core.webdriver.driver_factories import WebDriverFactory
+
 from sylenium import config
+from sylenium.core.webdriver.driver_factories import WebDriverFactory
 
 
 def get_driver() -> RemoteWebDriver:
