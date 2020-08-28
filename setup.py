@@ -11,7 +11,6 @@ from os.path import basename
 from os.path import dirname
 from os.path import join
 from os.path import splitext
-
 from setuptools import find_packages
 
 
@@ -58,11 +57,6 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
-        # uncomment if you test on these interpreters:
-        # 'Programming Language :: Python :: Implementation :: IronPython',
-        # 'Programming Language :: Python :: Implementation :: Jython',
-        # 'Programming Language :: Python :: Implementation :: Stackless',
         "Topic :: Utilities",
     ],
     project_urls={
@@ -74,7 +68,39 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     python_requires=">=3.7",
-    install_requires=[],
+    install_requires=[
+        "appdirs==1.4.4",
+        "assertpy==1.0",
+        "atomicwrites==1.4.0",
+        "attrs==20.1.0",
+        "certifi==2020.6.20",
+        "chardet==3.0.4",
+        "colorama==0.4.3",
+        "configparser==5.0.0",
+        "coverage==5.2.1",
+        "crayons==0.4.0",
+        "distlib==0.3.1",
+        "filelock==3.0.12",
+        "idna==2.10",
+        "iniconfig==1.0.1",
+        "more-itertools==8.5.0",
+        "packaging==20.4",
+        "pluggy==0.13.1",
+        "py==1.9.0",
+        "pyparsing==2.4.7",
+        "pytest==6.0.1",
+        "pytest-cov==2.10.1",
+        "pytest-travis-fold==1.3.0",
+        "PyYAML==5.3.1",
+        "requests==2.24.0",
+        "selenium==3.141.0",
+        "six==1.15.0",
+        "toml==0.10.1",
+        "tox==3.19.0",
+        "urllib3==1.25.10",
+        "virtualenv==20.0.31",
+        "webdriver-manager==3.2.2",
+    ],
     extras_require={
         # eg:
         #   'rst': ['docutils>=0.11'],

@@ -1,13 +1,11 @@
-from typing import Any
-from typing import Optional
-
+from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from sylenium.core.webdriver.driver_factories import WebDriverFactory
 from sylenium import config
 
 
-def open(
-    url: Optional[str] = None, yielded_page_object: Optional[Any] = None
-) -> Optional[Any]:
-    url = url or config.base_url
-    to_be_returned = yielded_page_object
-    # Fetch a thread local drivers (or instantiate one if necessary)
-    return yielded_page_object
+def get_driver() -> RemoteWebDriver:
+    """
+    Sylenium entry point for fetching a thread local scoped web driver instance.  Before invoking this function
+    to retrieve your customised driver, you should invoke initialize()
+    """
+    return WebDriverFactory(config=config).create_driver()

@@ -15,7 +15,7 @@ from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
 class Configuration(SimpleReprMixin, SimpleEQMixin):
     """
     This is the core configuration class for sylenium.
-    This should be configured prior to instantiating any drivers; it assumes sensible defaults otherwise.
+    This should be configured prior to instantiating any webdriver; it assumes sensible defaults otherwise.
     :param browser: The browser type to instantiate downstream. choices are: (chrome|firefox)
     :param headless: If the browsers instantiated will run headlessly. choices are: (True|False)
     :param remote: If the browser will be running using a seleniuim grid, likely in the cloud. choices are: (True|False)
