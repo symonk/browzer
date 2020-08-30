@@ -16,5 +16,5 @@ def test_headless_off(sy_session):
 
 def test_browser_headless_type_checks(sy_session):
     with pytest.raises(ValueError):
-        with sy_session(Configuration(headless="unsupported")):
-            pass
+        with sy_session() as session:
+            session.config.headless = "unsupported"
