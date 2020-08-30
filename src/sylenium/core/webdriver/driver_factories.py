@@ -1,6 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as GeckoWebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
@@ -20,7 +21,13 @@ class WebDriverCreator(ABC):
 
 class ChromeDriverCreator(WebDriverCreator):
     def create_driver(self) -> ChromeWebDriver:
-        return ChromeWebDriver(executable_path=ChromeDriverManager().install())
+        travis_opts = ChromeOptions()
+        travis_opts.add_argument("--headless")
+        travis_opts.add_argument("--no-sandbox")
+        travis_opts.add_argument("--disable-gpu")
+        return ChromeWebDriver(
+            executable_path=ChromeDriverManager().install(), options=travis_opts
+        )
 
 
 class GeckoDriverCreator(WebDriverCreator):

@@ -3,5 +3,5 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
 
 @pytest.fixture
-def default_driver(default_session) -> RemoteWebDriver:
-    return default_session.get_driver()
+def default_driver(headless_session) -> RemoteWebDriver:
+    return headless_session.get_driver()
