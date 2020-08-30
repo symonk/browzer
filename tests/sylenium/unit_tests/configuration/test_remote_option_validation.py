@@ -1,20 +1,20 @@
 import pytest
+from assertpy import assert_that
 
 from sylenium.configuration.configuration import Configuration
 
 
-def test_remote_on():
-    cfg = Configuration()
-    cfg.remote = False
-    assert not cfg.remote
+def test_remote_on(sy_session):
+    with sy_session(configuration=Configuration(remote=True)) as session:
+        assert_that(session.config.remote).is_true()
 
 
-def test_remote_off():
-    cfg = Configuration()
-    cfg.remote = False
-    assert not cfg.remote
+def test_remote_off(sy_session):
+    with sy_session(configuration=Configuration(remote=False)) as session:
+        assert_that(session.config.remote).is_false()
 
 
-def test_browser_headless_type_checks():
+def test_browser_headless_type_checks(sy_session):
     with pytest.raises(ValueError):
-        Configuration().remote = "unsupported"
+        with sy_session() as session:
+            session.config.remote = "unsupported"

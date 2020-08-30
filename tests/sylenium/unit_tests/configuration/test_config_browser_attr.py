@@ -1,22 +1,25 @@
 import pytest
 from assertpy import assert_that
 
+from sylenium import Session
 from sylenium.configuration.configuration import Configuration
 
 
-def test_browser_validation_is_enforced():
+def test_browser_validation_is_enforced(default_session):
     with pytest.raises(ValueError):
-        Configuration().browser = "unsupported"
+        default_session.config.browser = "unsupported"
 
 
-def test_browser_type_check_enforcement():
+def test_browser_type_check_enforcement(default_session):
     with pytest.raises(ValueError):
-        Configuration().browser = 99.00
+        default_session.config.browser = 99.00
 
 
 def test_browser_chrome_is_ok():
-    assert_that(Configuration(browser="chrome").browser).is_equal_to("chrome")
+    with Session(Configuration(browser="chrome")) as session:
+        assert_that(session.config.browser).is_equal_to("chrome")
 
 
 def test_firefox_is_ok():
-    assert_that(Configuration(browser="firefox").browser).is_equal_to("firefox")
+    with Session(Configuration(browser="firefox")) as session:
+        assert_that(session.config.browser).is_equal_to("firefox")

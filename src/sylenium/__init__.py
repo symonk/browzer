@@ -1,4 +1,4 @@
 from ._version import __version__
-from .configuration import config
+from .core.sylenium import Session
 
-__all__ = [__version__, config]
+__all__ = [__version__, Session]

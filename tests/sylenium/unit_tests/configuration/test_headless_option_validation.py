@@ -1,20 +1,20 @@
 import pytest
+from assertpy import assert_that
 
 from sylenium.configuration.configuration import Configuration
 
 
-def test_headless_on():
-    cfg = Configuration()
-    cfg.headless = True
-    assert cfg.headless
+def test_headless_on(sy_session):
+    with sy_session(Configuration(headless=True)) as session:
+        assert_that(session.config.headless).is_true()
 
 
-def test_headless_off():
-    cfg = Configuration()
-    cfg.headless = False
-    assert not cfg.headless
+def test_headless_off(sy_session):
+    with sy_session(Configuration(headless=False)) as session:
+        assert_that(session.config.headless).is_false()
 
 
-def test_browser_headless_type_checks():
+def test_browser_headless_type_checks(sy_session):
     with pytest.raises(ValueError):
-        Configuration().headless = "unsupported"
+        with sy_session(Configuration(headless="unsupported")):
+            pass
