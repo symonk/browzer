@@ -4,6 +4,7 @@ from abc import abstractmethod
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as GeckoWebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 from sylenium.configuration.configuration import Configuration
 
@@ -19,7 +20,7 @@ class WebDriverCreator(ABC):
 
 class ChromeDriverCreator(WebDriverCreator):
     def create_driver(self) -> ChromeWebDriver:
-        ...
+        return ChromeWebDriver(executable_path=ChromeDriverManager().install())
 
 
 class GeckoDriverCreator(WebDriverCreator):
@@ -41,5 +42,7 @@ class WebDriverFactory:
         based on how sylenium has been configured by the client.
         """
         browser = self.config.browser
-        web_driver = self.driver_mapping.get(browser)(self.config).create_driver()
+        web_driver = self.driver_mapping.get(browser.title())(
+            self.config
+        ).create_driver()
         return web_driver

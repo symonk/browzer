@@ -33,6 +33,8 @@ class Session:
         return self
 
     def __exit__(self, type, value, traceback):
+        for driver in self.drivers:
+            driver.quit()
         return False
 
     def __del__(self):
