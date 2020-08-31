@@ -14,11 +14,12 @@ SESSIONS: Dict[int, Session] = {}
 
 
 def print_session_information():
-    ...
+    for session in SESSIONS.values():
+        print(session)
 
 
 def register_session(session: Session):
-    SESSIONS[threading.get_ident()] = session
+    SESSIONS[session.session_id] = session
 
 
 def load(url: str, page_class: Type[PageObject]) -> PageObject:
