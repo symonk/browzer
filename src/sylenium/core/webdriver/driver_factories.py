@@ -29,10 +29,13 @@ class ChromeDriverCreator(WebDriverCreator):
         driver_executable = (
             self.config.driver_binary_path or ChromeDriverManager().install()
         )
-
-        return ChromeWebDriver(
-            executable_path=driver_executable, options=chrome_options
+        driver = ChromeWebDriver(
+            executable_path=driver_executable,
+            options=chrome_options,
+            desired_capabilities=self.config.browser_capabilities,
+            service_log_path=self.config.chrome_service_log_path,
         )
+        return driver
 
     def resolve_options(self) -> ChromeOptions:
         """
@@ -41,10 +44,7 @@ class ChromeDriverCreator(WebDriverCreator):
         chrome_options = self.config.chrome_options or ChromeOptions()
         is_travis = read_from_environ(key=TRAVIS_ENV, default=False)
         if self.config.headless or is_travis:
-            missing = {"--headless", "--no-sandbox", "--no-display"}
-            for expected in missing:
-                if missing not in chrome_options.arguments:
-                    chrome_options.arguments.append(expected)
+            chrome_options.headless = True
         return chrome_options
 
     def resolve_binary_path(self) -> str:

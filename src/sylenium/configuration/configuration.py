@@ -35,7 +35,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         downloads_directory: Optional[str] = None,
         proxy_enabled: bool = False,
         driver_binary_path: Optional[str] = None,
-        browser_capabilities: Dict[str, str] = None,
+        browser_capabilities: Optional[Dict[str, str]] = None,
         chrome_options: Optional[List[str]] = None,
         base_url: Optional[str] = None,
         explicit_waiting: float = 30.00,
@@ -47,6 +47,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         javascript_sendkeys: bool = False,
         driver_listener_module_class_path: str = None,
         default_selector: str = "css",
+        chrome_service_log_path: Optional[str] = None,
     ):
         self._browser: str = browser
         self._headless: bool = headless
@@ -72,6 +73,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._driver_listener_module_class_path: str = driver_listener_module_class_path
         self._page_loading_strategy: str = page_loading_strategy
         self._default_selector: str = default_selector
+        self._chrome_service_log_path: str = chrome_service_log_path
 
     @property
     def browser(self) -> str:
@@ -436,6 +438,21 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         """
         self._validate_type(str, default_selector, "default_selector")
         self._default_selector = default_selector
+
+    @property
+    def chrome_service_log_path(self) -> str:
+        """
+        Getter for the chrome service log path
+        """
+        return self._chrome_service_log_path
+
+    @chrome_service_log_path.setter
+    def chrome_service_log_path(self, path: str) -> None:
+        """
+        Setter for the chrome service log path
+        """
+        self._validate_type(str, path, "chrome_service_log_path")
+        self._chrome_service_log_path = path
 
     def full_hub_endpoint(self) -> str:
         """
