@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import uuid
+from typing import Optional
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
@@ -17,7 +18,7 @@ class Session:
         """
         self.config = configuration or Configuration()
         self.session_id = uuid.uuid4()
-        self.driver: RemoteWebDriver = None
+        self.driver: Optional[RemoteWebDriver] = None
         self.driver_factory = WebDriverFactory(self.config)
 
     def get_driver(self) -> RemoteWebDriver:
@@ -26,6 +27,10 @@ class Session:
         """
         driver = self.driver_factory.create_driver()
         self.driver = driver
+        # we will only register the session officially when someone has requested a driver
+        from sylenium.sylenium import register_session
+
+        register_session(self)
         return driver
 
     def __enter__(self) -> Session:
