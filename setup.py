@@ -71,7 +71,7 @@ setup(
     python_requires=">=3.7",
     install_requires=[
         "appdirs==1.4.4",
-        "assertpy==1.0",
+        "assertpy==1.1",
         "atomicwrites==1.4.0",
         "attrs==20.1.0",
         "certifi==2020.6.20",
