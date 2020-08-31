@@ -37,7 +37,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         browser_position: Optional[str] = None,
         downloads_directory: Optional[str] = None,
         proxy_enabled: bool = False,
-        driver_binary_path: Optional[str] = None,
+        driver_binary_path: str = "acquire",
         browser_capabilities: Optional[Dict[str, str]] = None,
         chrome_options: Optional[List[str]] = None,
         base_url: Optional[str] = None,
@@ -58,15 +58,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._remote: bool = remote
         self._selenium_grid_url: str = selenium_grid_url
         self._selenium_grid_port: int = selenium_grid_port
-        self._browser_resolution: str = browser_resolution
-        self._browser_version: str = browser_version
+        self._browser_resolution: Optional[str] = browser_resolution
+        self._browser_version: Optional[str] = browser_version
         self._browser_position: Optional[str] = browser_position
         self._downloads_directory: Optional[str] = downloads_directory
         self._proxy_enabled: bool = proxy_enabled
         self._driver_binary_path: str = driver_binary_path
-        self._browser_capabilities: Dict[str, str] = browser_capabilities
-        self._chrome_options: List[str] = chrome_options
-        self._base_url: str = base_url
+        self._browser_capabilities: Optional[Dict[str, str]] = browser_capabilities
+        self._chrome_options: Optional[List[str]] = chrome_options
+        self._base_url: Optional[str] = base_url
         self._explicit_waiting: float = explicit_waiting
         self._polling_interval: float = polling_interval
         self._page_source_capturing: bool = page_source_capturing
@@ -74,12 +74,12 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._stack_trace_capturing: bool = stack_trace_capturing
         self._javascript_clicks: bool = javascript_clicks
         self._javascript_sendkeys: bool = javascript_sendkeys
-        self._driver_event_firing_wrapper: Type[
-            AbstractEventListener
+        self._driver_event_firing_wrapper: Optional[
+            Type[AbstractEventListener]
         ] = driver_event_firing_wrapper
         self._page_loading_strategy: str = page_loading_strategy
         self._default_selector: str = default_selector
-        self._chrome_service_log_path: str = chrome_service_log_path
+        self._chrome_service_log_path: Optional[str] = chrome_service_log_path
         self._maximized = maximized
 
     @property
@@ -166,7 +166,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._selenium_grid_port = selenium_grid_port
 
     @property
-    def browser_resolution(self) -> str:
+    def browser_resolution(self) -> Optional[str]:
         """
         The getter for the browser_resolution attribute
         """
@@ -182,7 +182,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._selenium_grid_url = browser_resolution
 
     @property
-    def browser_version(self) -> str:
+    def browser_version(self) -> Optional[str]:
         """
         Getter for the browser_version attribute
         """
@@ -197,7 +197,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._browser_version = browser_version
 
     @property
-    def browser_position(self) -> str:
+    def browser_position(self) -> Optional[str]:
         """
         Getter for the browser_position attribute
         """
@@ -212,7 +212,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._browser_position = browser_position
 
     @property
-    def downloads_directory(self) -> str:
+    def downloads_directory(self) -> Optional[str]:
         """
         Getter for the downloads_directory attribute
         """
@@ -259,7 +259,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._driver_binary_path = driver_binary_path
 
     @property
-    def browser_capabilities(self) -> Dict[str, str]:
+    def browser_capabilities(self) -> Optional[Dict[str, str]]:
         """
         Getter for the browser_capabilities attribute
         """
@@ -274,7 +274,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._browser_capabilities = browser_capabilities
 
     @property
-    def chrome_options(self) -> List[str]:
+    def chrome_options(self) -> Optional[List[str]]:
         """
         Getter for the chrome_options attribute
         """
@@ -289,7 +289,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._chrome_options = chrome_options
 
     @property
-    def base_url(self) -> str:
+    def base_url(self) -> Optional[str]:
         """
         Getter for the base_url attribute
         """
@@ -412,7 +412,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._javascript_sendkeys = javascript_sendkeys
 
     @property
-    def driver_event_firing_wrapper(self) -> Type[AbstractEventListener]:
+    def driver_event_firing_wrapper(self) -> Optional[Type[AbstractEventListener]]:
         """
         Getter for the driver_event_firing_wrapper attribute
         """
@@ -449,7 +449,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._default_selector = default_selector
 
     @property
-    def chrome_service_log_path(self) -> str:
+    def chrome_service_log_path(self) -> Optional[str]:
         """
         Getter for the chrome service log path
         """

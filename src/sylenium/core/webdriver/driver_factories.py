@@ -1,5 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
+from typing import Mapping
+from typing import Type
 
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
@@ -47,7 +49,7 @@ class ChromeDriverCreator(WebDriverCreator):
         Handles (gracefully) multiple chrome based options in-line with what the user provided configuration
         has set.
         """
-        chrome_options = self.config.chrome_options or ChromeOptions()
+        chrome_options: ChromeOptions = self.config.chrome_options or ChromeOptions()
         is_travis = read_from_environ(key=TRAVIS_ENV, default=False)
         if self.config.headless or is_travis:
             chrome_options.headless = True
@@ -109,7 +111,7 @@ class RemoteDriverCreator(WebDriverCreator):
 class WebDriverFactory:
     def __init__(self, config: Configuration):
         self.config = config
-        self.driver_mapping = {
+        self.driver_mapping: Mapping[str, Type[WebDriverCreator]] = {
             "chrome": ChromeDriverCreator,
             "firefox": GeckoDriverCreator,
             "remote": RemoteDriverCreator,
@@ -121,5 +123,9 @@ class WebDriverFactory:
         based on how sylenium has been configured by the client.
         """
         lookup = self.config.browser if not self.config.remote else "remote"
-        driver = self.driver_mapping.get(lookup)(self.config).create_driver()
-        return driver
+        driver_type = self.driver_mapping.get(lookup)
+        if not driver_type:
+            raise ValueError(
+                f"Unsupported driver instantiation was attempted for: {lookup}"
+            )
+        return driver_type(self.config).create_driver()
