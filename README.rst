@@ -3,7 +3,7 @@
   :width: 1280
 
 ========
-Overview
+Overview :flags:
 ========
 
 .. start-badges
@@ -64,7 +64,7 @@ Overview
 .. end-badges
 
 ========
-What is Sylenium?
+What is Sylenium? :flags:
 ========
 
 Selenium wrapper for automating web applications end to end. Sylenium helps you get off the ground running and has a
@@ -73,13 +73,13 @@ its first release in Q1 2021.  Sylenium contains test runner framework plugin(s)
 
 
 =============
-Official Documentation
+Official Documentation :flags:
 =============
 
 https://sylenium.readthedocs.io/
 
 ==============
-Configuring Sylenium
+Configuring Sylenium :flags:
 ==============
 
 Everything in sylenium begins with a Session(config: Configuration), all spawned browsers are contained within these
@@ -110,7 +110,7 @@ Note: Syleniums defaults are pretty savvy and are ideal when you are writing bas
 
 
 ==============
-Quick Start
+Quick Start :flags:
 ==============
 
 .. code-block:: python
