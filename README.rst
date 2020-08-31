@@ -79,6 +79,35 @@ Official Documentation
 https://sylenium.readthedocs.io/
 
 ==============
+Configuring Sylenium
+==============
+
+Everything in sylenium begins with a Session(config: Configuration), all spawned browsers are contained within these
+sessions, this avoids globals everywhere and major headaches, especially unit testing for us!  At the moment, a single
+browser is mapped to a single session and these are fully customisable at runtime, as well as usable as ctx managers.
+Note: Syleniums defaults are pretty savvy and are ideal when you are writing basic scripts.
+
+.. code-block:: python
+
+    def my_session():
+        # from sylenium import Session
+        session = Session()
+        driver = session.get_webdriver()
+        # Requires clean up
+
+    def my_ctx_session():
+        with Session() as session:
+            driver = session.get_webdriver()
+            # do whatever with the driver... (auto cleaned up)
+
+    def customising_a_session():
+        config = Configuration(headless=True, download_directory="/tmp/", remote=True)
+        with Session(configuration=config) as session:
+            driver = session.get_webdriver() # fully configured with your own options
+
+
+
+==============
 Quick Start
 ==============
 
