@@ -1,10 +1,10 @@
 import atexit
 import threading
+from typing import List
 from typing import Mapping
 from typing import Type
 
 from sylenium.core.core import Session
-from sylenium.core.elements.locators import ElementContainer
 from sylenium.core.elements.locators import SyleniumElement
 from sylenium.core.elements.locators import SyleniumLocator
 from sylenium.core.pages.pageobjects import PageObject
@@ -31,7 +31,7 @@ def find(locator: SyleniumLocator) -> SyleniumElement:
     ...
 
 
-def find_all(locator: SyleniumLocator) -> ElementContainer[SyleniumElement]:
+def find_all(locator: SyleniumLocator) -> List[SyleniumElement]:
     ...
 
 
