@@ -29,7 +29,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         page_loading_strategy: str = "fast",
         selenium_grid_url: str = "http://127.0.0.1",
         selenium_grid_port: int = 4444,
-        browser_resolution: str = "1280x1024",
+        browser_resolution: Optional[str] = None,
         browser_version: str = "latest",
         browser_position: Optional[str] = None,
         downloads_directory: Optional[str] = None,
@@ -196,7 +196,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         """
         Getter for the browser_position attribute
         """
-        return self._browser_version
+        return self._browser_position
 
     @browser_position.setter
     def browser_position(self, browser_position: str) -> None:

@@ -39,7 +39,8 @@ class ChromeDriverCreator(WebDriverCreator):
 
     def resolve_options(self) -> ChromeOptions:
         """
-        Resolves headless and user provided chrome options to ensure they play together gracefully.
+        Handles (gracefully) multiple chrome based options in-line with what the user provided configuration
+        has set.
         """
         chrome_options = self.config.chrome_options or ChromeOptions()
         is_travis = read_from_environ(key=TRAVIS_ENV, default=False)
@@ -49,9 +50,21 @@ class ChromeDriverCreator(WebDriverCreator):
             if "--maximized" not in chrome_options.arguments:
                 chrome_options.add_argument("--start-maximized")
         if self.config.browser_resolution:
-            if "--width" not in chrome_options.arguments:
+            if "--window-size" not in chrome_options.arguments:
                 width, height = self.config.browser_resolution.split("x")
                 chrome_options.add_argument(f"--window-size={width},{height}")
+        if self.config.browser_position:
+            if "--window-position" not in chrome_options.arguments:
+                x, y = self.config.browser_position.split("x")
+                chrome_options.add_argument(f"--window-position={x},{y}")
+        if self.config.downloads_directory:
+            if "download.default_directory" not in chrome_options.arguments:
+                chrome_options.add_experimental_option(
+                    "prefs",
+                    {
+                        "download.default_directory": f"{self.config.downloads_directory}"
+                    },
+                )
         return chrome_options
 
     def resolve_binary_path(self) -> str:
