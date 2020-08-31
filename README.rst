@@ -82,19 +82,18 @@ https://sylenium.readthedocs.io/
 Quick Start
 ==============
 
-```python
-def test_without_page_objects():
-    # Without page objects, for simple scripts
-    start("https://localhost:8080/login.html")
-    find("login-username").set_text("admin")
-    find("login-pwd").set_text("password")
-    click("login-btn-submit")
-    # do something else
-```
+.. code-block:: python
 
-```python
-def test_with_page_objects():
-    login_page = start(LoginPage)
-    dashboard = login_page.login_as("admin", "password")
-    assert_that(dashboard).is_instances(DashboardPage)
-```
+    def test_without_page_objects():
+
+        # Without page objects, for simple scripts
+        start("https://localhost:8080/login.html")
+        find("login-username").set_text("admin")
+        find("login-pwd").set_text("password")
+        click("login-btn-submit")
+        # do something else
+
+    def test_with_page_objects():
+        login_page = start(LoginPage)
+        dashboard = login_page.login_as("admin", "password")
+        assert_that(dashboard).is_instances(DashboardPage)
