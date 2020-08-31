@@ -17,6 +17,17 @@ def default_driver(default_session) -> RemoteWebDriver:
 def webserver() -> Generator[socketserver.BaseServer, None, None]:
     handler = http.server.SimpleHTTPRequestHandler
     with socketserver.TCPServer(("localhost", 8080), handler) as server:
+
+        """
+        def page_url(page_name: str) -> str:
+            addr, port = server.server_address
+            base_url = f"http://{addr}:{port}/"
+            server.base_url = base_url
+            return f"{server.base_url}{page_name}.html"
+
+        server.page_url = page_url
+        """
+
         os.chdir(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), "http_content")
         )

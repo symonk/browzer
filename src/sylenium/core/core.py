@@ -23,18 +23,18 @@ class Session(SimpleReprMixin):
         self.session_id: int = threading.get_ident()
         self.driver: Optional[RemoteWebDriver] = None
         self.driver_factory: WebDriverFactory = WebDriverFactory(self.config)
+        from sylenium.sylenium import register_session
+
+        register_session(self)
 
     def get_driver(self) -> RemoteWebDriver:
         """
         Fetching a driver at runtime; Highly configurable via the session configuration provided by the user.
         """
-        driver = self.driver_factory.create_driver()
-        self.driver = driver
-        # we will only register the session officially when someone has requested a driver
-        from sylenium.sylenium import register_session
-
-        register_session(self)
-        return driver
+        if self.driver:
+            return self.driver
+        self.driver = self.driver_factory.create_driver()
+        return self.driver
 
     def __enter__(self) -> Session:
         return self
@@ -47,6 +47,7 @@ class Session(SimpleReprMixin):
     ):
         if self.driver:
             self.driver.quit()
+            del self.driver
         return False
 
     def __del__(self):
