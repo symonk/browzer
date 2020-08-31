@@ -96,4 +96,6 @@ Quick Start
     def test_with_page_objects():
         login_page = start(LoginPage)
         dashboard = login_page.login_as("admin", "password")
-        assert_that(dashboard).is_instances(DashboardPage)
+        find("my-widget").should_have(visible_text("Custom Widget")) # asserts under the hood
+        element: SyleniumElement = find("another-widget")
+        element.should_be(clickable())
