@@ -29,9 +29,7 @@ class WebDriverCreator(ABC):
 class ChromeDriverCreator(WebDriverCreator):
     def create_driver(self) -> ChromeWebDriver:
         chrome_options = self.resolve_options()
-        driver_executable = (
-            self.config.driver_binary_path or ChromeDriverManager().install()
-        )
+        driver_executable = self.resolve_binary_path()
         driver = ChromeWebDriver(
             executable_path=driver_executable,
             options=chrome_options,
