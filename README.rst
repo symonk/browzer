@@ -128,3 +128,9 @@ Quick Start :flags:
         find("my-widget").should_have(visible_text("Custom Widget")) # asserts under the hood
         element: SyleniumElement = find("another-widget")
         element.should_be(clickable())
+
+==============
+Sylenium-pytest :flags:
+==============
+
+Plugin (coming soon)
