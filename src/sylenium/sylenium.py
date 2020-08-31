@@ -1,7 +1,7 @@
 import atexit
 import threading
+from typing import Dict
 from typing import List
-from typing import Mapping
 from typing import Type
 
 from sylenium.core.core import Session
@@ -10,7 +10,7 @@ from sylenium.core.elements.locators import SyleniumLocator
 from sylenium.core.pages.pageobjects import PageObject
 from sylenium.exceptions.exceptions import SessionException
 
-SESSIONS: Mapping[int, Session] = {}
+SESSIONS: Dict[int, Session] = {}
 
 
 def print_session_information():
@@ -18,9 +18,7 @@ def print_session_information():
 
 
 def register_session(session: Session):
-    global SESSIONS
-    unique_id = threading.get_ident()
-    session[unique_id] = session
+    SESSIONS[threading.get_ident()] = session
 
 
 def load(url: str, page_class: Type[PageObject]) -> PageObject:
