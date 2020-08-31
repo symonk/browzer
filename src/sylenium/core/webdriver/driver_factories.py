@@ -48,6 +48,10 @@ class ChromeDriverCreator(WebDriverCreator):
         if self.config.maximized:
             if "--maximized" not in chrome_options.arguments:
                 chrome_options.add_argument("--start-maximized")
+        if self.config.browser_resolution:
+            if "--width" not in chrome_options.arguments:
+                width, height = self.config.browser_resolution.split("x")
+                chrome_options.add_argument(f"--window-size={width},{height}")
         return chrome_options
 
     def resolve_binary_path(self) -> str:
