@@ -90,17 +90,19 @@ Note: Syleniums defaults are pretty savvy and are ideal when you are writing bas
 .. code-block:: python
 
     def my_session():
-        # from sylenium import Session
+        from sylenium import Session
         session = Session()
         driver = session.get_webdriver()
         # Requires clean up
 
     def my_ctx_session():
+        from sylenium import Session
         with Session() as session:
             driver = session.get_webdriver()
             # do whatever with the driver... (auto cleaned up)
 
     def customising_a_session():
+        from sylenium import Session
         config = Configuration(headless=True, download_directory="/tmp/", remote=True)
         with Session(configuration=config) as session:
             driver = session.get_webdriver() # fully configured with your own options
