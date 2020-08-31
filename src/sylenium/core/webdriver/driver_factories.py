@@ -12,6 +12,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from sylenium.configuration.configuration import Configuration
 from sylenium.constants import TRAVIS_ENV
+from sylenium.core.elements.locators import SyleniumElement
 from sylenium.exceptions.exceptions import DriverInstantiationException
 from sylenium.helpers.operating_system.environ import read_from_environ
 from sylenium.helpers.operating_system.filesystem import does_file_exist
@@ -126,4 +127,6 @@ class WebDriverFactory:
             raise ValueError(
                 f"Unsupported driver instantiation was attempted for: {lookup}"
             )
-        return driver_type(self.config).create_driver()
+        driver = driver_type(self.config).create_driver()
+        driver._web_element_cls = SyleniumElement
+        return driver
