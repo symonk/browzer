@@ -1,11 +1,12 @@
 import http.server
 import os
-import socketserver
 import threading
 from typing import Generator
 
 import pytest
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+
+from tests.integration.webserver.tcp_server import IntegrationTCPServer
 
 
 @pytest.fixture
@@ -14,20 +15,9 @@ def default_driver(default_session) -> RemoteWebDriver:
 
 
 @pytest.fixture
-def webserver() -> Generator[socketserver.BaseServer, None, None]:
+def webserver() -> Generator[IntegrationTCPServer, None, None]:
     handler = http.server.SimpleHTTPRequestHandler
-    with socketserver.TCPServer(("localhost", 8080), handler) as server:
-
-        """
-        def page_url(page_name: str) -> str:
-            addr, port = server.server_address
-            base_url = f"http://{addr}:{port}/"
-            server.base_url = base_url
-            return f"{server.base_url}{page_name}.html"
-
-        server.page_url = page_url
-        """
-
+    with IntegrationTCPServer(("localhost", 8080), handler) as server:
         os.chdir(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), "http_content")
         )
