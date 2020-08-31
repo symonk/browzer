@@ -8,7 +8,9 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 from sylenium.configuration.configuration import Configuration
+from sylenium.constants import TRAVIS_ENV
 from sylenium.exceptions.exceptions import DriverInstantiationException
+from sylenium.helpers.operating_system.environ import read_from_environ
 from sylenium.helpers.operating_system.filesystem import does_file_exist
 
 
@@ -37,7 +39,8 @@ class ChromeDriverCreator(WebDriverCreator):
         Resolves headless and user provided chrome options to ensure they play together gracefully.
         """
         chrome_options = self.config.chrome_options or ChromeOptions()
-        if self.config.headless:
+        is_travis = read_from_environ(key=TRAVIS_ENV, default=False)
+        if self.config.headless or is_travis:
             missing = {"--headless", "--no-sandbox", "--no-display"}
             for expected in missing:
                 if missing not in chrome_options.arguments:
