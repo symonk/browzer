@@ -58,8 +58,7 @@ class ChromeDriverCreator(WebDriverCreator):
         if binary_path == "acquire":
             # wdm has been set, lets resolve and acquire the binary based on browser_version
             # version is 'latest' by default, unless a specific version has been specified by the client
-            version = self.config.browser_version
-            return ChromeDriverManager(version=version).install()
+            return ChromeDriverManager(version=self.config.browser_version).install()
         if does_file_exist(binary_path):
             # use has provided a binary path to a valid file, we will try and use it
             return binary_path
@@ -93,8 +92,6 @@ class WebDriverFactory:
         Factory method responsible for determining which driver to instantiate at runtime
         based on how sylenium has been configured by the client.
         """
-        browser = self.config.browser
-        is_remote = self.config.remote
-        lookup = browser if not is_remote else "remote"
+        lookup = self.config.browser if not self.config.remote else "remote"
         driver = self.driver_mapping.get(lookup)(self.config).create_driver()
         return driver
