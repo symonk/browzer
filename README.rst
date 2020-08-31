@@ -14,7 +14,7 @@ Overview
     * - docs:
       - |docs|
     * - tests:
-      - | |travis| |appveyor| |requires| |codecov|
+      - | |travis| |requires| |codecov|
     * - package:
       - | |version|
     * - infra:
