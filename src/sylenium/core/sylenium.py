@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import uuid
-from typing import List
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
@@ -18,7 +17,7 @@ class Session:
         """
         self.config = configuration or Configuration()
         self.session_id = uuid.uuid4()
-        self.drivers: List[RemoteWebDriver] = []
+        self.driver: RemoteWebDriver = None
         self.driver_factory = WebDriverFactory(self.config)
 
     def get_driver(self) -> RemoteWebDriver:
@@ -26,15 +25,15 @@ class Session:
         Fetching a driver at runtime; Highly configurable via the session configuration provided by the user.
         """
         driver = self.driver_factory.create_driver()
-        self.drivers.append(driver)
+        self.driver = driver
         return driver
 
     def __enter__(self) -> Session:
         return self
 
     def __exit__(self, type, value, traceback):
-        for driver in self.drivers:
-            driver.quit()
+        if self.driver:
+            self.driver.quit()
         return False
 
     def __del__(self):
