@@ -45,6 +45,9 @@ class ChromeDriverCreator(WebDriverCreator):
         is_travis = read_from_environ(key=TRAVIS_ENV, default=False)
         if self.config.headless or is_travis:
             chrome_options.headless = True
+        if self.config.maximized:
+            if "--maximized" not in chrome_options.arguments:
+                chrome_options.add_argument("--start-maximized")
         return chrome_options
 
     def resolve_binary_path(self) -> str:

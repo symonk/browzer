@@ -48,6 +48,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         driver_listener_module_class_path: str = None,
         default_selector: str = "css",
         chrome_service_log_path: Optional[str] = None,
+        maximized: bool = True,
     ):
         self._browser: str = browser
         self._headless: bool = headless
@@ -74,6 +75,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._page_loading_strategy: str = page_loading_strategy
         self._default_selector: str = default_selector
         self._chrome_service_log_path: str = chrome_service_log_path
+        self._maximized = maximized
 
     @property
     def browser(self) -> str:
@@ -453,6 +455,21 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         """
         self._validate_type(str, path, "chrome_service_log_path")
         self._chrome_service_log_path = path
+
+    @property
+    def maximized(self) -> bool:
+        """
+        Getter for the browser maximized attribute
+        """
+        return self._maximized
+
+    @maximized.setter
+    def maximized(self, maximized: bool) -> None:
+        """
+        Setter for the browser maximized attribute
+        """
+        self._validate_type(bool, maximized, "maximized")
+        self._maximized = maximized
 
     def full_hub_endpoint(self) -> str:
         """

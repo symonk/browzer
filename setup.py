@@ -101,6 +101,7 @@ setup(
         "urllib3==1.25.10",
         "virtualenv==20.0.31",
         "webdriver-manager==3.2.2",
+        "pre-commit==2.4.0",
     ],
     extras_require={
         # eg:
