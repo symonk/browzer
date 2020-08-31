@@ -4,6 +4,9 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
+from typing import Type
+
+from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
 
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.helpers.object_validator import enforce_type_of
@@ -45,7 +48,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         stack_trace_capturing: bool = False,
         javascript_clicks: bool = False,
         javascript_sendkeys: bool = False,
-        driver_listener_module_class_path: str = None,
+        driver_event_firing_wrapper: Type[AbstractEventListener] = None,
         default_selector: str = "css",
         chrome_service_log_path: Optional[str] = None,
         maximized: bool = True,
@@ -71,7 +74,9 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._stack_trace_capturing: bool = stack_trace_capturing
         self._javascript_clicks: bool = javascript_clicks
         self._javascript_sendkeys: bool = javascript_sendkeys
-        self._driver_listener_module_class_path: str = driver_listener_module_class_path
+        self._driver_event_firing_wrapper: Type[
+            AbstractEventListener
+        ] = driver_event_firing_wrapper
         self._page_loading_strategy: str = page_loading_strategy
         self._default_selector: str = default_selector
         self._chrome_service_log_path: str = chrome_service_log_path
@@ -407,24 +412,26 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._javascript_sendkeys = javascript_sendkeys
 
     @property
-    def driver_listener_module_class_path(self) -> str:
+    def driver_event_firing_wrapper(self) -> Type[AbstractEventListener]:
         """
-        Getter for the driver_listener_module_class_path attribute
+        Getter for the driver_event_firing_wrapper attribute
         """
-        return self._driver_listener_module_class_path
+        return self._driver_event_firing_wrapper
 
-    @driver_listener_module_class_path.setter
-    def driver_listener_module_class_path(
-        self, driver_listener_module_class_path: str
+    @driver_event_firing_wrapper.setter
+    def driver_event_firing_wrapper(
+        self, driver_event_firing_wrapper: Type[AbstractEventListener]
     ) -> None:
         """
-        Setter for the driver_listener_module_class_path attribute
+        Setter for the driver_event_firing_wrapper attribute
         """
         # TODO => instantiate into an instance of the event wrapper?
         self._validate_type(
-            str, driver_listener_module_class_path, "driver_listener_module_class_path"
+            AbstractEventListener,
+            driver_event_firing_wrapper,
+            "driver_listener_module_class_path",
         )
-        self._driver_listener_module_class_path = driver_listener_module_class_path
+        self._driver_event_firing_wrapper = driver_event_firing_wrapper
 
     @property
     def default_selector(self) -> str:

@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from selenium.webdriver.firefox.webdriver import WebDriver as GeckoWebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 from sylenium.configuration.configuration import Configuration
@@ -35,6 +36,10 @@ class ChromeDriverCreator(WebDriverCreator):
             desired_capabilities=self.config.browser_capabilities,
             service_log_path=self.config.chrome_service_log_path,
         )
+        if self.config.driver_event_firing_wrapper:
+            driver = EventFiringWebDriver(
+                driver, self.config.driver_event_firing_wrapper()
+            )
         return driver
 
     def resolve_options(self) -> ChromeOptions:
