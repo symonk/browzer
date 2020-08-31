@@ -25,7 +25,7 @@ def register_session(session: Session):
     SESSIONS[session.session_id] = session
 
 
-def load(url: str, page_class: Type[PageObject] = None) -> Optional[PageObject]:
+def start(url: str, page_class: Type[PageObject] = None) -> Optional[PageObject]:
     driver = _fetch_appropriate_driver()
     if page_class is None:
         driver.get(url)
