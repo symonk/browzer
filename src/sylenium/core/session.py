@@ -7,7 +7,7 @@ from typing import Type
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
-from sylenium.configuration import Configuration
+from sylenium import Configuration
 from sylenium.core.webdriver.driver_factories import WebDriverFactory
 from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
 

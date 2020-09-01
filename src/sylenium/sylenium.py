@@ -7,7 +7,7 @@ from typing import Type
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
-from sylenium.core.core import Session
+from sylenium import Session
 from sylenium.core.elements.locators import SyleniumElement
 from sylenium.core.elements.locators import SyleniumLocator
 from sylenium.core.pages.pageobjects import PageObject

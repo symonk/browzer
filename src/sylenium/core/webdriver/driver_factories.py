@@ -14,8 +14,8 @@ from sylenium.configuration.configuration import Configuration
 from sylenium.constants import TRAVIS_ENV
 from sylenium.core.elements.locators import SyleniumElement
 from sylenium.exceptions.exceptions import DriverInstantiationException
-from sylenium.helpers.operating_system.environ import read_from_environ
-from sylenium.helpers.operating_system.filesystem import does_file_exist
+from sylenium.helpers._filesystem_helper import does_file_exist
+from sylenium.helpers._os_environ_helper import read_from_environ
 
 
 class WebDriverCreator(ABC):

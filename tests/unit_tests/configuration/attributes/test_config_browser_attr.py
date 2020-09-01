@@ -1,8 +1,8 @@
 import pytest
 from assertpy import assert_that
 
+from sylenium import Configuration
 from sylenium import Session
-from sylenium.configuration.configuration import Configuration
 
 
 def test_browser_validation_is_enforced(default_session):
