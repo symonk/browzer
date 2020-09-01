@@ -11,8 +11,8 @@ from selenium.webdriver.support.abstract_event_listener import AbstractEventList
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.helpers._object_validator import enforce_type_of
 from sylenium.helpers._object_validator import raise_if_value_not_in
-from sylenium.mixins.simple_eq_mixin import SimpleEQMixin
-from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
+from sylenium.mixins import SimpleEQMixin
+from sylenium.mixins import SimpleReprMixin
 
 
 class Configuration(SimpleReprMixin, SimpleEQMixin):

@@ -1,4 +1,4 @@
-from sylenium.mixins.simple_eq_mixin import SimpleEQMixin
+from sylenium.mixins import SimpleEQMixin
 
 
 class Dummy(SimpleEQMixin):

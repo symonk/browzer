@@ -9,7 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
 from sylenium import Configuration
 from sylenium.core.webdriver.driver_factories import WebDriverFactory
-from sylenium.mixins.simple_repr_mixin import SimpleReprMixin
+from sylenium.mixins import SimpleReprMixin
 
 
 class Session(SimpleReprMixin):
