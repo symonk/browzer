@@ -102,6 +102,7 @@ setup(
         "virtualenv==20.0.31",
         "webdriver-manager==3.2.2",
         "pre-commit==2.7.1",
+        "pyfields==1.2.0",
     ],
     extras_require={
         # eg:

@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Type
 
+from pyfields import field
+from pyfields import init_fields
 from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
+from valid8.validation_lib import instance_of
+from valid8.validation_lib import is_in
 
 from sylenium.constants import SUPPORTED_BROWSERS
-from sylenium.helpers._object_validator import enforce_type_of
-from sylenium.helpers._object_validator import raise_if_value_not_in
 from sylenium.mixins import SimpleEQMixin
 from sylenium.mixins import SimpleReprMixin
 
@@ -18,477 +19,186 @@ from sylenium.mixins import SimpleReprMixin
 class Configuration(SimpleReprMixin, SimpleEQMixin):
     """
     This is the core configuration class for sylenium.
-    This should be configured prior to instantiating any webdriver; it assumes sensible defaults otherwise.
-    :param browser: The browser type to instantiate downstream. choices are: (chrome|firefox)
-    :param headless: If the browsers instantiated will run headlessly. choices are: (True|False)
-    :param remote: If the browser will be running using a seleniuim grid, likely in the cloud. choices are: (True|False)
+    This is the core instance that is required to create a new session, fully customisable by the client.
     """
 
-    def __init__(
-        self,
-        browser: str = "chrome",
-        headless: bool = False,
-        remote: bool = False,
-        page_loading_strategy: str = "fast",
-        selenium_grid_url: str = "http://127.0.0.1",
-        selenium_grid_port: int = 4444,
-        browser_resolution: Optional[str] = None,
-        browser_version: str = "latest",
-        browser_position: Optional[str] = None,
-        downloads_directory: Optional[str] = None,
-        proxy_enabled: bool = False,
-        driver_binary_path: str = "acquire",
-        browser_capabilities: Optional[Dict[str, str]] = None,
-        chrome_options: Optional[List[str]] = None,
-        base_url: Optional[str] = None,
-        explicit_waiting: float = 30.00,
-        polling_interval: float = 00.25,
-        page_source_capturing: bool = False,
-        page_screenshot_capturing: bool = False,
-        stack_trace_capturing: bool = False,
-        javascript_clicks: bool = False,
-        javascript_sendkeys: bool = False,
-        driver_event_firing_wrapper: Type[AbstractEventListener] = None,
-        default_selector: str = "css",
-        chrome_service_log_path: Optional[str] = None,
-        maximized: bool = True,
-    ):
-        self._browser: str = browser
-        self._headless: bool = headless
-        self._remote: bool = remote
-        self._selenium_grid_url: str = selenium_grid_url
-        self._selenium_grid_port: int = selenium_grid_port
-        self._browser_resolution: Optional[str] = browser_resolution
-        self._browser_version: Optional[str] = browser_version
-        self._browser_position: Optional[str] = browser_position
-        self._downloads_directory: Optional[str] = downloads_directory
-        self._proxy_enabled: bool = proxy_enabled
-        self._driver_binary_path: str = driver_binary_path
-        self._browser_capabilities: Optional[Dict[str, str]] = browser_capabilities
-        self._chrome_options: Optional[List[str]] = chrome_options
-        self._base_url: Optional[str] = base_url
-        self._explicit_waiting: float = explicit_waiting
-        self._polling_interval: float = polling_interval
-        self._page_source_capturing: bool = page_source_capturing
-        self._page_screenshot_capturing: bool = page_screenshot_capturing
-        self._stack_trace_capturing: bool = stack_trace_capturing
-        self._javascript_clicks: bool = javascript_clicks
-        self._javascript_sendkeys: bool = javascript_sendkeys
-        self._driver_event_firing_wrapper: Optional[
-            Type[AbstractEventListener]
-        ] = driver_event_firing_wrapper
-        self._page_loading_strategy: str = page_loading_strategy
-        self._default_selector: str = default_selector
-        self._chrome_service_log_path: Optional[str] = chrome_service_log_path
-        self._maximized = maximized
+    browser: str = field(
+        check_type=True,
+        default="chrome",
+        doc="Browser type to instantiate within sessions",
+        converters=str.lower,
+        validators=is_in(SUPPORTED_BROWSERS),
+    )
 
-    @property
-    def browser(self) -> str:
-        """
-        Getter for the browser attribute
-        :return: The browser attribute (string)
-        """
-        return self._browser
+    headless: bool = field(
+        check_type=True,
+        default=True,
+        doc="Browser instantiated will be headless or not",
+    )
 
-    @browser.setter
-    def browser(self, browser: str) -> None:
-        """
-        Setter for the browser attribute.
-        :param browser: The browser to configure
-        """
-        self._validate_type(str, browser, "browser")
-        raise_if_value_not_in(SUPPORTED_BROWSERS, browser.lower(), ValueError)
-        self._browser = browser.lower()
+    remote: bool = field(
+        check_type=True,
+        default=True,
+        doc="Browser is a remote web driver for a selenium grid",
+    )
 
-    @property
-    def headless(self) -> bool:
-        """
-        The getter for the headless attribute
-        :return: The headless attribute (boolean)
-        """
-        return self._headless
+    page_loading_strategy: str = field(
+        check_type=True,
+        default="fast",
+        doc="Strategy applied by sylenium when waiting for page loading",
+        converters=lambda x: x.lower(),
+        validators=is_in({"fast"}),
+    )
 
-    @headless.setter
-    def headless(self, headless: bool) -> None:
-        """
-        The setter for the headless attribute
-        """
-        self._validate_type(bool, headless, "headless")
-        self._headless = headless
+    selenium_grid_url: str = field(
+        check_type=True,
+        default="http://localhost",
+        doc="Selenium grid address (without port)",
+        converters=lambda x: x.lower(),
+        validators=lambda x: x.startswith("http"),
+    )
 
-    @property
-    def remote(self) -> bool:
-        """
-        The getter for the remote attribute
-        :return: The remote attribute (boolean)
-        """
-        return self._remote
+    selenium_grid_port: int = field(
+        check_type=True, default=4444, doc="Selenium grid port"
+    )
 
-    @remote.setter
-    def remote(self, remote: bool) -> None:
-        """
-        The setter for the remote attribute
-        """
-        self._validate_type(bool, remote, "remote")
-        self._remote = remote
+    browser_resolution: Optional[str] = field(
+        check_type=True,
+        default=None,
+        doc="Set the browser resolution when instantiating a driver",
+        nonable=True,
+        validators=lambda x: "x" in x,
+    )
 
-    @property
-    def selenium_grid_url(self) -> str:
-        """
-        The getter for the selenium grid url attribute
-        :return: The selenium grid hub url (str)
-        """
-        return self._selenium_grid_url
+    browser_position: Optional[str] = field(
+        check_type=True,
+        default=None,
+        doc="Set the browser position when instantiating a driver",
+        nonable=True,
+        validators=lambda x: "x" in x,
+    )
 
-    @selenium_grid_url.setter
-    def selenium_grid_url(self, selenium_grid_url: str) -> None:
-        """
-        The setter for the selenium_grid_url attribute
-        """
-        # TODO -> Better validation, do not end with /wd/hub we append it etc
-        self._validate_type(str, selenium_grid_url, "selenium_grid_url")
-        self._selenium_grid_url = selenium_grid_url
+    browser_version: str = field(
+        check_type=True, default="latest", doc="Version of the driver to use"
+    )
 
-    @property
-    def selenium_grid_port(self) -> int:
-        """
-        The getter for the selenium grid port attribute
-        :return: The selenium grid hub port (int)
-        """
-        return self._selenium_grid_port
+    downloads_directory: Optional[str] = field(
+        check_type=True,
+        default=None,
+        doc="Sets the download directory that browser downloads are saved in",
+        nonable=True,
+    )
 
-    @selenium_grid_port.setter
-    def selenium_grid_port(self, selenium_grid_port: int) -> None:
-        """
-        The setter for the selenium_grid_port attribute
-        """
-        self._validate_type(int, selenium_grid_port, "selenium_grid_port")
-        self._selenium_grid_port = selenium_grid_port
+    proxy_enabled: bool = field(
+        check_type=True,
+        default=False,
+        doc="Use the sylenium proxy at runtime (useful for request/response inspection",
+    )
 
-    @property
-    def browser_resolution(self) -> Optional[str]:
-        """
-        The getter for the browser_resolution attribute
-        """
-        return self._browser_resolution
+    driver_binary_path: str = field(
+        check_type=True,
+        default="acquire",
+        doc="Should sylenium download the driver binaries automatically without $path",
+        converters=lambda x: x.lower(),
+    )
 
-    @browser_resolution.setter
-    def browser_resolution(self, browser_resolution: str) -> None:
-        """
-        The setter for the browser_resolution attribute
-        """
-        # TODO -> Better validation on a intXint
-        self._validate_type(str, browser_resolution, "browser_resolution")
-        self._selenium_grid_url = browser_resolution
+    browser_capabilities: Optional[Dict[str, str]] = field(
+        check_type=True,
+        default_factory=lambda: {},
+        doc="Desired capabilities to merge with appropriate options",
+        nonable=True,
+    )
 
-    @property
-    def browser_version(self) -> Optional[str]:
-        """
-        Getter for the browser_version attribute
-        """
-        return self._browser_version
+    chrome_options: Optional[List[str]] = field(
+        check_type=True,
+        default_factory=lambda: [],
+        doc="Chrome options to control chrome browser instantiation",
+    )
 
-    @browser_version.setter
-    def browser_version(self, browser_version: str) -> None:
-        """
-        Setter for the browser_version attribute
-        """
-        self._validate_type(str, browser_version, "browser_version")
-        self._browser_version = browser_version
+    base_url: Optional[str] = field(
+        check_type=True,
+        default=None,
+        doc="base url to automatically launch when browsers are instantiated",
+        validators=lambda x: x != "",
+    )
 
-    @property
-    def browser_position(self) -> Optional[str]:
-        """
-        Getter for the browser_position attribute
-        """
-        return self._browser_position
+    explicit_waiting: float = field(
+        check_type=True,
+        default=30.00,
+        doc="Default time to wait for element checks before raising exceptions",
+        validators=lambda x: x > 0,
+    )
 
-    @browser_position.setter
-    def browser_position(self, browser_position: str) -> None:
-        """
-        Setter for the browser_position attribute
-        """
-        self._validate_type(str, browser_position, "browser_position")
-        self._browser_position = browser_position
+    polling_interval: float = field(
+        check_type=True,
+        default=00.50,
+        doc="How often should element checks be performed to continue",
+        validators=lambda x: x > 0,
+    )
 
-    @property
-    def downloads_directory(self) -> Optional[str]:
-        """
-        Getter for the downloads_directory attribute
-        """
-        return self._downloads_directory
+    page_source_capturing: bool = field(
+        check_type=True,
+        default=False,
+        doc="Automatically store page source .html during the driver lifetime",
+    )
 
-    @downloads_directory.setter
-    def downloads_directory(self, downloads_directory: str) -> None:
-        """
-        Setter for the downloads_directory attribute
-        """
-        self._validate_type(str, downloads_directory, "downloads_directory")
-        self._downloads_directory = downloads_directory
+    page_screenshot_capturing: bool = field(
+        check_type=True,
+        default=False,
+        doc="Automatically store page screenshots during the driver lifetime",
+    )
 
-    @property
-    def proxy_enabled(self) -> bool:
-        """
-        Getter for the proxy_enabled attribute
-        """
-        return self._proxy_enabled
+    stack_trace_capturing: bool = field(
+        check_type=True,
+        default=False,
+        doc="Automatically store stack trace information when things go wrong",
+    )
 
-    @proxy_enabled.setter
-    def proxy_enabled(self, proxy_enabled: bool) -> None:
-        """
-        Setter for the downloads_directory attribute
-        """
-        self._validate_type(bool, proxy_enabled, "proxy_enabled")
-        self._proxy_enabled = proxy_enabled
+    javascript_clicks: bool = field(
+        check_type=True,
+        default=False,
+        doc="Execute javascript to perform clicking actions",
+    )
 
-    @property
-    def driver_binary_path(self) -> str:
-        """
-        Getter for the driver_binary_path
-        """
-        return self._driver_binary_path
+    javascript_sendkeys: bool = field(
+        check_type=True,
+        default=False,
+        doc="Execute javascript to perform sending key actions",
+    )
 
-    @driver_binary_path.setter
-    def driver_binary_path(self, driver_binary_path: str) -> None:
-        """
-        Setter for the driver_binary_path
-        This is used to determine which version of the binaries to automatically acquire.
-        If this value is 'latest', we will automatically acquire the latest version for the given binary.
-        """
-        self._validate_type(str, driver_binary_path, "driver_binary_path")
-        self._driver_binary_path = driver_binary_path
+    driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = field(
+        check_type=True,
+        default=None,
+        doc="Event firing driver wrapper class",
+        validators=instance_of(AbstractEventListener),
+    )
 
-    @property
-    def browser_capabilities(self) -> Optional[Dict[str, str]]:
-        """
-        Getter for the browser_capabilities attribute
-        """
-        return self._browser_capabilities
+    default_selector: str = field(
+        check_type=True,
+        default="css",
+        doc="Default selector for finding elements when not specified explicitly",
+        validators=is_in({"css"}),
+        converters=lambda x: x.lower(),
+    )
 
-    @browser_capabilities.setter
-    def browser_capabilities(self, browser_capabilities: Dict[str, str]) -> None:
-        """
-        Setter for the browser_capabilities attribute
-        """
-        self._validate_type(Dict, browser_capabilities, "browser_capabilities")
-        self._browser_capabilities = browser_capabilities
+    chrome_service_log_path: Optional[str] = field(
+        check_type=True,
+        default=None,
+        doc="Custom path to write for chrome log / debug output",
+    )
 
-    @property
-    def chrome_options(self) -> Optional[List[str]]:
-        """
-        Getter for the chrome_options attribute
-        """
-        return self._chrome_options
+    maximized: bool = field(
+        check_type=True,
+        default=True,
+        doc="Should the browser be maximized when instantiated",
+    )
 
-    @chrome_options.setter
-    def chrome_options(self, chrome_options: List[str]) -> None:
-        """
-        Setter for the chrome_options attribute
-        """
-        self._validate_type(List, chrome_options, "chrome_options")
-        self._chrome_options = chrome_options
-
-    @property
-    def base_url(self) -> Optional[str]:
-        """
-        Getter for the base_url attribute
-        """
-        return self._base_url
-
-    @base_url.setter
-    def base_url(self, base_url: str) -> None:
-        """
-        Setter for the base_url attribute
-        """
-        # TODO => validate is url
-        self._validate_type(str, base_url, "base_url")
-        self._base_url = base_url
-
-    @property
-    def explicit_waiting(self) -> float:
-        """
-        Getter for the explicit_waiting attribute
-        """
-        return self._explicit_waiting
-
-    @explicit_waiting.setter
-    def explicit_waiting(self, explicit_waiting: float) -> None:
-        """
-        Setter for the explicit_waiting attribute
-        """
-        self._validate_type(float, explicit_waiting, "explicit_waiting")
-        self._explicit_waiting = explicit_waiting
-
-    @property
-    def polling_interval(self) -> float:
-        """
-        Getter for the polling_interval attribute
-        """
-        return self.polling_interval
-
-    @polling_interval.setter
-    def polling_interval(self, polling_interval: float) -> None:
-        """
-        Setter for the polling_interval attribute
-        """
-        self._validate_type(float, polling_interval, "polling_interval")
-        self._polling_interval = polling_interval
-
-    @property
-    def page_source_capturing(self) -> bool:
-        """
-        Getter for the page_source_capturing attribute
-        """
-        return self._page_source_capturing
-
-    @page_source_capturing.setter
-    def page_source_capturing(self, page_source_capturing: bool) -> None:
-        """
-        Setter for the page_source_capturing attribute
-        """
-        self._validate_type(bool, page_source_capturing, "page_source_capturing")
-        self._page_source_capturing = page_source_capturing
-
-    @property
-    def page_screenshot_capturing(self) -> bool:
-        """
-        Getter for the page_screenshot_capturing attribute
-        """
-        return self._page_source_capturing
-
-    @page_screenshot_capturing.setter
-    def page_screenshot_capturing(self, page_screenshot_capturing: bool) -> None:
-        """
-        Setter for the page_screenshot_capturing attribute
-        """
-        self._validate_type(
-            bool, page_screenshot_capturing, "page_screenshot_capturing"
-        )
-        self._page_screenshot_capturing = page_screenshot_capturing
-
-    @property
-    def stack_trace_capturing(self) -> bool:
-        """
-        Getter for the stack_trace_capturing attribute
-        """
-        return self._stack_trace_capturing
-
-    @stack_trace_capturing.setter
-    def stack_trace_capturing(self, stack_trace_capturing: bool) -> None:
-        """
-        Setter for the stack_trace_capturing attribute
-        """
-        self._validate_type(bool, stack_trace_capturing, "stack_trace_capturing")
-        self._stack_trace_capturing = stack_trace_capturing
-
-    @property
-    def javascript_clicks(self) -> bool:
-        """
-        Getter for the javascript_clicks attribute
-        """
-        return self._javascript_clicks
-
-    @javascript_clicks.setter
-    def javascript_clicks(self, javascript_clicks: bool) -> None:
-        """
-        Setter for the javascript_clicks attribute
-        """
-        self._validate_type(bool, javascript_clicks, "javascript_clicks")
-        self._javascript_clicks = javascript_clicks
-
-    @property
-    def javascript_sendkeys(self) -> bool:
-        """
-        Getter for the javascript_sendkeys attribute
-        """
-        return self._javascript_sendkeys
-
-    @javascript_sendkeys.setter
-    def javascript_sendkeys(self, javascript_sendkeys: bool) -> None:
-        """
-        Setter for the javascript_sendkeys attribute
-        """
-        self._validate_type(bool, javascript_sendkeys, "javascript_sendkeys")
-        self._javascript_sendkeys = javascript_sendkeys
-
-    @property
-    def driver_event_firing_wrapper(self) -> Optional[Type[AbstractEventListener]]:
-        """
-        Getter for the driver_event_firing_wrapper attribute
-        """
-        return self._driver_event_firing_wrapper
-
-    @driver_event_firing_wrapper.setter
-    def driver_event_firing_wrapper(
-        self, driver_event_firing_wrapper: Type[AbstractEventListener]
-    ) -> None:
-        """
-        Setter for the driver_event_firing_wrapper attribute
-        """
-        # TODO => instantiate into an instance of the event wrapper?
-        self._validate_type(
-            AbstractEventListener,
-            driver_event_firing_wrapper,
-            "driver_listener_module_class_path",
-        )
-        self._driver_event_firing_wrapper = driver_event_firing_wrapper
-
-    @property
-    def default_selector(self) -> str:
-        """
-        Getter for the default_selector attribute
-        """
-        return self._default_selector
-
-    @default_selector.setter
-    def default_selector(self, default_selector: str) -> None:
-        """
-        Setter for the default_selector attribute
-        """
-        self._validate_type(str, default_selector, "default_selector")
-        self._default_selector = default_selector
-
-    @property
-    def chrome_service_log_path(self) -> Optional[str]:
-        """
-        Getter for the chrome service log path
-        """
-        return self._chrome_service_log_path
-
-    @chrome_service_log_path.setter
-    def chrome_service_log_path(self, path: str) -> None:
-        """
-        Setter for the chrome service log path
-        """
-        self._validate_type(str, path, "chrome_service_log_path")
-        self._chrome_service_log_path = path
-
-    @property
-    def maximized(self) -> bool:
-        """
-        Getter for the browser maximized attribute
-        """
-        return self._maximized
-
-    @maximized.setter
-    def maximized(self, maximized: bool) -> None:
-        """
-        Setter for the browser maximized attribute
-        """
-        self._validate_type(bool, maximized, "maximized")
-        self._maximized = maximized
+    @init_fields
+    def __init__(self):
+        ...
 
     def full_hub_endpoint(self) -> str:
         """
         The getter for the full hub endpoint that nodes are registered to and tests should be launched to.
         """
-        # TODO -> Better validation, is it reachable? is it a url?
         return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
-
-    @staticmethod
-    def _validate_type(expected: Any, actual: Any, attr: str):
-        """
-        Wrapper function for validating types of attribute(s) and raising upon failing checks.
-        """
-        msg = f"Attribute: {attr} only permits type of {expected}.  You passed: {type(actual)}"
-        enforce_type_of(expected, actual, ValueError, msg)

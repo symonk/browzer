@@ -17,6 +17,7 @@ packaging==20.4
 pluggy==0.13.1
 pre-commit==2.7.1
 py==1.9.0
+pyfields==1.2.0
 pyparsing==2.4.7
 pytest==6.0.1
 pytest-cov==2.10.1
