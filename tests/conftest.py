@@ -2,6 +2,7 @@ import pytest
 
 from sylenium import Configuration
 from sylenium import Session
+from sylenium import session_manager
 
 
 @pytest.fixture
@@ -19,3 +20,8 @@ def sy_session():
 def headless_session():
     with Session(configuration=Configuration(headless=True)) as session:
         yield session
+
+
+@pytest.fixture(autouse=True)
+def clean_up_sessions(request):
+    request.addfinalizer(session_manager.deactivate)

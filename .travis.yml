@@ -24,7 +24,7 @@ install:
   - pip --version
   - tox --version
 script:
-  - tox -v
+  - tox -v -p --parallel-live
 after_failure:
   - more .tox/log/* | cat
   - more .tox/*/log/* | cat

@@ -37,9 +37,10 @@ class SessionManager:
         return fetched_session
 
     def deactivate(self):
-        fetched_session = self.sessions.get(threading.get_ident())
-        if fetched_session:
-            del fetched_session
+        try:
+            del self.sessions[threading.get_ident()]
+        except KeyError:
+            ...
 
 
 session_manager = SessionManager()
