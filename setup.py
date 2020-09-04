@@ -97,7 +97,7 @@ setup(
         "selenium==3.141.0",
         "six==1.15.0",
         "toml==0.10.1",
-        "tox==3.19.0",
+        "tox==3.20.0",
         "urllib3==1.25.10",
         "virtualenv==20.0.31",
         "webdriver-manager==3.2.2",
