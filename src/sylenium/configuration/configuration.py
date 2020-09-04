@@ -8,8 +8,8 @@ from typing import Type
 from pyfields import field
 from pyfields import init_fields
 from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
-from valid8.validation_lib import instance_of
 from valid8.validation_lib import is_in
+from valid8.validation_lib import subclass_of
 
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.mixins import SimpleEQMixin
@@ -38,7 +38,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     remote: bool = field(
         check_type=True,
-        default=True,
+        default=False,
         doc="Browser is a remote web driver for a selenium grid",
     )
 
@@ -103,15 +103,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     )
 
     browser_capabilities: Optional[Dict[str, str]] = field(
-        check_type=True,
-        default_factory=lambda: {},
+        check_type=False,
+        default_factory=lambda x: {},
         doc="Desired capabilities to merge with appropriate options",
         nonable=True,
     )
 
     chrome_options: Optional[List[str]] = field(
-        check_type=True,
-        default_factory=lambda: [],
+        check_type=False,
+        default_factory=lambda x: [],
         doc="Chrome options to control chrome browser instantiation",
     )
 
@@ -167,10 +167,10 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     )
 
     driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = field(
-        check_type=True,
+        check_type=False,
         default=None,
         doc="Event firing driver wrapper class",
-        validators=instance_of(AbstractEventListener),
+        validators=subclass_of(AbstractEventListener),
     )
 
     default_selector: str = field(
