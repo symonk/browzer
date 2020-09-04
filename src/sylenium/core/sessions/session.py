@@ -36,7 +36,7 @@ class SessionManager:
             )
         return fetched_session
 
-    def deactivate(self):
+    def deactivate(self) -> None:
         try:
             del self.sessions[threading.get_ident()]
         except KeyError:
@@ -85,9 +85,3 @@ class Session(SimpleReprMixin):
     def __del__(self):
         # Clean up when not used as a ctx manager
         session_manager.deactivate()
-
-    def __hash__(self):
-        ...
-
-    def __eq__(self, other):
-        ...
