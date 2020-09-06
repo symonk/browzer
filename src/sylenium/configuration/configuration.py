@@ -27,6 +27,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         selenium_grid_port: int = 4444,
         browser_resolution: Optional[str] = None,
         browser_position: Optional[str] = None,
+        browser_version: str = "latest",
     ):
         self.browser = browser
         self.headless = headless
@@ -36,6 +37,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.selenium_grid_port = selenium_grid_port
         self.browser_resolution = browser_resolution
         self.browser_position = browser_position
+        self.browser_version = browser_version
 
     @property
     def browser(self) -> str:
@@ -116,6 +118,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
             self._validate_types("browser_position", browser_position, str)
             self._validate_contains_x(browser_position)
         self._browser_position = browser_position
+
+    @property
+    def browser_version(self) -> str:
+        return self._browser_version
+
+    @browser_version.setter
+    def browser_version(self, browser_version: str) -> None:
+        self._validate_types("browser_version", browser_version, str)
+        self._browser_version = browser_version
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
