@@ -16,3 +16,7 @@ def test_remote_incorrect_type(configuration):
     assert_that(exc.value.args[0]).is_equal_to(
         "remote= should be of type: <class 'bool'>"
     )
+
+
+def test_remote_default(configuration):
+    assert_that(configuration().remote).is_false()

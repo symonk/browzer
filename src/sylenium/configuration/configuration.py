@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from typing import Any
+from typing import Iterable
 from typing import Type
 
 from sylenium.constants import SUPPORTED_BROWSERS
+from sylenium.constants import SUPPORTED_PAGE_LOADING_STRATEGIES
 from sylenium.mixins import SimpleEQMixin
 from sylenium.mixins import SimpleReprMixin
 
@@ -15,11 +17,16 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     """
 
     def __init__(
-        self, browser: str = "chrome", headless: bool = True, remote: bool = False
+        self,
+        browser: str = "chrome",
+        headless: bool = True,
+        remote: bool = False,
+        page_loading_strategy: str = "fast",
     ):
         self.browser = browser
         self.headless = headless
         self.remote = remote
+        self.page_loading_strategy = page_loading_strategy
 
     @property
     def browser(self) -> str:
@@ -29,10 +36,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def browser(self, browser: str) -> None:
         self._validate_types("browser", browser, str)
         browser = browser.lower()
-        if browser not in SUPPORTED_BROWSERS:
-            raise ValueError(
-                f"browser={browser} is not supported, choose either: {SUPPORTED_BROWSERS}"
-            )
+        self._validate_is_in(browser, SUPPORTED_BROWSERS)
         self._browser = browser.lower()
 
     @property
@@ -53,6 +57,17 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._validate_types("remote", remote, bool)
         self._remote = remote
 
+    @property
+    def page_loading_strategy(self) -> str:
+        return self._page_loading_strategy
+
+    @page_loading_strategy.setter
+    def page_loading_strategy(self, page_loading_strategy: str) -> str:
+        self._validate_types("page_loading_strategy", page_loading_strategy, str)
+        page_loading_strategy = page_loading_strategy.lower()
+        self._validate_is_in(page_loading_strategy, SUPPORTED_PAGE_LOADING_STRATEGIES)
+        self._page_loading_strategy = page_loading_strategy
+
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
         """
@@ -60,6 +75,13 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         """
         if not isinstance(value, expected_type):
             raise ValueError(f"{attr}= should be of type: {str(expected_type)}")
+
+    @staticmethod
+    def _validate_is_in(data: str, supported: Iterable[str]) -> None:
+        if data not in supported:
+            raise ValueError(
+                f"value: {data} was not in the supported values: {supported}"
+            )
 
     def full_hub_endpoint(self) -> str:
         """

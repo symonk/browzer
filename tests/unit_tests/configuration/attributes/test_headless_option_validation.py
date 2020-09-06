@@ -16,3 +16,7 @@ def test_headless_bad_type(configuration):
     assert_that(exc.value.args[0]).is_equal_to(
         "headless= should be of type: <class 'bool'>"
     )
+
+
+def test_headless_default(configuration):
+    assert_that(configuration().headless).is_true()
