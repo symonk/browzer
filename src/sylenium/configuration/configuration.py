@@ -153,6 +153,13 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._validate_types("proxy_enabled", proxy_enabled, bool)
         self._proxy_enabled = proxy_enabled
 
+    @property
+    def selenium_grid(self) -> str:
+        """
+        Retrieve the full hub endpoint to points remote browsers at for running tests in the cloud
+        """
+        return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
+
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
         """
@@ -186,9 +193,3 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def is_valid_directory(path: str) -> None:
         if not os.path.isdir(path):
             raise FileExistsError(f"Directory: {path} was not found on the file system")
-
-    def full_hub_endpoint(self) -> str:
-        """
-        The getter for the full hub endpoint that nodes are registered to and tests should be launched to.
-        """
-        return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
