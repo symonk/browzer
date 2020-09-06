@@ -22,11 +22,13 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         headless: bool = True,
         remote: bool = False,
         page_loading_strategy: str = "fast",
+        selenium_grid_url: str = "http://localhost",
     ):
         self.browser = browser
         self.headless = headless
         self.remote = remote
         self.page_loading_strategy = page_loading_strategy
+        self.selenium_grid_url = selenium_grid_url
 
     @property
     def browser(self) -> str:
@@ -62,11 +64,20 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         return self._page_loading_strategy
 
     @page_loading_strategy.setter
-    def page_loading_strategy(self, page_loading_strategy: str) -> str:
+    def page_loading_strategy(self, page_loading_strategy: str) -> None:
         self._validate_types("page_loading_strategy", page_loading_strategy, str)
         page_loading_strategy = page_loading_strategy.lower()
         self._validate_is_in(page_loading_strategy, SUPPORTED_PAGE_LOADING_STRATEGIES)
         self._page_loading_strategy = page_loading_strategy
+
+    @property
+    def selenium_grid_url(self) -> str:
+        return self._selenium_grid_url
+
+    @selenium_grid_url.setter
+    def selenium_grid_url(self, selenium_grid_url: str) -> None:
+        self._validate_types("selenium_grid_url", selenium_grid_url, str)
+        self._selenium_grid_url = selenium_grid_url
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
