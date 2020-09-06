@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 from typing import Iterable
 from typing import Optional
@@ -28,6 +29,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         browser_resolution: Optional[str] = None,
         browser_position: Optional[str] = None,
         browser_version: str = "latest",
+        download_directory: Optional[str] = None,
     ):
         self.browser = browser
         self.headless = headless
@@ -38,6 +40,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.browser_resolution = browser_resolution
         self.browser_position = browser_position
         self.browser_version = browser_version
+        self.download_directory = download_directory
 
     @property
     def browser(self) -> str:
@@ -128,6 +131,17 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self._validate_types("browser_version", browser_version, str)
         self._browser_version = browser_version
 
+    @property
+    def download_directory(self) -> Optional[str]:
+        return self._download_directory
+
+    @download_directory.setter
+    def download_directory(self, download_directory: Optional[str]) -> None:
+        if download_directory:
+            self._validate_types("download_directory", download_directory, str)
+            self.is_valid_directory(download_directory)
+        self._download_directory = download_directory
+
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
         """
@@ -156,6 +170,11 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
             raise ValueError(
                 f"value: {data} was resolution or position based and did not include 'x'"
             )
+
+    @staticmethod
+    def is_valid_directory(path: str) -> None:
+        if not os.path.isdir(path):
+            raise FileExistsError(f"Directory: {path} was not found on the file system")
 
     def full_hub_endpoint(self) -> str:
         """
