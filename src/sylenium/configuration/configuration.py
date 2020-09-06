@@ -30,6 +30,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         browser_position: Optional[str] = None,
         browser_version: str = "latest",
         download_directory: Optional[str] = None,
+        proxy_enabled: bool = False,
     ):
         self.browser = browser
         self.headless = headless
@@ -41,6 +42,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.browser_position = browser_position
         self.browser_version = browser_version
         self.download_directory = download_directory
+        self.proxy_enabled = proxy_enabled
 
     @property
     def browser(self) -> str:
@@ -141,6 +143,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
             self._validate_types("download_directory", download_directory, str)
             self.is_valid_directory(download_directory)
         self._download_directory = download_directory
+
+    @property
+    def proxy_enabled(self) -> bool:
+        return self._proxy_enabled
+
+    @proxy_enabled.setter
+    def proxy_enabled(self, proxy_enabled: bool) -> None:
+        self._validate_types("proxy_enabled", proxy_enabled, bool)
+        self._proxy_enabled = proxy_enabled
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
