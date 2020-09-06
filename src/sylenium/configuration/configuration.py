@@ -26,6 +26,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         selenium_grid_url: str = "http://localhost",
         selenium_grid_port: int = 4444,
         browser_resolution: Optional[str] = None,
+        browser_position: Optional[str] = None,
     ):
         self.browser = browser
         self.headless = headless
@@ -34,6 +35,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.selenium_grid_url = selenium_grid_url
         self.selenium_grid_port = selenium_grid_port
         self.browser_resolution = browser_resolution
+        self.browser_position = browser_position
 
     @property
     def browser(self) -> str:
@@ -101,11 +103,19 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def browser_resolution(self, browser_resolution: str) -> None:
         if browser_resolution:
             self._validate_types("browser_resolution", browser_resolution, str)
-            if "x" not in browser_resolution:
-                raise ValueError(
-                    "browser_resolution= should contain 'x' to decipher width vs height"
-                )
+            self._validate_contains_x(browser_resolution)
         self._browser_resolution = browser_resolution
+
+    @property
+    def browser_position(self) -> Optional[str]:
+        return self._browser_position
+
+    @browser_position.setter
+    def browser_position(self, browser_position: str) -> None:
+        if browser_position:
+            self._validate_types("browser_position", browser_position, str)
+            self._validate_contains_x(browser_position)
+        self._browser_position = browser_position
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
@@ -117,9 +127,23 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @staticmethod
     def _validate_is_in(data: str, supported: Iterable[str]) -> None:
+        """
+        Validate a piece of data is in a particular iterable
+        """
         if data not in supported:
             raise ValueError(
                 f"value: {data} was not in the supported values: {supported}"
+            )
+
+    @staticmethod
+    def _validate_contains_x(data: str) -> None:
+        """
+        For resolution or position based attrs, validate 'x' is in the value
+        This is because 'x' is required to split for deciphering things like width vs height
+        """
+        if "x" not in data:
+            raise ValueError(
+                f"value: {data} was resolution or position based and did not include 'x'"
             )
 
     def full_hub_endpoint(self) -> str:

@@ -22,5 +22,5 @@ def test_browser_resolution_contains_x(configuration):
     with pytest.raises(ValueError) as exc:
         configuration(browser_resolution="1920")
     assert_that(exc.value.args[0]).is_equal_to(
-        "browser_resolution= should contain 'x' to decipher width vs height"
+        "value: 1920 was resolution or position based and did not include 'x'"
     )
