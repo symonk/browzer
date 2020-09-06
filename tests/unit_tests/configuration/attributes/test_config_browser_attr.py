@@ -1,24 +1,28 @@
 import pytest
 from assertpy import assert_that
 
-from sylenium import Configuration
+from sylenium.constants import SUPPORTED_BROWSERS
 
 
-def test_browser_validation_is_enforced():
-    with pytest.raises(ValueError):
-        Configuration(browser="unsupported")
+def test_browser_unsupported_value(configuration):
+    test_browser = "unsupported"
+    with pytest.raises(ValueError) as exc:
+        configuration(browser=test_browser)
+    assert_that(exc.value.args[0]).is_equal_to(
+        f"browser={test_browser} is not supported, choose either: {SUPPORTED_BROWSERS}"
+    )
 
 
-def test_browser_type_check_enforcement(default_session):
-    with pytest.raises(ValueError):
-        Configuration(browser="99")
+def test_browser_incorrect_type(configuration):
+    with pytest.raises(ValueError) as exc:
+        configuration(browser=99)
+    assert_that(exc.value.args[0]).is_equal_to(
+        "browser= should be of type: <class 'str'>"
+    )
 
 
-def test_browser_chrome_is_ok():
-    assert_that(Configuration(browser="chrome").browser).is_equal_to("chrome")
-    assert_that(Configuration(browser="ChRoMe").browser).is_equal_to("chrome")
-
-
-def test_firefox_is_ok():
-    assert_that(Configuration(browser="firefox").browser).is_equal_to("firefox")
-    assert_that(Configuration(browser="FiReFox").browser).is_equal_to("firefox")
+def test_browser_lowers_successful(configuration):
+    assert_that(configuration(browser="chrome").browser).is_equal_to("chrome")
+    assert_that(configuration(browser="ChroME").browser).is_equal_to("chrome")
+    assert_that(configuration(browser="firefox").browser).is_equal_to("firefox")
+    assert_that(configuration(browser="FiReFox").browser).is_equal_to("firefox")
