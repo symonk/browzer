@@ -23,12 +23,14 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         remote: bool = False,
         page_loading_strategy: str = "fast",
         selenium_grid_url: str = "http://localhost",
+        selenium_grid_port: int = 4444,
     ):
         self.browser = browser
         self.headless = headless
         self.remote = remote
         self.page_loading_strategy = page_loading_strategy
         self.selenium_grid_url = selenium_grid_url
+        self.selenium_grid_port = selenium_grid_port
 
     @property
     def browser(self) -> str:
@@ -78,6 +80,15 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def selenium_grid_url(self, selenium_grid_url: str) -> None:
         self._validate_types("selenium_grid_url", selenium_grid_url, str)
         self._selenium_grid_url = selenium_grid_url
+
+    @property
+    def selenium_grid_port(self) -> int:
+        return self._selenium_grid_port
+
+    @selenium_grid_port.setter
+    def selenium_grid_port(self, selenium_grid_port: int) -> None:
+        self._validate_types("selenium_grid_port", selenium_grid_port, int)
+        self._selenium_grid_port = selenium_grid_port
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
