@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 from typing import Iterable
+from typing import Optional
 from typing import Type
 
 from sylenium.constants import SUPPORTED_BROWSERS
@@ -24,6 +25,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         page_loading_strategy: str = "fast",
         selenium_grid_url: str = "http://localhost",
         selenium_grid_port: int = 4444,
+        browser_resolution: Optional[str] = None,
     ):
         self.browser = browser
         self.headless = headless
@@ -31,6 +33,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.page_loading_strategy = page_loading_strategy
         self.selenium_grid_url = selenium_grid_url
         self.selenium_grid_port = selenium_grid_port
+        self.browser_resolution = browser_resolution
 
     @property
     def browser(self) -> str:
@@ -89,6 +92,20 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def selenium_grid_port(self, selenium_grid_port: int) -> None:
         self._validate_types("selenium_grid_port", selenium_grid_port, int)
         self._selenium_grid_port = selenium_grid_port
+
+    @property
+    def browser_resolution(self) -> Optional[str]:
+        return self._browser_resolution
+
+    @browser_resolution.setter
+    def browser_resolution(self, browser_resolution: str) -> None:
+        if browser_resolution:
+            self._validate_types("browser_resolution", browser_resolution, str)
+            if "x" not in browser_resolution:
+                raise ValueError(
+                    "browser_resolution= should contain 'x' to decipher width vs height"
+                )
+        self._browser_resolution = browser_resolution
 
     @staticmethod
     def _validate_types(attr: str, value: Any, expected_type: Type) -> None:
