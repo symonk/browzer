@@ -18,7 +18,7 @@ before_install:
   - sleep 3
   - export CHROME_BIN=/usr/bin/google-chrome
 install:
-  - python -mpip install --progress-bar=off tox -rci/requirements/testing.txt
+  - python -mpip install --progress-bar=off tox -rrequirements/testing.txt
   - virtualenv --version
   - easy_install --version
   - pip --version
