@@ -268,7 +268,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         if not function(value, expected_type):
             raise TypeError(
                 f"{attr}= should be of type: {' '.join(str(t) for t in expected_type)}"
-            )
+            ) from None
 
     @staticmethod
     def _validate_is_in(data: str, supported: Iterable[str]) -> None:
