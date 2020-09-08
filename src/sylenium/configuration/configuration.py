@@ -31,6 +31,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         browser_version: str = "latest",
         download_directory: Optional[str] = None,
         proxy_enabled: bool = False,
+        driver_binary_path: str = "acquire",
     ):
         self.browser = browser
         self.headless = headless
@@ -43,6 +44,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.browser_version = browser_version
         self.download_directory = download_directory
         self.proxy_enabled = proxy_enabled
+        self.driver_binary_path = driver_binary_path
 
     @property
     def browser(self) -> str:
@@ -152,6 +154,17 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     def proxy_enabled(self, proxy_enabled: bool) -> None:
         self._validate_types("proxy_enabled", proxy_enabled, bool)
         self._proxy_enabled = proxy_enabled
+
+    @property
+    def driver_binary_path(self) -> str:
+        return self._driver_binary_path
+
+    @driver_binary_path.setter
+    def driver_binary_path(self, driver_binary_path: str) -> None:
+        self._validate_types("driver_binary_path", driver_binary_path, str)
+        self._driver_binary_path = driver_binary_path
+
+    # non attr functions
 
     @property
     def selenium_grid(self) -> str:

@@ -76,12 +76,12 @@ class Session(SimpleReprMixin):
         exc_type: Optional[Type[BaseException]],
         exc_value: Optional[BaseException],
         traceback: Optional[TracebackType],
-    ):
+    ) -> None:
         if self._driver:
             self._driver.quit()
             del self._driver
         return False
 
-    def __del__(self):
+    def __del__(self) -> None:
         # Clean up when not used as a ctx manager
         session_manager.deactivate()
