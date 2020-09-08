@@ -8,5 +8,5 @@ def test_getting_url_functions_correctly():
     assert_that(
         Configuration(
             selenium_grid_port=9999, selenium_grid_url="https://100.0.0.0"
-        ).full_hub_endpoint()
+        ).selenium_grid
     ).is_equal_to(expected)
