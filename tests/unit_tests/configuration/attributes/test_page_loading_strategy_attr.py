@@ -10,7 +10,7 @@ def test_page_loading_strategy_supported(configuration):
 
 
 def test_page_loading_strategy(configuration):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(TypeError) as exc:
         configuration(page_loading_strategy=True)
     assert_that(exc.value.args[0]).is_equal_to(
         "page_loading_strategy= should be of type: <class 'str'>"
