@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from inspect import isclass
 from typing import Any
 from typing import Dict
 from typing import Iterable
@@ -235,6 +236,10 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self, driver_event_firing_wrapper: Optional[Type[AbstractEventListener]]
     ) -> None:
         if driver_event_firing_wrapper:
+            if not isclass(driver_event_firing_wrapper):
+                raise ValueError(
+                    "driver_event_firing_wrapper= should be of type <class>"
+                )
             self._type_check(
                 "driver_event_firing_wrapper",
                 driver_event_firing_wrapper,
