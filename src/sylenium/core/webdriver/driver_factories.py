@@ -67,9 +67,7 @@ class ChromeDriverCreator(WebDriverCreator):
             if "download.default_directory" not in chrome_options.arguments:
                 chrome_options.add_experimental_option(
                     "prefs",
-                    {
-                        "download.default_directory": f"{self.config.downloads_directory}"
-                    },
+                    {"download.default_directory": f"{self.config.download_directory}"},
                 )
         return chrome_options
 

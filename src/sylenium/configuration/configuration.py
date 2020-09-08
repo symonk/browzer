@@ -7,8 +7,10 @@ from typing import Iterable
 from typing import Optional
 from typing import Set
 from typing import Tuple
+from typing import Type
 
 from selenium.webdriver.chrome.webdriver import Options as ChromeOptions
+from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
 
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.constants import SUPPORTED_PAGE_LOADING_STRATEGIES
@@ -38,6 +40,9 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         driver_binary_path: str = "acquire",
         browser_capabilities: Optional[Dict[str, str]] = None,
         chrome_options: Optional[Set[str], ChromeOptions] = None,
+        chrome_service_log_path: Optional[str] = None,
+        maximized: bool = True,
+        driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
     ):
         self.browser = browser
         self.headless = headless
@@ -53,6 +58,9 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.driver_binary_path = driver_binary_path
         self.chrome_options = chrome_options
         self.browser_capabilities = browser_capabilities
+        self.chrome_service_log_path = chrome_service_log_path
+        self.maximized = maximized
+        self.driver_event_firing_wrapper = driver_event_firing_wrapper
 
     @property
     def browser(self) -> str:
@@ -60,7 +68,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @browser.setter
     def browser(self, browser: str) -> None:
-        self._validate_types("browser", browser, (str,))
+        self._type_check("browser", browser, (str,))
         browser = browser.lower()
         self._validate_is_in(browser, SUPPORTED_BROWSERS)
         self._browser = browser.lower()
@@ -71,7 +79,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @headless.setter
     def headless(self, headless: bool) -> None:
-        self._validate_types("headless", headless, (bool,))
+        self._type_check("headless", headless, (bool,))
         self._headless = headless
 
     @property
@@ -80,7 +88,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @remote.setter
     def remote(self, remote: bool) -> None:
-        self._validate_types("remote", remote, (bool,))
+        self._type_check("remote", remote, (bool,))
         self._remote = remote
 
     @property
@@ -89,7 +97,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @page_loading_strategy.setter
     def page_loading_strategy(self, page_loading_strategy: str) -> None:
-        self._validate_types("page_loading_strategy", page_loading_strategy, (str,))
+        self._type_check("page_loading_strategy", page_loading_strategy, (str,))
         page_loading_strategy = page_loading_strategy.lower()
         self._validate_is_in(page_loading_strategy, SUPPORTED_PAGE_LOADING_STRATEGIES)
         self._page_loading_strategy = page_loading_strategy
@@ -100,7 +108,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @selenium_grid_url.setter
     def selenium_grid_url(self, selenium_grid_url: str) -> None:
-        self._validate_types("selenium_grid_url", selenium_grid_url, (str,))
+        self._type_check("selenium_grid_url", selenium_grid_url, (str,))
         self._selenium_grid_url = selenium_grid_url
 
     @property
@@ -109,7 +117,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @selenium_grid_port.setter
     def selenium_grid_port(self, selenium_grid_port: int) -> None:
-        self._validate_types("selenium_grid_port", selenium_grid_port, (int,))
+        self._type_check("selenium_grid_port", selenium_grid_port, (int,))
         self._selenium_grid_port = selenium_grid_port
 
     @property
@@ -119,7 +127,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     @browser_resolution.setter
     def browser_resolution(self, browser_resolution: str) -> None:
         if browser_resolution:
-            self._validate_types("browser_resolution", browser_resolution, (str,))
+            self._type_check("browser_resolution", browser_resolution, (str,))
             self._validate_contains_x(browser_resolution)
         self._browser_resolution = browser_resolution
 
@@ -130,7 +138,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     @browser_position.setter
     def browser_position(self, browser_position: str) -> None:
         if browser_position:
-            self._validate_types("browser_position", browser_position, (str,))
+            self._type_check("browser_position", browser_position, (str,))
             self._validate_contains_x(browser_position)
         self._browser_position = browser_position
 
@@ -140,7 +148,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @browser_version.setter
     def browser_version(self, browser_version: str) -> None:
-        self._validate_types("browser_version", browser_version, (str,))
+        self._type_check("browser_version", browser_version, (str,))
         self._browser_version = browser_version
 
     @property
@@ -150,7 +158,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     @download_directory.setter
     def download_directory(self, download_directory: Optional[str]) -> None:
         if download_directory:
-            self._validate_types("download_directory", download_directory, (str,))
+            self._type_check("download_directory", download_directory, (str,))
             self.is_valid_directory(download_directory)
         self._download_directory = download_directory
 
@@ -160,7 +168,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @proxy_enabled.setter
     def proxy_enabled(self, proxy_enabled: bool) -> None:
-        self._validate_types("proxy_enabled", proxy_enabled, (bool,))
+        self._type_check("proxy_enabled", proxy_enabled, (bool,))
         self._proxy_enabled = proxy_enabled
 
     @property
@@ -169,7 +177,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
 
     @driver_binary_path.setter
     def driver_binary_path(self, driver_binary_path: str) -> None:
-        self._validate_types("driver_binary_path", driver_binary_path, (str,))
+        self._type_check("driver_binary_path", driver_binary_path, (str,))
         self._driver_binary_path = driver_binary_path
 
     @property
@@ -181,7 +189,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         if isinstance(chrome_options, ChromeOptions) or chrome_options is None:
             self._chrome_options = chrome_options
             return
-        self._validate_types("chrome_options", chrome_options, (set, ChromeOptions))
+        self._type_check("chrome_options", chrome_options, (set, ChromeOptions))
         options = ChromeOptions()
         for option in chrome_options:
             options.add_argument(option)
@@ -196,8 +204,44 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self, browser_capabilities: Optional[Dict[str, str]]
     ) -> None:
         if browser_capabilities is not None:
-            self._validate_types("browser_capabilities", browser_capabilities, Dict)
+            self._type_check("browser_capabilities", browser_capabilities, (dict,))
         self._browser_capabilities = browser_capabilities
+
+    @property
+    def chrome_service_log_path(self) -> str:
+        return self._chrome_service_log_path
+
+    @chrome_service_log_path.setter
+    def chrome_service_log_path(self, chrome_service_log_path: Optional[str]) -> None:
+        if chrome_service_log_path:
+            self._type_check("chrome_service_log_path", chrome_service_log_path, (str,))
+        self._chrome_service_log_path = chrome_service_log_path
+
+    @property
+    def maximized(self) -> bool:
+        return self._maximized
+
+    @maximized.setter
+    def maximized(self, maximized: bool) -> None:
+        self._type_check("maximized", maximized, (bool,))
+        self._maximized = maximized
+
+    @property
+    def driver_event_firing_wrapper(self) -> Optional[Type[AbstractEventListener]]:
+        return self._driver_event_firing_wrapper
+
+    @driver_event_firing_wrapper.setter
+    def driver_event_firing_wrapper(
+        self, driver_event_firing_wrapper: Optional[Type[AbstractEventListener]]
+    ) -> None:
+        if driver_event_firing_wrapper:
+            self._type_check(
+                "driver_event_firing_wrapper",
+                driver_event_firing_wrapper,
+                (AbstractEventListener,),
+                True,
+            )
+        self._driver_event_firing_wrapper = driver_event_firing_wrapper
 
     # non attr functions -----------------------------------------------------------------------------
 
@@ -209,11 +253,14 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         return f"{self.selenium_grid_url}:{self.selenium_grid_port}/wd/hub"
 
     @staticmethod
-    def _validate_types(attr: str, value: Any, expected_type: Tuple) -> None:
+    def _type_check(
+        attr: str, value: Any, expected_type: Tuple, expected_subclass: bool = False
+    ) -> None:
         """
         Validate types passed into the config.
         """
-        if not isinstance(value, expected_type):
+        function = isinstance if not expected_subclass else issubclass
+        if not function(value, expected_type):
             raise ValueError(
                 f"{attr}= should be of type: {' '.join(str(t) for t in expected_type)}"
             )
