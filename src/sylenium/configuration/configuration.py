@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from typing import Any
+from typing import Dict
 from typing import Iterable
 from typing import Optional
 from typing import Set
@@ -35,6 +36,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         download_directory: Optional[str] = None,
         proxy_enabled: bool = False,
         driver_binary_path: str = "acquire",
+        browser_capabilities: Optional[Dict[str, str]] = None,
         chrome_options: Optional[Set[str], ChromeOptions] = None,
     ):
         self.browser = browser
@@ -50,6 +52,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         self.proxy_enabled = proxy_enabled
         self.driver_binary_path = driver_binary_path
         self.chrome_options = chrome_options
+        self.browser_capabilities = browser_capabilities
 
     @property
     def browser(self) -> str:
@@ -183,6 +186,18 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         for option in chrome_options:
             options.add_argument(option)
         self._chrome_options = options
+
+    @property
+    def browser_capabilities(self) -> Optional[Dict[str, str]]:
+        return self._browser_capabilities
+
+    @browser_capabilities.setter
+    def browser_capabilities(
+        self, browser_capabilities: Optional[Dict[str, str]]
+    ) -> None:
+        if browser_capabilities is not None:
+            self._validate_types("browser_capabilities", browser_capabilities, Dict)
+        self._browser_capabilities = browser_capabilities
 
     # non attr functions -----------------------------------------------------------------------------
 

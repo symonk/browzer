@@ -63,7 +63,7 @@ class ChromeDriverCreator(WebDriverCreator):
             if "--window-position" not in chrome_options.arguments:
                 x, y = self.config.browser_position.split("x")
                 chrome_options.add_argument(f"--window-position={x},{y}")
-        if self.config.downloads_directory:
+        if self.config.download_directory:
             if "download.default_directory" not in chrome_options.arguments:
                 chrome_options.add_experimental_option(
                     "prefs",
