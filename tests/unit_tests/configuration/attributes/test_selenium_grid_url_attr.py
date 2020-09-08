@@ -3,7 +3,7 @@ from assertpy import assert_that
 
 
 def test_selenium_grid_url_bad_type(configuration):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(TypeError) as exc:
         configuration(selenium_grid_url=True)
     assert_that(exc.value.args[0]).is_equal_to(
         "selenium_grid_url= should be of type: <class 'str'>"

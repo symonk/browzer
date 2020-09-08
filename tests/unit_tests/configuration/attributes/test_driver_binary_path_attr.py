@@ -14,7 +14,7 @@ def test_driver_binary_path_custom(configuration):
 
 
 def test_driver_binary_path_invalid_type(configuration):
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError) as err:
         configuration(driver_binary_path=True)
     assert_that(err.value.args[0]).is_equal_to(
         "driver_binary_path= should be of type: <class 'str'>"

@@ -13,7 +13,7 @@ def test_chrome_service_log_custom(configuration, tmpdir):
 
 
 def test_chrome_service_unsupported_type(configuration):
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError) as err:
         configuration(chrome_service_log_path=125)
     assert_that(err.value.args[0]).is_equal_to(
         "chrome_service_log_path= should be of type: <class 'str'>"

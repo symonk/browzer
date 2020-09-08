@@ -237,7 +237,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
     ) -> None:
         if driver_event_firing_wrapper:
             if not isclass(driver_event_firing_wrapper):
-                raise ValueError(
+                raise TypeError(
                     "driver_event_firing_wrapper= should be of type <class>"
                 )
             self._type_check(
@@ -266,7 +266,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         """
         function = isinstance if not expected_subclass else issubclass
         if not function(value, expected_type):
-            raise ValueError(
+            raise TypeError(
                 f"{attr}= should be of type: {' '.join(str(t) for t in expected_type)}"
             )
 

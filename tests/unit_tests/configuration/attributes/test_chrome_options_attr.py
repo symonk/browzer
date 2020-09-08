@@ -24,7 +24,7 @@ def test_chrome_options_custom_set(configuration):
 
 
 def test_chrome_options_incorrect_type(configuration):
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(TypeError) as err:
         configuration(chrome_options=99)
     assert_that(err.value.args[0]).is_equal_to(
         "chrome_options= should be of type: <class 'set'> <class 'selenium.webdriver.chrome.options.Options'>"

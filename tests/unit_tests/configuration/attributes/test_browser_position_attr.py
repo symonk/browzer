@@ -11,7 +11,7 @@ def test_browser_position_with_none_is_ok(configuration):
 
 
 def test_browser_position_incorrect_type(configuration):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(TypeError) as exc:
         configuration(browser_position=True)
     assert_that(exc.value.args[0]).is_equal_to(
         "browser_position= should be of type: <class 'str'>"

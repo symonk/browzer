@@ -11,7 +11,7 @@ def test_maximized_override(configuration):
 
 
 def test_maximized_unsupported(configuration):
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(TypeError) as error:
         configuration(maximized="")
     assert_that(error.value.args[0]).is_equal_to(
         "maximized= should be of type: <class 'bool'>"

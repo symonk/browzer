@@ -14,7 +14,7 @@ def test_browser_unsupported_value(configuration):
 
 
 def test_browser_incorrect_type(configuration):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(TypeError) as exc:
         configuration(browser=99)
     assert_that(exc.value.args[0]).is_equal_to(
         "browser= should be of type: <class 'str'>"

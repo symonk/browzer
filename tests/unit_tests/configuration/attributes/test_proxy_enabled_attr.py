@@ -11,7 +11,7 @@ def test_proxy_enabled_default_off(configuration):
 
 
 def test_proxy_enabled_unsupported_type(configuration):
-    with pytest.raises(ValueError) as exc:
+    with pytest.raises(TypeError) as exc:
         configuration(proxy_enabled="notabool")
     assert_that(exc.value.args[0]).is_equal_to(
         "proxy_enabled= should be of type: <class 'bool'>"

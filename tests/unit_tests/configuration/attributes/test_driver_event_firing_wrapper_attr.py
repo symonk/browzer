@@ -19,7 +19,7 @@ def test_driver_event_firing_wrapper_custom(configuration):
 
 
 def test_driver_event_firing_wrapper_unsupported_not_class(configuration):
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(TypeError) as error:
         configuration(configuration(driver_event_firing_wrapper=15))
     assert_that(error.value.args[0]).is_equal_to(
         "driver_event_firing_wrapper= should be of type <class>"
@@ -30,7 +30,7 @@ def test_driver_event_firing_wrapper_class_but_not_subclass(configuration):
     class Random:
         pass
 
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(TypeError) as error:
         configuration(configuration(driver_event_firing_wrapper=Random))
     assert_that(error.value.args[0]).is_equal_to(
         "driver_event_firing_wrapper= should be of type: <class 'selenium.webdriver.support.abstract_event_listener.AbstractEventListener'>"
