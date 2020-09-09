@@ -67,9 +67,9 @@ Overview :flags:
 What is Sylenium? :flags:
 ========
 
-Selenium wrapper for automating web applications end to end. Sylenium helps you get off the ground running and has a
-core focus on improving stability of selenium when used for test writing.  With Selenium 4 upcoming, Sylenium aims for
-its first release in Q1 2021.  Sylenium contains test runner framework plugin(s) and is test runner agnostic.
+The goal of sylenium is to create a test framework agnostic browser (selenium wrapper) automation library to help
+development teams write end to end tests for their web applications without all the necessary boilerplate that is
+required to achieve stability with selenium.
 
 
 =============
@@ -82,32 +82,9 @@ https://sylenium.readthedocs.io/
 Configuring Sylenium :flags:
 ==============
 
-Everything in sylenium begins with a Session(config: Configuration), all spawned browsers are contained within these
-sessions, this avoids globals everywhere and major headaches, especially unit testing for us!  At the moment, a single
-browser is mapped to a single session and these are fully customisable at runtime, as well as usable as ctx managers.
-Note: Syleniums defaults are pretty savvy and are ideal when you are writing basic scripts.
-
 .. code-block:: python
 
-    def my_session():
-        from sylenium import Session
-        session = Session()
-        driver = session.get_webdriver()
-        # Requires clean up
-
-    def my_ctx_session():
-        from sylenium import Session
-        with Session() as session:
-            driver = session.get_webdriver()
-            # do whatever with the driver... (auto cleaned up)
-
-    def customising_a_session():
-        from sylenium import Session
-        config = Configuration(headless=True, download_directory="/tmp/", remote=True)
-        with Session(configuration=config) as session:
-            driver = session.get_webdriver() # fully configured with your own options
-
-
+    # Coming soon
 
 ==============
 Quick Start :flags:
@@ -115,19 +92,7 @@ Quick Start :flags:
 
 .. code-block:: python
 
-    def test_without_page_objects():
-        # Without page objects, for simple scripts
-        start("https://localhost:8080/login.html")
-        find("login-username").set_text("admin")
-        find("login-pwd").set_text("password")
-        click("login-btn-submit")
-
-    def test_with_page_objects():
-        login_page = start(LoginPage)
-        dashboard = login_page.login_as("admin", "password")
-        find("my-widget").should_have(visible_text("Custom Widget")) # asserts under the hood
-        element: SyleniumElement = find("another-widget")
-        element.should_be(clickable())
+    # Coming soon
 
 ==============
 Sylenium-pytest :flags:
