@@ -9,6 +9,7 @@ from typing import Optional
 from typing import Set
 from typing import Tuple
 from typing import Type
+from typing import Union
 
 from selenium.webdriver.chrome.webdriver import Options as ChromeOptions
 from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
@@ -40,7 +41,7 @@ class Configuration(SimpleReprMixin, SimpleEQMixin):
         proxy_enabled: bool = False,
         driver_binary_path: str = "acquire",
         browser_capabilities: Optional[Dict[str, str]] = None,
-        chrome_options: Optional[Set[str], ChromeOptions] = None,
+        chrome_options: Union[Optional[Set[str]], Optional[ChromeOptions]] = None,
         chrome_service_log_path: Optional[str] = None,
         maximized: bool = True,
         driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
