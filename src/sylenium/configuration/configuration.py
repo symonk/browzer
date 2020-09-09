@@ -34,22 +34,25 @@ class Configuration:
         selenium_grid_url: str = "http://localhost",
         selenium_grid_port: int = 4444,
         browser_resolution: Optional[str] = None,
-        browser_position: Optional[str] = None,
         browser_version: str = "latest",
+        browser_position: Optional[str] = None,
         download_directory: Optional[str] = None,
         proxy_enabled: bool = False,
         driver_binary_path: str = "acquire",
         browser_capabilities: Optional[Dict[str, str]] = None,
         chrome_options: Union[Optional[Set[str]], Optional[ChromeOptions]] = None,
-        chrome_service_log_path: Optional[str] = None,
-        maximized: bool = True,
-        driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
         base_url: Optional[str] = None,
         explicit_waiting: float = 30.00,
         polling_interval: float = 01.50,
         page_source_capturing: bool = False,
         page_screenshot_capturing: bool = False,
         stack_trace_capturing: bool = False,
+        javascript_clicks: bool = False,
+        javascript_sendkeys: bool = False,
+        driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
+        default_selector: str = "css",
+        chrome_service_log_path: Optional[str] = None,
+        maximized: bool = True,
     ):
         self.browser = browser
         self.headless = headless
@@ -58,22 +61,25 @@ class Configuration:
         self.selenium_grid_url = selenium_grid_url
         self.selenium_grid_port = selenium_grid_port
         self.browser_resolution = browser_resolution
-        self.browser_position = browser_position
         self.browser_version = browser_version
+        self.browser_position = browser_position
         self.download_directory = download_directory
         self.proxy_enabled = proxy_enabled
         self.driver_binary_path = driver_binary_path
         self.chrome_options = chrome_options
         self.browser_capabilities = browser_capabilities
-        self.chrome_service_log_path = chrome_service_log_path
-        self.maximized = maximized
-        self.driver_event_firing_wrapper = driver_event_firing_wrapper
         self.base_url = base_url
         self.explicit_waiting = explicit_waiting
         self.polling_interval = polling_interval
         self.page_source_capturing = page_source_capturing
         self.page_screenshot_capturing = page_screenshot_capturing
         self.stack_trace_capturing = stack_trace_capturing
+        self.javascript_clicks = javascript_clicks
+        self.javascript_sendkeys = javascript_sendkeys
+        self.driver_event_firing_wrapper = driver_event_firing_wrapper
+        self.default_selector = default_selector
+        self.chrome_service_log_path = chrome_service_log_path
+        self.maximized = maximized
 
     @property
     def browser(self) -> str:
@@ -145,6 +151,15 @@ class Configuration:
         self._browser_resolution = browser_resolution
 
     @property
+    def browser_version(self) -> str:
+        return self._browser_version
+
+    @browser_version.setter
+    def browser_version(self, browser_version: str) -> None:
+        self._type_check("browser_version", browser_version, (str,))
+        self._browser_version = browser_version
+
+    @property
     def browser_position(self) -> Optional[str]:
         return self._browser_position
 
@@ -154,15 +169,6 @@ class Configuration:
             self._type_check("browser_position", browser_position, (str,))
             self._validate_contains_x(browser_position)
         self._browser_position = browser_position
-
-    @property
-    def browser_version(self) -> str:
-        return self._browser_version
-
-    @browser_version.setter
-    def browser_version(self, browser_version: str) -> None:
-        self._type_check("browser_version", browser_version, (str,))
-        self._browser_version = browser_version
 
     @property
     def download_directory(self) -> Optional[str]:
@@ -321,6 +327,33 @@ class Configuration:
     def stack_trace_capturing(self, stack_trace_capturing: bool) -> None:
         self._type_check("stack_trace_capturing", stack_trace_capturing, (bool,))
         self._stack_trace_capturing = stack_trace_capturing
+
+    @property
+    def default_selector(self) -> str:
+        return self._default_selector
+
+    @default_selector.setter
+    def default_selector(self, default_selector: str) -> None:
+        self._type_check("default_selector", default_selector, (str,))
+        self._default_selector = default_selector
+
+    @property
+    def javascript_clicks(self) -> bool:
+        return self._javascript_clicks
+
+    @javascript_clicks.setter
+    def javascript_clicks(self, javascript_clicks: bool) -> None:
+        self._type_check("javascript_clicks", javascript_clicks, (bool,))
+        self._javascript_clicks = javascript_clicks
+
+    @property
+    def javascript_sendkeys(self) -> bool:
+        return self._javascript_sendkeys
+
+    @javascript_sendkeys.setter
+    def javascript_sendkeys(self, javascript_sendkeys: bool) -> None:
+        self._type_check("javascript_sendkeys", javascript_sendkeys, (bool,))
+        self._javascript_sendkeys = javascript_sendkeys
 
     # non attr functions -----------------------------------------------------------------------------
 
