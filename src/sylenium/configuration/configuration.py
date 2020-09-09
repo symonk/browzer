@@ -283,7 +283,7 @@ class Configuration:
 
     @explicit_waiting.setter
     def explicit_waiting(self, explicit_waiting: Union[float, int]) -> None:
-        if type(explicit_waiting) == int:
+        if type(explicit_waiting) is int:
             explicit_waiting = float(explicit_waiting)
         self._type_check("explicit_waiting", explicit_waiting, (float,))
         self._explicit_waiting = explicit_waiting
@@ -294,7 +294,7 @@ class Configuration:
 
     @polling_interval.setter
     def polling_interval(self, polling_interval: float) -> None:
-        if type(polling_interval) == int:
+        if type(polling_interval) is int:
             polling_interval = float(polling_interval)
         self._type_check("polling_interval", polling_interval, (float,))
         self._polling_interval = polling_interval
