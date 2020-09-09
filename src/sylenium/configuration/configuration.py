@@ -45,6 +45,8 @@ class Configuration:
         maximized: bool = True,
         driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
         base_url: Optional[str] = None,
+        explicit_waiting: float = 30.00,
+        polling_interval: float = 01.50,
     ):
         self.browser = browser
         self.headless = headless
@@ -64,6 +66,8 @@ class Configuration:
         self.maximized = maximized
         self.driver_event_firing_wrapper = driver_event_firing_wrapper
         self.base_url = base_url
+        self.explicit_waiting = explicit_waiting
+        self.polling_interval = polling_interval
 
     @property
     def browser(self) -> str:
@@ -260,6 +264,28 @@ class Configuration:
             self._type_check("base_url", base_url, (str,))
             self._validate_is_url(base_url)
         self._base_url = base_url
+
+    @property
+    def explicit_waiting(self) -> float:
+        return self._explicit_waiting
+
+    @explicit_waiting.setter
+    def explicit_waiting(self, explicit_waiting: Union[float, int]) -> None:
+        if isinstance(explicit_waiting, int):
+            explicit_waiting = float(explicit_waiting)
+        self._type_check("explicit_waiting", explicit_waiting, (float,))
+        self._explicit_waiting = explicit_waiting
+
+    @property
+    def polling_interval(self) -> float:
+        return self._polling_interval
+
+    @polling_interval.setter
+    def polling_interval(self, polling_interval: float) -> None:
+        if isinstance(polling_interval, int):
+            polling_interval = float(polling_interval)
+        self._type_check("polling_interval", polling_interval, (float,))
+        self._polling_interval = polling_interval
 
     # non attr functions -----------------------------------------------------------------------------
 
