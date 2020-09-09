@@ -47,6 +47,9 @@ class Configuration:
         base_url: Optional[str] = None,
         explicit_waiting: float = 30.00,
         polling_interval: float = 01.50,
+        page_source_capturing: bool = False,
+        page_screenshot_capturing: bool = False,
+        stack_trace_capturing: bool = False,
     ):
         self.browser = browser
         self.headless = headless
@@ -68,6 +71,9 @@ class Configuration:
         self.base_url = base_url
         self.explicit_waiting = explicit_waiting
         self.polling_interval = polling_interval
+        self.page_source_capturing = page_source_capturing
+        self.page_screenshot_capturing = page_screenshot_capturing
+        self.stack_trace_capturing = stack_trace_capturing
 
     @property
     def browser(self) -> str:
@@ -286,6 +292,35 @@ class Configuration:
             polling_interval = float(polling_interval)
         self._type_check("polling_interval", polling_interval, (float,))
         self._polling_interval = polling_interval
+
+    @property
+    def page_source_capturing(self) -> bool:
+        return self._page_source_capturing
+
+    @page_source_capturing.setter
+    def page_source_capturing(self, page_source_capturing: bool) -> None:
+        self._type_check("page_source_capturing", page_source_capturing, (bool,))
+        self._page_source_capturing = page_source_capturing
+
+    @property
+    def page_screenshot_capturing(self) -> bool:
+        return self._page_screenshot_capturing
+
+    @page_screenshot_capturing.setter
+    def page_screenshot_capturing(self, page_screenshot_capturing: bool) -> None:
+        self._type_check(
+            "page_screenshot_capturing", page_screenshot_capturing, (bool,)
+        )
+        self._page_screenshot_capturing = page_screenshot_capturing
+
+    @property
+    def stack_trace_capturing(self) -> bool:
+        return self._stack_trace_capturing
+
+    @stack_trace_capturing.setter
+    def stack_trace_capturing(self, stack_trace_capturing: bool) -> None:
+        self._type_check("stack_trace_capturing", stack_trace_capturing, (bool,))
+        self._stack_trace_capturing = stack_trace_capturing
 
     # non attr functions -----------------------------------------------------------------------------
 

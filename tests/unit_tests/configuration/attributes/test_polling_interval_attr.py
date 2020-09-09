@@ -14,7 +14,7 @@ def test_polling_interval_custom(configuration):
 
 def test_polling_interval_incorrect_type(configuration):
     with pytest.raises(TypeError) as error:
-        configuration(polling_interval=True)
+        configuration(polling_interval="nope")
     assert_that(error.value.args[0]).is_equal_to(
         "polling_interval= should be of type: <class 'float'>"
     )

@@ -14,7 +14,7 @@ def test_explicit_waiting_custom(configuration):
 
 def test_explicit_waiting_incorrect_type(configuration):
     with pytest.raises(TypeError) as error:
-        configuration(explicit_waiting=True)
+        configuration(explicit_waiting="nope")
     assert_that(error.value.args[0]).is_equal_to(
         "explicit_waiting= should be of type: <class 'float'>"
     )
