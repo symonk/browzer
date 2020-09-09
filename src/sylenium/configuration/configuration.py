@@ -10,6 +10,7 @@ from typing import Set
 from typing import Tuple
 from typing import Type
 from typing import Union
+from urllib.parse import urlparse
 
 from selenium.webdriver.chrome.webdriver import Options as ChromeOptions
 from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
@@ -43,6 +44,7 @@ class Configuration:
         chrome_service_log_path: Optional[str] = None,
         maximized: bool = True,
         driver_event_firing_wrapper: Optional[Type[AbstractEventListener]] = None,
+        base_url: Optional[str] = None,
     ):
         self.browser = browser
         self.headless = headless
@@ -61,6 +63,7 @@ class Configuration:
         self.chrome_service_log_path = chrome_service_log_path
         self.maximized = maximized
         self.driver_event_firing_wrapper = driver_event_firing_wrapper
+        self.base_url = base_url
 
     @property
     def browser(self) -> str:
@@ -126,7 +129,7 @@ class Configuration:
 
     @browser_resolution.setter
     def browser_resolution(self, browser_resolution: str) -> None:
-        if browser_resolution:
+        if browser_resolution is not None:
             self._type_check("browser_resolution", browser_resolution, (str,))
             self._validate_contains_x(browser_resolution)
         self._browser_resolution = browser_resolution
@@ -137,7 +140,7 @@ class Configuration:
 
     @browser_position.setter
     def browser_position(self, browser_position: str) -> None:
-        if browser_position:
+        if browser_position is not None:
             self._type_check("browser_position", browser_position, (str,))
             self._validate_contains_x(browser_position)
         self._browser_position = browser_position
@@ -157,7 +160,7 @@ class Configuration:
 
     @download_directory.setter
     def download_directory(self, download_directory: Optional[str]) -> None:
-        if download_directory:
+        if download_directory is not None:
             self._type_check("download_directory", download_directory, (str,))
             self.is_valid_directory(download_directory)
         self._download_directory = download_directory
@@ -247,6 +250,17 @@ class Configuration:
             )
         self._driver_event_firing_wrapper = driver_event_firing_wrapper
 
+    @property
+    def base_url(self) -> Optional[str]:
+        return self._base_url
+
+    @base_url.setter
+    def base_url(self, base_url: Optional[str]) -> None:
+        if base_url is not None:
+            self._type_check("base_url", base_url, (str,))
+            self._validate_is_url(base_url)
+        self._base_url = base_url
+
     # non attr functions -----------------------------------------------------------------------------
 
     @property
@@ -289,6 +303,12 @@ class Configuration:
             raise ValueError(
                 f"value: {data} was resolution or position based and did not include 'x'"
             )
+
+    @staticmethod
+    def _validate_is_url(data: str) -> None:
+        result = urlparse(data)
+        if not result.netloc or not result.scheme:
+            raise ValueError(f"url: {data} is not considered a valid url")
 
     @staticmethod
     def is_valid_directory(path: str) -> None:
