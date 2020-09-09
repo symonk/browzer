@@ -16,11 +16,9 @@ from selenium.webdriver.support.abstract_event_listener import AbstractEventList
 
 from sylenium.constants import SUPPORTED_BROWSERS
 from sylenium.constants import SUPPORTED_PAGE_LOADING_STRATEGIES
-from sylenium.mixins import SimpleEQMixin
-from sylenium.mixins import SimpleReprMixin
 
 
-class Configuration(SimpleReprMixin, SimpleEQMixin):
+class Configuration:
     """
     This is the core configuration class for sylenium.
     This is the core instance that is required to create a new session, fully customisable by the client.

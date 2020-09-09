@@ -11,7 +11,6 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from sylenium import Configuration
 from sylenium.core.webdriver.driver_factories import WebDriverFactory
 from sylenium.exceptions import SessionException
-from sylenium.mixins import SimpleReprMixin
 
 
 class SessionManager:
@@ -46,7 +45,7 @@ class SessionManager:
 session_manager = SessionManager()
 
 
-class Session(SimpleReprMixin):
+class Session:
     def __init__(self, configuration: Configuration = None):
         """
         Sylenium session; This is the entry point to sylenium in general, a client should create a session
