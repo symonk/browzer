@@ -1,6 +1,6 @@
 from assertpy import assert_that
 
-from sylenium.sylenium import start
+from sylenium.sylenium import go
 
 
 def test_default_driver(default_driver) -> None:
@@ -9,4 +9,4 @@ def test_default_driver(default_driver) -> None:
 
 
 def test_loading(default_session, webserver) -> None:
-    start(webserver.page_url("simple_element"))
+    go(webserver.page_url("simple_element"))
