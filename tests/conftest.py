@@ -1,3 +1,6 @@
+import string
+from random import choice
+
 import pytest
 
 from sylenium import Configuration
@@ -25,3 +28,9 @@ def headless_session():
 @pytest.fixture(autouse=True)
 def clean_up_sessions(request):
     request.addfinalizer(session_manager.deactivate)
+
+
+@pytest.fixture
+def random_string() -> str:
+    characters = string.ascii_letters
+    return "".join(choice(characters) for x in range(15))

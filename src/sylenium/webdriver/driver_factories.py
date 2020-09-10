@@ -15,7 +15,6 @@ from sylenium.constants import TRAVIS_ENV
 from sylenium.exceptions.exceptions import DriverInstantiationException
 from sylenium.helpers._filesystem_helper import does_file_exist
 from sylenium.helpers._os_environ_helper import read_from_environ
-from sylenium.webelement.locators import SyleniumElement
 
 
 class WebDriverCreator(ABC):
@@ -126,5 +125,4 @@ class WebDriverFactory:
                 f"Unsupported driver instantiation was attempted for: {lookup}"
             )
         driver = driver_type(self.config).create_driver()
-        driver._web_element_cls = SyleniumElement
         return driver
