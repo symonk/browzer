@@ -9,8 +9,8 @@ from typing import Type
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
 from sylenium import Configuration
-from sylenium.exceptions import SessionException
-from sylenium.webdriver.driver_factories import WebDriverFactory
+from sylenium.driver.driver_factories import WebDriverFactory
+from sylenium.exception import SessionException
 
 
 class SessionManager:

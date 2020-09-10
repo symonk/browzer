@@ -1,14 +1,14 @@
 from assertpy import assert_that
 from selenium.webdriver.common.by import By
 
-from sylenium.webelement import ByClassName
-from sylenium.webelement import ByCssSelector
-from sylenium.webelement import ById
-from sylenium.webelement import ByLinkText
-from sylenium.webelement import ByName
-from sylenium.webelement import ByPartialLinkText
-from sylenium.webelement import ByTagName
-from sylenium.webelement import ByXpath
+from sylenium.element import ByClassName
+from sylenium.element import ByCssSelector
+from sylenium.element import ById
+from sylenium.element import ByLinkText
+from sylenium.element import ByName
+from sylenium.element import ByPartialLinkText
+from sylenium.element import ByTagName
+from sylenium.element import ByXpath
 
 
 def test_by_id(random_string):

@@ -12,9 +12,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from sylenium.configuration.configuration import Configuration
 from sylenium.constants import TRAVIS_ENV
-from sylenium.exceptions.exceptions import DriverInstantiationException
-from sylenium.helpers._filesystem_helper import does_file_exist
-from sylenium.helpers._os_environ_helper import read_from_environ
+from sylenium.exception.exceptions import DriverInstantiationException
+from sylenium.helper._filesystem_helper import does_file_exist
+from sylenium.helper._os_environ_helper import read_from_environ
 
 
 class WebDriverCreator(ABC):
