@@ -30,7 +30,7 @@ class ByName(Locatable):
 
 class ByTagName(Locatable):
     def __init__(self, value: str) -> None:
-        super().__init__(By.NAME, value)
+        super().__init__(By.TAG_NAME, value)
 
 
 class ByClassName(Locatable):
