@@ -2,7 +2,7 @@ from typing import Optional
 from typing import Type
 
 from sylenium import session_manager
-from sylenium.core.pages.pageobjects import PageObject
+from sylenium.pages.pageobjects import PageObject
 
 
 def start(
