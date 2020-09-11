@@ -30,7 +30,7 @@ def get_default_configuration() -> Configuration:
     return DEFAULT_CONFIGURATION
 
 
-def get_driver(config: Optional[Configuration]) -> SyleniumDriver:
+def get_driver(config: Optional[Configuration] = None) -> SyleniumDriver:
     from sylenium.driver.driver_factory import create_sylenium_driver
 
     config = config or get_default_configuration()
