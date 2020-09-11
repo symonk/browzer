@@ -8,15 +8,13 @@ from sylenium import Configuration
 
 
 def test_chrome_options_headless_standalone(headless_driver):
-    assert_that(headless_driver.get_driver())
+    assert_that(headless_driver)
 
 
 def test_service_options_log(driver_creator, tmpdir):
     driver_creator(
         config=Configuration(
-            chrome_service_log_path=f"{tmpdir}{os.path.sep}sylenium.log",
-            headless=False,
-            browser_position="0x0",
+            chrome_service_log_path=f"{tmpdir}{os.path.sep}sylenium.log", headless=False
         )
     )
 
