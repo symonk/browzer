@@ -4,7 +4,7 @@ from typing import Type
 
 
 def enforce_type_of(
-    expected: Any, value: Any, exc: Type[Exception] = ValueError, msg: str = None
+    expected: Any, value: Any, exc: Type[Exception] = ValueError, msg: str = ""
 ) -> None:
     """
     Enforce a particular value is of an expected type

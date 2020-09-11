@@ -1,5 +1,6 @@
 from abc import ABC
 from abc import abstractmethod
+from typing import Any
 from typing import Mapping
 from typing import Type
 
@@ -72,7 +73,7 @@ class ChromeDriverCreator(WebDriverCreator):
                 )
         return chrome_options
 
-    def resolve_binary_path(self) -> str:
+    def resolve_binary_path(self) -> Any:
         """
         Resolves the binary driver path, using the following mechanism:
         Priority A) Has the user said to use WDM explicitly

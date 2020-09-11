@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from types import TracebackType
+from typing import Any
 from typing import Optional
 from typing import Type
 
@@ -44,7 +45,7 @@ class SyleniumDriver:
         """
         self.driver.get(url)
 
-    def get_current_url(self) -> str:
+    def get_current_url(self) -> Any:
         """
         Retrieve the current url from the current page
         """

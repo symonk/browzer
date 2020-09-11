@@ -227,7 +227,7 @@ class Configuration:
         self._browser_capabilities = browser_capabilities
 
     @property
-    def chrome_service_log_path(self) -> str:
+    def chrome_service_log_path(self) -> Optional[str]:
         return self._chrome_service_log_path
 
     @chrome_service_log_path.setter
@@ -366,7 +366,10 @@ class Configuration:
 
     @staticmethod
     def _type_check(
-        attr: str, value: Any, expected_type: Tuple, expected_subclass: bool = False
+        attr: str,
+        value: Any,
+        expected_type: Tuple[Type[Any], ...],
+        expected_subclass: bool = False,
     ) -> None:
         """
         Validate types passed into the config.
