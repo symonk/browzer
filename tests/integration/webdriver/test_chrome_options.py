@@ -7,24 +7,23 @@ from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriv
 from sylenium import Configuration
 
 
-def test_chrome_options_headless_standalone(headless_session):
-    assert_that(headless_session.get_driver())
+def test_chrome_options_headless_standalone(headless_driver):
+    assert_that(headless_driver.get_driver())
 
 
-def test_service_options_log(sy_session, tmpdir):
-    with sy_session(
-        configuration=Configuration(
+def test_service_options_log(driver_creator, tmpdir):
+    driver_creator(
+        config=Configuration(
             chrome_service_log_path=f"{tmpdir}{os.path.sep}sylenium.log",
             headless=False,
             browser_position="0x0",
         )
-    ) as session:
-        session.get_driver()
+    )
 
 
-def test_event_wrapper(sy_session):
+def test_event_wrapper(driver_creator):
     class MyListener(AbstractEventListener):
         pass
 
-    with sy_session(Configuration(driver_event_firing_wrapper=MyListener)) as session:
-        assert_that(session.get_driver()).is_instance_of(EventFiringWebDriver)
+    driver = driver_creator(Configuration(driver_event_firing_wrapper=MyListener))
+    assert_that(driver.driver).is_instance_of(EventFiringWebDriver)

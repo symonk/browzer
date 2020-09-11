@@ -10,8 +10,8 @@ from tests.integration.webserver.tcp_server import IntegrationTCPServer
 
 
 @pytest.fixture
-def default_driver(default_session) -> RemoteWebDriver:
-    return default_session.get_driver()
+def default_driver(default_driver) -> RemoteWebDriver:
+    return default_driver
 
 
 @pytest.fixture

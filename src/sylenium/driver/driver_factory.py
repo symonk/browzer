@@ -10,6 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+from sylenium import SyleniumDriver
 from sylenium.configuration.configuration import Configuration
 from sylenium.constants import TRAVIS_ENV
 from sylenium.exception.exceptions import DriverInstantiationException
@@ -104,25 +105,21 @@ class RemoteDriverCreator(WebDriverCreator):
         ...
 
 
-class WebDriverFactory:
-    def __init__(self, config: Configuration):
-        self.config = config
-        self.driver_mapping: Mapping[str, Type[WebDriverCreator]] = {
-            "chrome": ChromeDriverCreator,
-            "firefox": GeckoDriverCreator,
-            "remote": RemoteDriverCreator,
-        }
-
-    def create_driver(self) -> RemoteWebDriver:
-        """
-        Factory method responsible for determining which driver to instantiate at runtime
-        based on how sylenium has been configured by the client.
-        """
-        lookup = self.config.browser if not self.config.remote else "remote"
-        driver_type = self.driver_mapping.get(lookup)
-        if not driver_type:
-            raise ValueError(
-                f"Unsupported driver instantiation was attempted for: {lookup}"
-            )
-        driver = driver_type(self.config).create_driver()
-        return driver
+def create_sylenium_driver(config: Configuration) -> SyleniumDriver:
+    """
+    Factory method responsible for determining which driver to instantiate at runtime
+    based on how sylenium has been configured by the client.
+    """
+    driver_mapping: Mapping[str, Type[WebDriverCreator]] = {
+        "chrome": ChromeDriverCreator,
+        "firefox": GeckoDriverCreator,
+        "remote": RemoteDriverCreator,
+    }
+    lookup = config.browser if not config.remote else "remote"
+    driver_type = driver_mapping.get(lookup)
+    if not driver_type:
+        raise ValueError(
+            f"Unsupported driver instantiation was attempted for: {lookup}"
+        )
+    driver = driver_type(config).create_driver()
+    return SyleniumDriver(driver, config)

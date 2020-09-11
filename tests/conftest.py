@@ -4,30 +4,24 @@ from random import choice
 import pytest
 
 from sylenium import Configuration
-from sylenium import Session
-from sylenium import session_manager
+from sylenium import get_driver
 
 
 @pytest.fixture
-def default_session():
-    with Session() as session:
-        yield session
+def driver_creator():
+    return get_driver
 
 
 @pytest.fixture
-def sy_session():
-    return Session
+def default_driver():
+    with get_driver() as driver:
+        yield driver
 
 
 @pytest.fixture
-def headless_session():
-    with Session(configuration=Configuration(headless=True)) as session:
-        yield session
-
-
-@pytest.fixture(autouse=True)
-def clean_up_sessions(request):
-    request.addfinalizer(session_manager.deactivate)
+def headless_driver():
+    with get_driver(config=Configuration(headless=True)) as driver:
+        yield driver
 
 
 @pytest.fixture
