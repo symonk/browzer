@@ -11,9 +11,9 @@ from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-from sylenium import SyleniumDriver
 from sylenium.configuration.configuration import Configuration
 from sylenium.constants import TRAVIS_ENV
+from sylenium.driver.sylenium_driver import SyleniumDriver
 from sylenium.exception.exceptions import DriverInstantiationException
 from sylenium.helper._filesystem_helper import does_file_exist
 from sylenium.helper._os_environ_helper import read_from_environ

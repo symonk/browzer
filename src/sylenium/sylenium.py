@@ -1,37 +1,22 @@
-from __future__ import annotations
-
-import typing
 from typing import Optional
 
 from sylenium import Configuration
+from sylenium import DriverManager
+from sylenium import SyleniumDriver
 
-if typing.TYPE_CHECKING:
-    from sylenium import SyleniumDriver
-
-DEFAULT_CONFIGURATION = Configuration()
+DRIVER_MANAGER = DriverManager()
 
 
 def go(url: str) -> None:
-    driver = get_driver()
-    driver.get(url)
-
-
-def register_configuration(config: Configuration) -> None:
-    global DEFAULT_CONFIGURATION
-    DEFAULT_CONFIGURATION = config
-
-
-def get_default_configuration() -> Configuration:
-    """
-    Return the currently registered default configuration instance of sylenium.
-    This is overridable using the register_configuration function, which should be invoked by the client
-    in the instance where you want newly made drivers without explicit configuration to use your own settings.
-    """
-    return DEFAULT_CONFIGURATION
+    get_driver().get(url)
 
 
 def get_driver(config: Optional[Configuration] = None) -> SyleniumDriver:
-    from sylenium.driver.driver_factory import create_sylenium_driver
-
-    config = config or get_default_configuration()
-    return create_sylenium_driver(config)
+    """
+    Responsible for yielding a thread local driver instance for the thread in question.
+    In the event that no driver exists for the thread, a new driver will be configured and registered
+    using the optional configuration provided.  default configuration will be used otherwise and the 'global'
+    configuration can be configured by calling the configure(config) option of sylenium to modify all
+    non explicitly configured browser instances.
+    """
+    return DRIVER_MANAGER.get_threaded_driver(config)

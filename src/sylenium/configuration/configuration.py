@@ -411,3 +411,15 @@ class Configuration:
     def is_valid_directory(path: str) -> None:
         if not os.path.isdir(path):
             raise FileExistsError(f"Directory: {path} was not found on the file system")
+
+
+DEFAULT_CONFIGURATION = Configuration()
+
+
+def configure(config: Configuration) -> None:
+    global DEFAULT_CONFIGURATION
+    DEFAULT_CONFIGURATION = config
+
+
+def get_global_configuration() -> Configuration:
+    return DEFAULT_CONFIGURATION
