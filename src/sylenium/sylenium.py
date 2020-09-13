@@ -11,6 +11,10 @@ def go(url: str) -> None:
     get_driver().get(url)
 
 
+def terminate_drivers() -> None:
+    DRIVER_MANAGER.terminate_all()
+
+
 def get_driver(config: Optional[Configuration] = None) -> SyleniumDriver:
     """
     Responsible for yielding a thread local driver instance for the thread in question.

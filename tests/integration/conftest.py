@@ -26,3 +26,10 @@ def webserver() -> Generator[IntegrationTCPServer, None, None]:
         yield server
     except Exception:
         pass
+
+
+@pytest.fixture(autouse=True, scope="session")
+def close_threaded_drivers(request):
+    from sylenium.sylenium import DRIVER_MANAGER
+
+    request.addfinalizer(DRIVER_MANAGER.terminate_all)

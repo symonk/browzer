@@ -1,5 +1,6 @@
 import string
 from random import choice
+from typing import Type
 
 import pytest
 
@@ -22,6 +23,11 @@ def default_driver():
 def headless_driver():
     with get_driver(config=Configuration(headless=True)) as driver:
         yield driver
+
+
+@pytest.fixture()
+def configuration() -> Type[Configuration]:
+    return Configuration
 
 
 @pytest.fixture
