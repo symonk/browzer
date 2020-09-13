@@ -1,10 +1,11 @@
 from ._version import __version__
+from .command import invoker
 from .concurrency.driver_monitor_thread import DriverMonitorThread
 from .configuration import Configuration
 from .configuration import configure
 from .configuration import get_global_configuration
-from .driver import DriverManager
-from .driver import SyleniumDriver
+from .driver import driver_manager
+from .driver.sylenium_driver import SyleniumDriver
 from .element.sylenium_element import SyleniumElement
 from .sylenium import get_driver
 
@@ -15,7 +16,8 @@ __all__ = [
     "configure",
     "get_global_configuration",
     "DriverMonitorThread",
-    "DriverManager",
+    "driver_manager",
     "get_driver",
     "SyleniumElement",
+    "invoker",
 ]

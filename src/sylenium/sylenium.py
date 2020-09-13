@@ -2,11 +2,9 @@ from typing import List
 from typing import Optional
 
 from sylenium import Configuration
-from sylenium import DriverManager
 from sylenium import SyleniumDriver
 from sylenium import SyleniumElement
-
-DRIVER_MANAGER = DriverManager()
+from sylenium import driver_manager
 
 
 def go(url: str) -> None:
@@ -22,7 +20,7 @@ def find_all(locatable) -> List[SyleniumElement]:
 
 
 def terminate_drivers() -> None:
-    DRIVER_MANAGER.terminate_all()
+    driver_manager.terminate_all()
 
 
 def get_driver(config: Optional[Configuration] = None) -> SyleniumDriver:
@@ -33,4 +31,4 @@ def get_driver(config: Optional[Configuration] = None) -> SyleniumDriver:
     configuration can be configured by calling the configure(config) option of sylenium to modify all
     non explicitly configured browser instances.
     """
-    return DRIVER_MANAGER.get_threaded_driver(config)
+    return driver_manager.get_threaded_driver(config)

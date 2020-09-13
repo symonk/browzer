@@ -10,31 +10,28 @@ from sylenium.driver.driver_factory import create_sylenium_driver
 from sylenium.driver.sylenium_driver import SyleniumDriver
 
 THREAD_LOCK = Lock()
+_DRIVERS: Dict[int, SyleniumDriver] = {}
 
 
-class DriverManager:
-    _drivers: Dict[int, SyleniumDriver] = {}
+def get_threaded_driver(config: Optional[Configuration]) -> SyleniumDriver:
+    with THREAD_LOCK:
+        thread = threading.get_ident()
+        driver = _DRIVERS.get(thread)
+        if driver is None:
+            # No registered driver for this thread. Create one:
+            _DRIVERS[thread] = create_sylenium_driver(
+                config or get_global_configuration()
+            )
+            return _DRIVERS[thread]
+        # Driver is already in existence, for the asking thread, use it
+        return driver
 
-    def __init__(self) -> None:
-        ...
 
-    def get_threaded_driver(self, config: Optional[Configuration]) -> SyleniumDriver:
-        with THREAD_LOCK:
-            thread = threading.get_ident()
-            driver = self._drivers.get(thread)
-            if driver is None:
-                # No registered driver for this thread. Create one:
-                self._drivers[thread] = create_sylenium_driver(
-                    config or get_global_configuration()
-                )
-                return self._drivers[thread]
-            # Driver is already in existence, for the asking thread, use it
-            return driver
+def get_all_active_drivers() -> Mapping[int, SyleniumDriver]:
+    return _DRIVERS
 
-    def get_all_active_drivers(self) -> Mapping[int, SyleniumDriver]:
-        return self._drivers
 
-    def terminate_all(self) -> None:
-        for driver in self.get_all_active_drivers().values():
-            driver.quit()
-        self._drivers.clear()
+def terminate_all() -> None:
+    for driver in get_all_active_drivers().values():
+        driver.quit()
+    _DRIVERS.clear()

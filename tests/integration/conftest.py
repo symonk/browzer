@@ -6,6 +6,8 @@ from typing import Generator
 import pytest
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
+from sylenium import driver_manager
+
 from tests.integration.webserver.tcp_server import IntegrationTCPServer
 
 
@@ -30,6 +32,4 @@ def webserver() -> Generator[IntegrationTCPServer, None, None]:
 
 @pytest.fixture(autouse=True)
 def close_threaded_drivers(request):
-    from sylenium.sylenium import DRIVER_MANAGER
-
-    request.addfinalizer(DRIVER_MANAGER.terminate_all)
+    request.addfinalizer(driver_manager.terminate_all)
