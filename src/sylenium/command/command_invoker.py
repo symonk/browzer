@@ -10,6 +10,7 @@ COMMANDS: Dict[str, Command] = {}
 
 def reset_commands() -> None:
     COMMANDS.clear()
+    add_find_commands()
 
 
 def add_find_commands() -> None:
@@ -17,5 +18,9 @@ def add_find_commands() -> None:
     COMMANDS["find_all"] = FindAll()
 
 
-def execute(cmd: Command) -> Any:
-    ...
+def execute(command: Command, *args, **kwargs) -> Any:
+    return command.execute()
+
+
+# Register commands
+add_find_commands()
