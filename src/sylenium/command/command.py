@@ -1,9 +1,12 @@
 from abc import ABC
 from abc import abstractmethod
-from typing import Any
+from typing import Generic
+from typing import TypeVar
+
+T = TypeVar("T")
 
 
-class Command(ABC):
+class Command(ABC, Generic[T]):
     @abstractmethod
-    def execute(self, *args, **kwargs) -> Any:
+    def execute(self, *args, **kwargs) -> T:
         raise NotImplementedError()
