@@ -17,9 +17,9 @@ def default_driver(default_driver) -> RemoteWebDriver:
 @pytest.fixture
 def webserver() -> Generator[IntegrationTCPServer, None, None]:
     handler = http.server.SimpleHTTPRequestHandler
-    server = IntegrationTCPServer(("localhost", 8080), handler)
+    server = IntegrationTCPServer(("localhost", 0), handler)
     os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), "http_content"))
-    print("Http server started for integration testing")
+    print(f"Http server started for integration testing on: {server.server_address}")
     try:
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()

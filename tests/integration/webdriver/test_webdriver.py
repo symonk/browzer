@@ -19,7 +19,7 @@ def test_loading(webserver) -> None:
     assert_that(element).is_instance_of(SyleniumElement)
 
 
-def test_multiple(configuration, webserver, mocker) -> None:
+def test_multiple(configuration, webserver) -> None:
     t1 = Thread(target=go, args=(webserver.page_url("simple_element"),))
     t2 = Thread(target=go, args=(webserver.page_url("simple_element"),))
     t1.start()
@@ -28,6 +28,6 @@ def test_multiple(configuration, webserver, mocker) -> None:
     t2.join()
 
 
-def test_single_but_same(configuration, mocker) -> None:
+def test_single_but_same(configuration) -> None:
     go("https://www.google.com")
     go("https://www.thesun.com")
