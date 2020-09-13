@@ -1,14 +1,24 @@
+from typing import List
 from typing import Optional
 
 from sylenium import Configuration
 from sylenium import DriverManager
 from sylenium import SyleniumDriver
+from sylenium import SyleniumElement
 
 DRIVER_MANAGER = DriverManager()
 
 
 def go(url: str) -> None:
     get_driver().get(url)
+
+
+def find(locatable) -> SyleniumElement:
+    return get_driver().find(locatable)
+
+
+def find_all(locatable) -> List[SyleniumElement]:
+    return get_driver().find_all(locatable)
 
 
 def terminate_drivers() -> None:

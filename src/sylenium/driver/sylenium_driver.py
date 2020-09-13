@@ -2,12 +2,14 @@ from __future__ import annotations
 
 from types import TracebackType
 from typing import Any
+from typing import List
 from typing import Optional
 from typing import Type
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
 from sylenium import Configuration
+from sylenium.element.sylenium_element import SyleniumElement
 
 
 class SyleniumDriver:
@@ -50,3 +52,12 @@ class SyleniumDriver:
         Retrieve the current url from the current page
         """
         return self.driver.current_url
+
+    def find(self, locatable) -> SyleniumElement:
+        return SyleniumElement(self.driver.find_element(*locatable.locate()), locatable)
+
+    def find_all(self, locatable) -> List[SyleniumElement]:
+        return [
+            SyleniumElement(ele, locatable)
+            for ele in self.driver.find_elements(*locatable.locate())
+        ]

@@ -5,6 +5,7 @@ from .configuration import configure
 from .configuration import get_global_configuration
 from .driver import DriverManager
 from .driver import SyleniumDriver
+from .element.sylenium_element import SyleniumElement
 from .sylenium import get_driver
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "DriverMonitorThread",
     "DriverManager",
     "get_driver",
+    "SyleniumElement",
 ]

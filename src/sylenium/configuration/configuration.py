@@ -28,7 +28,7 @@ class Configuration:
     def __init__(
         self,
         browser: str = "chrome",
-        headless: bool = True,
+        headless: bool = False,
         remote: bool = False,
         page_loading_strategy: str = "fast",
         selenium_grid_url: str = "http://localhost",
