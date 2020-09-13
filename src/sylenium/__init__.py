@@ -1,5 +1,5 @@
 from ._version import __version__
-from .command import invoker
+from .command import command_invoker
 from .concurrency.driver_monitor_thread import DriverMonitorThread
 from .configuration import Configuration
 from .configuration import configure
@@ -19,5 +19,5 @@ __all__ = [
     "driver_manager",
     "get_driver",
     "SyleniumElement",
-    "invoker",
+    "command_invoker",
 ]
