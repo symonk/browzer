@@ -28,7 +28,7 @@ def webserver() -> Generator[IntegrationTCPServer, None, None]:
         pass
 
 
-@pytest.fixture(autouse=True, scope="session")
+@pytest.fixture(autouse=True)
 def close_threaded_drivers(request):
     from sylenium.sylenium import DRIVER_MANAGER
 

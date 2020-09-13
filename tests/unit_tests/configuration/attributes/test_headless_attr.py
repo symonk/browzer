@@ -19,4 +19,4 @@ def test_headless_bad_type(configuration):
 
 
 def test_headless_default(configuration):
-    assert_that(configuration().headless).is_true()
+    assert_that(configuration().headless).is_false()
