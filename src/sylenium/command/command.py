@@ -5,5 +5,5 @@ from typing import Any
 
 class Command(ABC):
     @abstractmethod
-    def execute(self, *args, **kwargs) -> Any:
+    def execute(self, **kwargs) -> Any:
         raise NotImplementedError()

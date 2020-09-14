@@ -48,4 +48,16 @@ class SyleniumElement:
         ...
 
     def click(self) -> None:
-        command_invoker.execute("click", self)
+        command_invoker.execute(command="click", element=self)
+
+    def set_text(self, text: str) -> SyleniumElement:
+        command_invoker.execute(command="set_text", element=self, text=text)
+        return self
+
+    def clear(self) -> SyleniumElement:
+        command_invoker.execute(command="clear", element=self)
+        return self
+
+    def press_enter(self) -> SyleniumElement:
+        command_invoker.execute(command="press_enter", element=self)
+        return self

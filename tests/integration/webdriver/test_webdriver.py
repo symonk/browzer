@@ -20,6 +20,12 @@ def test_loading(webserver) -> None:
     assert_that(element).is_instance_of(SyleniumElement)
 
 
+def test_hello_world(webserver) -> None:
+    go(webserver.page_url("simple_textarea"))
+    sylenium_element = find(ById("textarea"))
+    sylenium_element.set_text("Hello world!").clear().set_text("New Version")
+
+
 def test_multiple(configuration, webserver) -> None:
     t1 = Thread(target=go, args=(webserver.page_url("simple_element"),))
     t2 = Thread(target=go, args=(webserver.page_url("simple_element"),))
