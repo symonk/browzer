@@ -90,9 +90,9 @@ Configuring Sylenium :flags:
 Quick Start :flags:
 ==============
 
+Here is a simple way to get going for a standalone simple library script that requires some browser interaction:
 .. code-block:: python
 
-    # Simple Standalone Script:
     import sylenium import *
 
     def main():
@@ -102,9 +102,14 @@ Quick Start :flags:
             find(ById("sb_form_q")).set_text("Hello World").clear().set_text("My Search").press_enter()
             find(ById("b_results")).should_be(Visible).should_contain(Text("My Search"))
 
+
+For those building more robust automation frameworks around their applications, here is an example harnessing Page Objects:
+.. code-block:: python
+
     # Complex Page Objects Approach:
     from __future__ import annotations
     from sylenium import *
+
     class BingPage:
         search_box = find(ById("sb_form_q") # Lazy
         results_box = find(ById("b_results") # Lazy
