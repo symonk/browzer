@@ -5,6 +5,7 @@ from sylenium.command.click import Click
 from sylenium.command.command import Command
 from sylenium.command.find import Find
 from sylenium.command.find_all import FindAll
+from sylenium.exception import IllegalElementCommandException
 
 COMMANDS: Dict[str, Command] = {}
 
@@ -27,7 +28,7 @@ def execute(command: str, *args, **kwargs) -> Any:
     found_command = COMMANDS.get(command, None)
     if found_command is not None:
         return found_command.execute(*args, **kwargs)
-    raise ValueError(
+    raise IllegalElementCommandException(
         f"Attempting to perform an illegal command through the command invoker: {command}"
     )
 
