@@ -1,23 +1,27 @@
-from ._version import __version__
-from .command import command_invoker
-from .concurrency.driver_monitor_thread import DriverMonitorThread
-from .configuration import Configuration
-from .configuration import configure
-from .configuration import get_global_configuration
-from .driver import driver_manager
-from .driver.sylenium_driver import SyleniumDriver
-from .element.sylenium_element import SyleniumElement
-from .sylenium import get_driver
+from ._version import __version__  # isort:skip
+from . import exception  # isort:skip
+from .configuration import Configuration  # isort:skip
+from .configuration import configure  # isort:skip
+from .configuration import get_global_configuration  # isort:skip
+from .concurrency import DriverMonitorThread  # isort:skip
+from .command import command_invoker  # isort:skip
+from .driver import driver_manager  # isort:skip
+from .driver import SyleniumDriver  # isort:skip
+from .element import SyleniumElement  # isort:skip
+from .sylenium import get_driver  # isort:skip
+
 
 __all__ = [
     "__version__",
+    "exception",
     "Configuration",
-    "SyleniumDriver",
+    "configuration",
     "configure",
     "get_global_configuration",
     "DriverMonitorThread",
+    "SyleniumElement",
+    "SyleniumDriver",
     "driver_manager",
     "get_driver",
-    "SyleniumElement",
     "command_invoker",
 ]

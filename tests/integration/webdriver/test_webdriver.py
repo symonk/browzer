@@ -16,6 +16,7 @@ def test_default_driver(default_driver) -> None:
 def test_loading(webserver) -> None:
     go(webserver.page_url("simple_element"))
     element = find(ById("button1"))
+    element.click()
     assert_that(element).is_instance_of(SyleniumElement)
 
 

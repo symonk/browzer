@@ -8,7 +8,7 @@ from typing import Type
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
-from sylenium import Configuration
+from sylenium.configuration.configuration import Configuration
 from sylenium.element.sylenium_element import SyleniumElement
 
 
@@ -54,10 +54,12 @@ class SyleniumDriver:
         return self.driver.current_url
 
     def find(self, locatable) -> SyleniumElement:
-        return SyleniumElement(self.driver.find_element(*locatable.locate()), locatable)
+        return SyleniumElement(
+            self.driver.find_element(*locatable.locate()), locatable, self
+        )
 
     def find_all(self, locatable) -> List[SyleniumElement]:
         return [
-            SyleniumElement(ele, locatable)
+            SyleniumElement(ele, locatable, self)
             for ele in self.driver.find_elements(*locatable.locate())
         ]

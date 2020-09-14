@@ -6,6 +6,7 @@ from .locators import ByName
 from .locators import ByPartialLinkText
 from .locators import ByTagName
 from .locators import ByXpath
+from .sylenium_element import SyleniumElement
 
 __all__ = [
     "ById",
@@ -16,4 +17,5 @@ __all__ = [
     "ByTagName",
     "ByClassName",
     "ByCssSelector",
+    "SyleniumElement",
 ]

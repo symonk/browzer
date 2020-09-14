@@ -6,8 +6,9 @@ from typing import Optional
 
 from sylenium.configuration import Configuration
 from sylenium.configuration import get_global_configuration
-from sylenium.driver.driver_factory import create_sylenium_driver
-from sylenium.driver.sylenium_driver import SyleniumDriver
+
+from .driver_factory import create_sylenium_driver
+from .sylenium_driver import SyleniumDriver
 
 THREAD_LOCK = Lock()
 _DRIVERS: Dict[int, SyleniumDriver] = {}
