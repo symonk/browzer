@@ -10,11 +10,6 @@ from sylenium.exception import IllegalElementCommandException
 COMMANDS: Dict[str, Command] = {}
 
 
-def reset_commands() -> None:
-    COMMANDS.clear()
-    add_find_commands()
-
-
 def add_find_commands() -> None:
     COMMANDS["find"] = Find()
     COMMANDS["find_all"] = FindAll()
