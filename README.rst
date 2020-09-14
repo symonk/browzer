@@ -84,7 +84,23 @@ Configuring Sylenium :flags:
 
 .. code-block:: python
 
-    # Coming soon
+Simple:
+
+# Sylenium uses a smart default configuration for most use cases, however the customisation options are endless.  Managing
+the 'global' configuration can be achieved as outlined below:
+
+.. code-block:: python
+    from sylenium import Configuration
+    from sylenium import configure
+    configure(Configuration(headless=False, remote=True, explicit_waiting=15.00))
+    # Now all drivers will use this 'global configuration'
+    go("https://www.google.com")
+
+# On the fly per driver configurations?
+
+.. code-block:: python
+    with get_driver(Configuration(headless=True, polling_interval=2.50, default_selector='ID')):
+        go('https://www.google.com')
 
 ==============
 Quick Start :flags:
