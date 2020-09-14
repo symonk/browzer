@@ -10,6 +10,13 @@ class SyleniumElement:
         self.element = delegated_element
         self.locatable = locatable
 
+    def refind(self) -> SyleniumElement:
+        """
+        Before calling any actions on the SyleniumElement, it should be refound.  This always happens and is a little
+        price to pay for stability and dealing with StaleElements.
+        """
+        ...
+
     def should_be(self) -> SyleniumElement:
         ...
 

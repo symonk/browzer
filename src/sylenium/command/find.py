@@ -1,5 +1,5 @@
-from sylenium import SyleniumElement
 from sylenium.command.command import Command
+from sylenium.element.sylenium_element import SyleniumElement
 
 
 class Find(Command[SyleniumElement]):
