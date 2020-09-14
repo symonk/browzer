@@ -82,8 +82,6 @@ https://sylenium.readthedocs.io/
 Configuring Sylenium :flags:
 ==============
 
-.. code-block:: python
-
 Simple:
 
 Sylenium uses a smart default configuration for most use cases, however the customisation options are endless.  Managing
