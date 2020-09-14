@@ -94,6 +94,7 @@ the 'global' configuration can be achieved as outlined below:
     # Now all drivers will use this 'global configuration'
     go("https://www.google.com")
 
+
 On the fly per driver configurations?
 
 .. code-block:: python
@@ -119,7 +120,7 @@ Here is a simple way to get going for a standalone simple library script that re
             find(ById("b_results")).should_be(Visible).should_contain(Text("My Search"))
 
 
-For those building more robust automation frameworks around their applications, here is an example harnessing Page Objects:
+For those building more robust automation frameworks around their applications, here is an example harnessing Pages:
 
 .. code-block:: python
 
