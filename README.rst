@@ -100,7 +100,7 @@ Quick Start :flags:
         with get_driver():
             go("https://www.bing.com")
             find(ById("sb_form_q)")).set_text("Hello World").clear().set_text("My Search").press_enter()
-            find(ById("b_results")).should_be(Visible).should_contain(Text("My Searrch"))
+            find(ById("b_results")).should_be(Visible).should_contain(Text("My Search"))
 
 ==============
 Sylenium-pytest :flags:
