@@ -114,10 +114,12 @@ Quick Start :flags:
 
         def perform_search(search_term: str) -> BingPage:
           search_box.clear().set_text(search_term)).press_enter(0)
+          return self
 
         def check_results_contains(search_term: str) -> BingPage:
             # conditions are inbuilt assertions, failing tests accordingly
             results_box.should_be(Visible).should_contain(Text(search_term)))
+            return self
 
 
     # Note: This is a pytest explicit example and bing_page is a 'fixture'
