@@ -24,4 +24,4 @@ def test_event_wrapper(driver_creator):
         pass
 
     driver = driver_creator(Configuration(driver_event_firing_wrapper=MyListener))
-    assert_that(driver.driver).is_instance_of(EventFiringWebDriver)
+    assert_that(driver.wrapped_driver).is_instance_of(EventFiringWebDriver)

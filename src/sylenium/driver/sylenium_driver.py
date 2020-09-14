@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from types import TracebackType
 from typing import Any
-from typing import List
 from typing import Optional
 from typing import Type
 
@@ -15,7 +14,7 @@ from sylenium.element.sylenium_element import SyleniumElement
 class SyleniumDriver:
     def __init__(self, delegated_driver: RemoteWebDriver, config: Configuration):
         self.config = config
-        self.driver = delegated_driver
+        self.wrapped_driver = delegated_driver
 
     def __enter__(self) -> SyleniumDriver:
         return self
@@ -33,33 +32,25 @@ class SyleniumDriver:
         Closes the current driver window
         Note: Not to be confused with the entire driver instance, .quit() should be used for that.
         """
-        self.driver.close()
+        self.wrapped_driver.close()
 
     def quit(self) -> None:
         """
         Terminates the driver and closes all of its associated windows
         """
-        self.driver.quit()
+        self.wrapped_driver.quit()
 
     def get(self, url: str) -> None:
         """
         Loads the url provided in the current browser session
         """
-        self.driver.get(url)
+        self.wrapped_driver.get(url)
 
     def get_current_url(self) -> Any:
         """
         Retrieve the current url from the current page
         """
-        return self.driver.current_url
+        return self.wrapped_driver.current_url
 
     def find(self, locatable) -> SyleniumElement:
-        return SyleniumElement(
-            self.driver.find_element(*locatable.locate()), locatable, self
-        )
-
-    def find_all(self, locatable) -> List[SyleniumElement]:
-        return [
-            SyleniumElement(ele, locatable, self)
-            for ele in self.driver.find_elements(*locatable.locate())
-        ]
+        return SyleniumElement(locatable, self)

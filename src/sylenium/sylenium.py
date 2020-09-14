@@ -1,4 +1,3 @@
-from typing import List
 from typing import Optional
 
 from sylenium import Configuration
@@ -13,10 +12,6 @@ def go(url: str) -> None:
 
 def find(locatable) -> SyleniumElement:
     return get_driver().find(locatable)
-
-
-def find_all(locatable) -> List[SyleniumElement]:
-    return get_driver().find_all(locatable)
 
 
 def terminate_drivers() -> None:
