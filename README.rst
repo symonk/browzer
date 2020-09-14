@@ -91,6 +91,7 @@ Quick Start :flags:
 ==============
 
 Here is a simple way to get going for a standalone simple library script that requires some browser interaction:
+
 .. code-block:: python
 
     import sylenium import *
@@ -104,6 +105,7 @@ Here is a simple way to get going for a standalone simple library script that re
 
 
 For those building more robust automation frameworks around their applications, here is an example harnessing Page Objects:
+
 .. code-block:: python
 
     # Complex Page Objects Approach:
