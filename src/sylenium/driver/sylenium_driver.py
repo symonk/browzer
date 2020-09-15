@@ -20,9 +20,9 @@ class SyleniumDriver:
     def __init__(self, delegated_driver: RemoteWebDriver, config: Configuration):
         self.config: Configuration = config
         self.wrapped_driver: RemoteWebDriver = delegated_driver
-        self.wrapped_driver._wrap_value = self._wrap_value
+        self.wrapped_driver._wrap_value = None
 
-    def _wrap_value(self) -> Any:
+    def _wrap_value(self, *args) -> Any:
         """
         Unsure of an implementation for now...
         """
