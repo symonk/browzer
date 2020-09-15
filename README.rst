@@ -136,7 +136,7 @@ For those building more robust automation frameworks around their applications, 
             ... # No driver necessary, sylenium is very smart with driver management
 
         def perform_search(search_term: str) -> BingPage:
-          search_box.clear().set_text(search_term)).press_enter(0)
+          search_box.clear().set_text(search_term)).press_enter()
           return self
 
         def check_results_contains(search_term: str) -> BingPage:
