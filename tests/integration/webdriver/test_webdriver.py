@@ -1,7 +1,9 @@
 from threading import Thread
 
 from assertpy import assert_that
+from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
+from sylenium import SyleniumDriver
 from sylenium import SyleniumElement
 from sylenium.element import ById
 from sylenium.sylenium import find
@@ -38,3 +40,13 @@ def test_multiple(configuration, webserver) -> None:
 def test_single_but_same(configuration) -> None:
     go("https://www.google.com")
     go("https://www.thesun.com")
+
+
+def test_remote_browser(driver_creator, configuration) -> None:
+    with driver_creator(
+        config=configuration(
+            remote=True, browser_capabilities={"BrowserName": "chrome"}
+        )
+    ) as my_driver:
+        assert_that(my_driver).is_instance_of(SyleniumDriver)
+        assert_that(my_driver.wrapped_driver).is_instance_of(RemoteWebDriver)

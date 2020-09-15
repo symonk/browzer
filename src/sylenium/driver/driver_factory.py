@@ -109,7 +109,7 @@ class RemoteDriverCreator(WebDriverCreator):
     def create_driver(self) -> RemoteWebDriver:
         desired_capabilities = self.config.browser_capabilities
         return RemoteWebDriver(
-            command_executor=self.config.selenium_grid_url,
+            command_executor=self.config.full_grid_endpoint,
             desired_capabilities=desired_capabilities,
             browser_profile=None,
             proxy=None,

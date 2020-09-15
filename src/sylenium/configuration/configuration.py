@@ -358,7 +358,7 @@ class Configuration:
     # non attr functions -----------------------------------------------------------------------------
 
     @property
-    def selenium_grid(self) -> str:
+    def full_grid_endpoint(self) -> str:
         """
         Retrieve the full hub endpoint to points remote browsers at for running tests in the cloud
         """
