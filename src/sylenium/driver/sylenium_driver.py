@@ -12,9 +12,21 @@ from sylenium.element.sylenium_element import SyleniumElement
 
 
 class SyleniumDriver:
+    """
+    Serves as a wrapper around an arbitrary RemoteWebDriver subclass.  Similar to how EventFiringWebDriver wraps
+    RemoteWebDriver when used.
+    """
+
     def __init__(self, delegated_driver: RemoteWebDriver, config: Configuration):
-        self.config = config
-        self.wrapped_driver = delegated_driver
+        self.config: Configuration = config
+        self.wrapped_driver: RemoteWebDriver = delegated_driver
+        self.wrapped_driver._wrap_value = self._wrap_value
+
+    def _wrap_value(self) -> Any:
+        """
+        Unsure of an implementation for now...
+        """
+        ...
 
     def __enter__(self) -> SyleniumDriver:
         return self

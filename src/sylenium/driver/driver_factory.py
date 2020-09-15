@@ -1,7 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 from typing import Any
-from typing import Mapping
+from typing import Dict
 from typing import Type
 
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -25,7 +25,7 @@ class WebDriverCreator(ABC):
 
     @abstractmethod
     def create_driver(self) -> RemoteWebDriver:
-        raise NotImplementedError()
+        ...
 
 
 class ChromeDriverCreator(WebDriverCreator):
@@ -34,9 +34,12 @@ class ChromeDriverCreator(WebDriverCreator):
         driver_executable = self.resolve_binary_path()
         driver = ChromeWebDriver(
             executable_path=driver_executable,
+            port=0,
             options=chrome_options,
+            service_args=None,
             desired_capabilities=self.config.browser_capabilities,
             service_log_path=self.config.chrome_service_log_path,
+            keep_alive=True,
         )
         if self.config.driver_event_firing_wrapper:
             driver = EventFiringWebDriver(
@@ -104,7 +107,16 @@ class GeckoDriverCreator(WebDriverCreator):
 
 class RemoteDriverCreator(WebDriverCreator):
     def create_driver(self) -> RemoteWebDriver:
-        ...
+        desired_capabilities = self.config.browser_capabilities
+        return RemoteWebDriver(
+            command_executor=self.config.selenium_grid_url,
+            desired_capabilities=desired_capabilities,
+            browser_profile=None,
+            proxy=None,
+            keep_alive=False,
+            file_detector=None,
+            options=None,
+        )
 
 
 def create_sylenium_driver(config: Configuration) -> SyleniumDriver:
@@ -112,7 +124,7 @@ def create_sylenium_driver(config: Configuration) -> SyleniumDriver:
     Factory method responsible for determining which driver to instantiate at runtime
     based on how sylenium has been configured by the client.
     """
-    driver_mapping: Mapping[str, Type[WebDriverCreator]] = {
+    driver_mapping: Dict[str, Type[WebDriverCreator]] = {
         "chrome": ChromeDriverCreator,
         "firefox": GeckoDriverCreator,
         "remote": RemoteDriverCreator,
