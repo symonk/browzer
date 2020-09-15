@@ -1,5 +1,6 @@
 from threading import Thread
 
+import pytest
 from assertpy import assert_that
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 
@@ -42,6 +43,7 @@ def test_single_but_same(configuration) -> None:
     go("https://www.thesun.com")
 
 
+@pytest.mark.skip(reason="unsupported yet")
 def test_remote_browser(driver_creator, configuration) -> None:
     with driver_creator(
         config=configuration(
