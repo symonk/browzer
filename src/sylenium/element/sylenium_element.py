@@ -6,7 +6,7 @@ from typing import Optional
 from selenium.webdriver.remote.webelement import WebElement as RemoteWebElement
 
 from sylenium.command import command_invoker
-from sylenium.interface.locatable import Locatable
+from sylenium.element.locatable import Locatable
 
 if TYPE_CHECKING:
     from sylenium import SyleniumDriver

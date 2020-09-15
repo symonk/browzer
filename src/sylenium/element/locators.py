@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-from sylenium.interface.locatable import Locatable
+from sylenium.element.locatable import Locatable
 
 
 class ById(Locatable):
