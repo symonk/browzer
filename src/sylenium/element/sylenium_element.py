@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement as RemoteWebElement
 
-from sylenium.command import command_invoker
 from sylenium.element.locatable import Locatable
 
 if TYPE_CHECKING:
@@ -24,10 +25,10 @@ class SyleniumElement:
 
     @property
     def wrapped_element(self) -> RemoteWebElement:
-        """
-        Upon access, re-acquire the RemoteWebElement.  This is useful to avoid StaleElements and provides
-        a high level of stability.
-        """
+        return self._wrapped_element
+
+    def _refind(self) -> RemoteWebElement:
+        self._wrapped_element = self.driver.find(self.locator).wrapped_element
         return self._wrapped_element
 
     def should_be(self) -> SyleniumElement:
@@ -49,16 +50,23 @@ class SyleniumElement:
         ...
 
     def click(self) -> None:
-        command_invoker.execute(command="click", element=self)
+        self._refind()
+        try:
+            self.wrapped_element.click()
+        except WebDriverException:
+            ...
 
     def set_text(self, text: str) -> SyleniumElement:
-        command_invoker.execute(command="set_text", element=self, text=text)
+        self._refind()
+        self.wrapped_element.send_keys(text)
         return self
 
     def clear(self) -> SyleniumElement:
-        command_invoker.execute(command="clear", element=self)
+        self._refind()
+        self.wrapped_element.clear()
         return self
 
     def press_enter(self) -> SyleniumElement:
-        command_invoker.execute(command="press_enter", element=self)
+        self._refind()
+        self.set_text(Keys.ENTER)
         return self

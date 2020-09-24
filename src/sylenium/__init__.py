@@ -4,7 +4,6 @@ from .configuration import Configuration  # isort:skip
 from .configuration import configure  # isort:skip
 from .configuration import get_global_configuration  # isort:skip
 from .concurrency import DriverMonitorThread  # isort:skip
-from .command import command_invoker  # isort:skip
 from .driver import driver_manager  # isort:skip
 from .driver import SyleniumDriver  # isort:skip
 from .element import SyleniumElement  # isort:skip
@@ -23,5 +22,4 @@ __all__ = [
     "SyleniumDriver",
     "driver_manager",
     "get_driver",
-    "command_invoker",
 ]
