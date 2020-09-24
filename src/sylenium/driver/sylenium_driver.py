@@ -27,7 +27,6 @@ class SyleniumDriver:
     def __init__(self, delegated_driver: RemoteWebDriver, config: Configuration):
         self.config: Configuration = config
         self.wrapped_driver: RemoteWebDriver = delegated_driver
-        self.wrapped_driver._wrap_value = self._wrap_value
 
     def _wrap_value(self, value) -> Any:
         return self.wrapped_driver._wrap_value(getattr(value, "wrapped_element", value))
