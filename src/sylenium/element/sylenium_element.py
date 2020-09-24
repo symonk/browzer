@@ -28,7 +28,7 @@ class SyleniumElement:
         Upon access, re-acquire the RemoteWebElement.  This is useful to avoid StaleElements and provides
         a high level of stability.
         """
-        return self.wrapped_element
+        return self._wrapped_element
 
     def should_be(self) -> SyleniumElement:
         ...
