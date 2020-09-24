@@ -69,5 +69,5 @@ class SyleniumDriver:
 
     def find(self, locatable: Locatable) -> SyleniumElement:
         return SyleniumElement(
-            locatable, self.wrapped_driver.find_element(locatable.locate()), self
+            locatable, self.wrapped_driver.find_element(*locatable.locate()), self
         )
