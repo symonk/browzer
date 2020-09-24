@@ -2,13 +2,20 @@ from __future__ import annotations
 
 from types import TracebackType
 from typing import Any
+from typing import List
 from typing import Optional
 from typing import Type
+from typing import Union
 
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.remote.webelement import WebElement as RemoteWebElement
 
 from sylenium.configuration.configuration import Configuration
+from sylenium.element.locatable import Locatable
 from sylenium.element.sylenium_element import SyleniumElement
+
+ELEMENT_UNION = Union[RemoteWebElement, List[RemoteWebElement]]
+SYLENIUM_ELEMENT_UNION = Union[SyleniumElement, List[SyleniumElement]]
 
 
 class SyleniumDriver:
@@ -20,12 +27,10 @@ class SyleniumDriver:
     def __init__(self, delegated_driver: RemoteWebDriver, config: Configuration):
         self.config: Configuration = config
         self.wrapped_driver: RemoteWebDriver = delegated_driver
+        self.wrapped_driver._wrap_value = self._wrap_value
 
-    def _wrap_value(self, *args) -> Any:
-        """
-        Unsure of an implementation for now...
-        """
-        ...
+    def _wrap_value(self, value) -> Any:
+        return self.wrapped_driver._wrap_value(getattr(value, "wrapped_element", value))
 
     def __enter__(self) -> SyleniumDriver:
         return self
@@ -63,5 +68,7 @@ class SyleniumDriver:
         """
         return self.wrapped_driver.current_url
 
-    def find(self, locatable) -> SyleniumElement:
-        return SyleniumElement(locatable, self)
+    def find(self, locatable: Locatable) -> SyleniumElement:
+        return SyleniumElement(
+            locatable, self.wrapped_driver.find_element(locatable.locate()), self
+        )

@@ -20,7 +20,7 @@ from sylenium.helper._os_environ_helper import read_from_environ
 
 
 class WebDriverCreator(ABC):
-    def __init__(self, config: Configuration):
+    def __init__(self, config: Configuration) -> None:
         self.config = config
 
     @abstractmethod
@@ -29,6 +29,9 @@ class WebDriverCreator(ABC):
 
 
 class ChromeDriverCreator(WebDriverCreator):
+    def __init__(self, config: Configuration) -> None:
+        super().__init__(config)
+
     def create_driver(self) -> ChromeWebDriver:
         chrome_options = self.resolve_options()
         driver_executable = self.resolve_binary_path()
@@ -101,11 +104,17 @@ class ChromeDriverCreator(WebDriverCreator):
 
 
 class GeckoDriverCreator(WebDriverCreator):
+    def __init__(self, config: Configuration) -> None:
+        super().__init__(config)
+
     def create_driver(self) -> GeckoWebDriver:
-        ...
+        raise NotImplementedError
 
 
 class RemoteDriverCreator(WebDriverCreator):
+    def __init__(self, config: Configuration) -> None:
+        super().__init__(config)
+
     def create_driver(self) -> RemoteWebDriver:
         desired_capabilities = self.config.browser_capabilities
         return RemoteWebDriver(
@@ -130,10 +139,9 @@ def create_sylenium_driver(config: Configuration) -> SyleniumDriver:
         "remote": RemoteDriverCreator,
     }
     lookup = config.browser if not config.remote else "remote"
-    driver_type = driver_mapping.get(lookup)
-    if not driver_type:
+    driver_creator_class = driver_mapping.get(lookup)
+    if not driver_creator_class:
         raise ValueError(
             f"Unsupported driver instantiation was attempted for: {lookup}"
         )
-    driver = driver_type(config).create_driver()
-    return SyleniumDriver(driver, config)
+    return SyleniumDriver(driver_creator_class(config).create_driver(), config)

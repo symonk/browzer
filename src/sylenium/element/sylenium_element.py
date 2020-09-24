@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from typing import Optional
 
 from selenium.webdriver.remote.webelement import WebElement as RemoteWebElement
 
@@ -13,9 +12,14 @@ if TYPE_CHECKING:
 
 
 class SyleniumElement:
-    def __init__(self, locatable: Locatable, driver: SyleniumDriver):
-        self._wrapped_element: Optional[RemoteWebElement] = None
-        self.locatable = locatable
+    def __init__(
+        self,
+        locatable: Locatable,
+        wrapped_element: RemoteWebElement,
+        driver: SyleniumDriver,
+    ):
+        self._wrapped_element = wrapped_element
+        self.locator = locatable
         self.driver = driver
 
     @property
@@ -24,10 +28,7 @@ class SyleniumElement:
         Upon access, re-acquire the RemoteWebElement.  This is useful to avoid StaleElements and provides
         a high level of stability.
         """
-        self._wrapped_element = self.driver.wrapped_driver.find_element(
-            *self.locatable.locate()
-        )
-        return self._wrapped_element
+        return self.wrapped_element
 
     def should_be(self) -> SyleniumElement:
         ...
