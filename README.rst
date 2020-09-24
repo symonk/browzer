@@ -119,39 +119,6 @@ Here is a simple way to get going for a standalone simple library script that re
             find(ById("sb_form_q")).set_text("Hello World").clear().set_text("My Search").press_enter()
             find(ById("b_results")).should_be(Visible).should_contain(Text("My Search"))
 
-
-For those building more robust automation frameworks around their applications, here is an example harnessing Pages:
-
-.. code-block:: python
-
-    # Complex Page Objects Approach:
-    from __future__ import annotations
-    from sylenium import *
-
-    class BingPage:
-        search_box = find(ById("sb_form_q") # Lazy
-        results_box = find(ById("b_results") # Lazy
-
-        def __init__(self) -> None:
-            ... # No driver necessary, sylenium is very smart with driver management
-
-        def perform_search(search_term: str) -> BingPage:
-          search_box.clear().set_text(search_term)).press_enter()
-          return self
-
-        def check_results_contains(search_term: str) -> BingPage:
-            # conditions are inbuilt assertions, failing tests accordingly
-            results_box.should_be(Visible).should_contain(Text(search_term)))
-            return self
-
-
-    # Note: This is a pytest explicit example and bing_page is a 'fixture'
-    def test_bing_searching(bing_page) -> None:
-        term = "sylenium"
-        bing_page.perform_search(term)
-        bing_page.check_results_contains(term)
-
-
 ==============
 Sylenium-pytest :flags:
 ==============
