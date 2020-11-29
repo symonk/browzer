@@ -14,7 +14,7 @@ Overview :flags:
     * - docs:
       - |docs|
     * - tests:
-      - | |travis| |requires| |codecov|
+      - | |travis| |codecov|
     * - package:
       - | |version|
     * - infra:
