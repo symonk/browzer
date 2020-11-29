@@ -32,10 +32,6 @@ Overview :flags:
     :alt: AppVeyor Build Status
     :target: https://ci.appveyor.com/project/symonk/sylenium
 
-.. |requires| image:: https://requires.io/github/symonk/sylenium/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/symonk/sylenium/requirements/?branch=master
-
 .. |codecov| image:: https://codecov.io/gh/symonk/sylenium/branch/master/graphs/badge.svg?branch=master
     :alt: Coverage Status
     :target: https://codecov.io/github/symonk/sylenium
